@@ -1,7 +1,5 @@
 package com.BJJ.BJJSite.Classes;
 
-import com.BJJ.BJJSite.Enums.Permissions;
-
 /**
  * Represents an Admin.
  */
@@ -18,8 +16,7 @@ public class Administrator extends Employee {
 
         private String adminLevel = "DEFAULT ADMIN";
 
-        public AdministratorBuilder(Permissions permissions) {
-            super(permissions);
+        public AdministratorBuilder() {
         }
 
         public AdministratorBuilder adminLevel(String value) {

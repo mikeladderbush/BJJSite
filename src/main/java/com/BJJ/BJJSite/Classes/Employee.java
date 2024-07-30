@@ -32,8 +32,7 @@ public class Employee extends User {
         private PayBasis paybasis = PayBasis.VOLUNTEER;
         private double baseEarnings = 0.0;
 
-        public EmployeeBuilder(Permissions permissions) {
-            super(permissions);
+        public EmployeeBuilder() {
         }
 
         public T socialSecurityNumber(String value) {
