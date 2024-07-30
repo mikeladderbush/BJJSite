@@ -1,13 +1,19 @@
 package com.BJJ.BJJSite.Classes;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
-import com.BJJ.BJJSite.Enums.Permissions;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.BJJ.BJJSite.Interfaces.UserUtils;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,17 +24,37 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User implements UserUtils {
+public class User implements UserUtils, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     protected Long id;
 
-    private String firstName;
-    private String lastName;
+    @Column(nullable = false)
+    protected String fullName;
+
     protected String username;
+
+    @Column(nullable = false)
     protected String password;
+
+    @Column(unique = true, length = 100, nullable = false)
     protected String email;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
+
     private String phone;
     private String address;
     private String sex;
@@ -37,12 +63,8 @@ public class User implements UserUtils {
     @ElementCollection
     private List<PaymentOption> paymentOptions;
 
-    @Enumerated
-    protected Permissions permissions;
-
     protected User(UserBuilder<?> UserBuilder) {
-        firstName = UserBuilder.firstName;
-        lastName = UserBuilder.lastName;
+        fullName = UserBuilder.fullName;
         phone = UserBuilder.phone;
         username = UserBuilder.username;
         password = UserBuilder.password;
@@ -50,14 +72,18 @@ public class User implements UserUtils {
         address = UserBuilder.address;
         sex = UserBuilder.sex;
         dob = UserBuilder.dob;
+        createdAt = UserBuilder.createdAt;
+        updatedAt = UserBuilder.updatedAt;
+        isAccountNonExpired = UserBuilder.isAccountNonExpired;
+        isAccountNonLocked = UserBuilder.isAccountNonLocked;
+        isCredentialsNonExpired = UserBuilder.isCredentialsNonExpired;
+        isEnabled = UserBuilder.isEnabled;
         paymentOptions = UserBuilder.paymentOptions;
-        permissions = UserBuilder.permissions;
     }
 
     public static class UserBuilder<T extends UserBuilder<T>> {
 
-        private String firstName = "NO FIRST NAME ON FILE";
-        private String lastName = "NO LAST NAME ON FILE";
+        private String fullName = "DEFAULT_NAME";
         private String phone = "NO EMAIL ON FILE";
         private String username = "NO FIRST NAME ON FILE";
         protected String password = "NO LAST NAME ON FILE";
@@ -65,20 +91,19 @@ public class User implements UserUtils {
         private String address = "NO ADDRESS ON FILE";
         private String sex = "DEFAULT";
         private String dob = "DEFAULT";
+        private Date createdAt;
+        private Date updatedAt;
+        private boolean isAccountNonExpired;
+        private boolean isAccountNonLocked;
+        private boolean isCredentialsNonExpired;
+        private boolean isEnabled;
         private List<PaymentOption> paymentOptions = null;
-        private final Permissions permissions;
 
-        public UserBuilder(Permissions permissions) {
-            this.permissions = permissions;
+        public UserBuilder() {
         }
 
-        public T firstName(String value) {
-            this.firstName = value;
-            return self();
-        }
-
-        public T lastName(String value) {
-            this.lastName = value;
+        public T fullName(String value) {
+            this.fullName = value;
             return self();
         }
 
@@ -117,6 +142,36 @@ public class User implements UserUtils {
             return self();
         }
 
+        public T createdAt(Date value) {
+            this.createdAt = value;
+            return self();
+        }
+
+        public T updatedAt(Date value) {
+            this.updatedAt = value;
+            return self();
+        }
+
+        public T isAccountNonExpired(boolean value) {
+            this.isAccountNonExpired = value;
+            return self();
+        }
+
+        public T isAccountNonLocked(boolean value) {
+            this.isAccountNonLocked = value;
+            return self();
+        }
+
+        public T isCredentialsNonExpired(boolean value) {
+            this.isCredentialsNonExpired = value;
+            return self();
+        }
+
+        public T isEnabled(boolean value) {
+            this.isEnabled = value;
+            return self();
+        }
+
         public T paymentOptions(List<PaymentOption> value) {
             this.paymentOptions = value;
             return self();
@@ -150,27 +205,15 @@ public class User implements UserUtils {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        if (firstName != null) {
-            this.firstName = firstName;
+    public void setFullName(String fullName) {
+        if (fullName != null) {
+            this.fullName = fullName;
         } else {
-            throw new IllegalArgumentException("First Name cannot be null");
-        }
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        if (lastName != null) {
-            this.lastName = lastName;
-        } else {
-            throw new IllegalArgumentException("Last Name cannot be null");
+            throw new IllegalArgumentException("Name cannot be null");
         }
     }
 
@@ -271,6 +314,38 @@ public class User implements UserUtils {
         this.dob = dob;
     }
 
+    public boolean getIsAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    public void setIsAccountNonExpired(boolean isAccountNonExpired) {
+        this.isAccountNonExpired = isAccountNonExpired;
+    }
+
+    public boolean getIsAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public void setIsAccountNonLocked(boolean isAccountNonLocked) {
+        this.isAccountNonLocked = isAccountNonLocked;
+    }
+
+    public boolean getIsCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+    }
+
+    public boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
     public List<PaymentOption> getPaymentOptions() {
         return paymentOptions;
     }
@@ -279,15 +354,9 @@ public class User implements UserUtils {
         this.paymentOptions = paymentOptions;
     }
 
-    public Permissions getPermissions() {
-        return permissions;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
-    public void setPermissions(Permissions permissions) {
-        if (permissions != null) {
-            this.permissions = permissions;
-        } else {
-            throw new IllegalArgumentException("Permission error");
-        }
-    }
 }

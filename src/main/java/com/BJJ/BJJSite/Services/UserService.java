@@ -27,11 +27,8 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            if (update.getFirstName() != null) {
-                user.setFirstName(update.getFirstName());
-            }
-            if (update.getLastName() != null) {
-                user.setLastName(update.getLastName());
+            if (update.getFullName() != null) {
+                user.setFullName(update.getFullName());
             }
             if (update.getUsername() != null) {
                 user.setUsername(update.getUsername());
@@ -63,6 +60,10 @@ public class UserService {
 
     public Optional<User> getUser(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public void deleteUser(Long id) {

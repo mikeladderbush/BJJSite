@@ -15,8 +15,7 @@ public interface ServiceInterface {
 
     public default void displayInformation(User user) {
         System.out.println("User ID: " + user.getId());
-        System.out.println("First Name: " + user.getFirstName());
-        System.out.println("Last Name: " + user.getLastName());
+        System.out.println("Full Name: " + user.getFullName());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Password: " + user.getPassword());
@@ -24,7 +23,10 @@ public interface ServiceInterface {
         System.out.println("Address: " + user.getAddress());
         System.out.println("Sex: " + user.getSex());
         System.out.println("DOB: " + user.getDob());
-        System.out.println("Permissions: " + user.getPermissions());
+        System.out.println("Account non-expired: " + user.getIsAccountNonExpired());
+        System.out.println("Account non-locked: " + user.getIsAccountNonLocked());
+        System.out.println("Credentials non-expired: " + user.getIsCredentialsNonExpired());
+        System.out.println("Enabled: " + user.getIsEnabled());
     }
 
 }

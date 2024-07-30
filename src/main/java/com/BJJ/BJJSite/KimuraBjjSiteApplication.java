@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Factories.UserFactory;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class KimuraBjjSiteApplication implements CommandLineRunner {
 
 	@Autowired
@@ -21,8 +22,7 @@ public class KimuraBjjSiteApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		User demoUser = userFactory.createUser(builder -> {
-			builder.firstName("Mike")
-					.lastName("Ladderbush")
+			builder.fullName("Mike Ladderbush")
 					.username("mikeladderbush")
 					.password("mike")
 					.email("mikeladderbush@gmail.com")
