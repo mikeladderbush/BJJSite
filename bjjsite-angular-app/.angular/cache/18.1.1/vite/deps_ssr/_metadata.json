@@ -1,58 +1,40 @@
 {
-  "hash": "6c8bae4e",
-  "configHash": "7b902597",
-  "lockfileHash": "f1fd4662",
-  "browserHash": "6c245c0c",
+  "hash": "f48c2ce6",
+  "configHash": "35adff95",
+  "lockfileHash": "6ca5bdf8",
+  "browserHash": "b59402e1",
   "optimized": {
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "05be6f79",
-      "needsInterop": false
-    },
-    "@angular/material/button": {
-      "src": "../../../../../node_modules/@angular/material/fesm2022/button.mjs",
-      "file": "@angular_material_button.js",
-      "fileHash": "594c47fa",
-      "needsInterop": false
-    },
-    "@angular/material/icon": {
-      "src": "../../../../../node_modules/@angular/material/fesm2022/icon.mjs",
-      "file": "@angular_material_icon.js",
-      "fileHash": "d0d31cd7",
+      "fileHash": "b2a3cc50",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "7e8927e8",
+      "fileHash": "9a302294",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "c3cebbe6",
+      "fileHash": "73d084a3",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "ebf47387",
+      "fileHash": "bfb73443",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-QRL6E2ZB": {
-      "file": "chunk-QRL6E2ZB.js"
+    "chunk-5747EXSC": {
+      "file": "chunk-5747EXSC.js"
     },
-    "chunk-HXQNWP2Z": {
-      "file": "chunk-HXQNWP2Z.js"
-    },
-    "chunk-YPALO4AP": {
-      "file": "chunk-YPALO4AP.js"
-    },
-    "chunk-CVVIHLGL": {
-      "file": "chunk-CVVIHLGL.js"
+    "chunk-MTFEWRJD": {
+      "file": "chunk-MTFEWRJD.js"
     },
     "xhr2-AQ42KH57": {
       "file": "xhr2-AQ42KH57.js"
