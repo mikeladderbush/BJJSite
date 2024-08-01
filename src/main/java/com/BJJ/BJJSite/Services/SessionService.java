@@ -36,7 +36,7 @@ public class SessionService implements ServiceInterface {
      * 
      * @return A randomly generated ID for Sessions.
      */
-    public String generateId() {
+    public Long generateId() {
         return ServiceInterface.super.generateId();
     }
 
@@ -45,7 +45,7 @@ public class SessionService implements ServiceInterface {
      * 
      * @param id The ID of the Session to delete.
      */
-    public void deleteSession(String id) {
+    public void deleteSession(Long id) {
         Iterator<Session> iterator = Sessions.iterator();
         while (iterator.hasNext()) {
             Session Session = iterator.next();
@@ -70,7 +70,7 @@ public class SessionService implements ServiceInterface {
      * @param id The ID of the Session to find.
      * @return The Session with the specified ID, or null if not found.
      */
-    public Session findSessionById(String id) {
+    public Session findSessionById(Long id) {
         for (Session Session : Sessions) {
             if (Session.getId().equals(id)) {
                 return Session;

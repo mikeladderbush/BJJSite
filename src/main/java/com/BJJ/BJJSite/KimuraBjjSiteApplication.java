@@ -1,5 +1,7 @@
 package com.BJJ.BJJSite;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +23,7 @@ public class KimuraBjjSiteApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User demoUser = userFactory.createUser(builder -> {
+		Optional<User> demoUser = userFactory.createUser(builder -> {
 			builder.fullName("Mike Ladderbush")
 					.username("mikeladderbush")
 					.password("mike")

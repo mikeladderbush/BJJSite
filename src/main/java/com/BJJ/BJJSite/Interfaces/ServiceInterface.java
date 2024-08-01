@@ -1,16 +1,20 @@
 package com.BJJ.BJJSite.Interfaces;
 
+import java.security.SecureRandom;
+
 import com.BJJ.BJJSite.Classes.User;
 
 public interface ServiceInterface {
+
+    public static final SecureRandom secureRandom = new SecureRandom();
 
     /**
      * Generates a random ID for objects.
      * 
      * @return A randomly generated ID for.
      */
-    public default String generateId() {
-        return java.util.UUID.randomUUID().toString();
+    public default Long generateId() {
+        return Math.abs(secureRandom.nextLong());
     }
 
     public default void displayInformation(User user) {

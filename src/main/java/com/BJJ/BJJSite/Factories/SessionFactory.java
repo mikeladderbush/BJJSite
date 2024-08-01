@@ -12,7 +12,7 @@ public class SessionFactory {
 
     // Method to create a Session with default values
     public static Session createSession() {
-        String id = sessionService.generateId();
+        Long id = sessionService.generateId();
         String sessionType = "REGULAR CLASS";
         String timeOfSession = "6:00PM";
         Date dateOfSession = new Date();
@@ -20,7 +20,7 @@ public class SessionFactory {
     }
 
     public static Session createSession(Consumer<Session.SessionBuilder<?>> consumer) {
-        String id = sessionService.generateId();
+        Long id = sessionService.generateId();
         String sessionType = "REGULAR CLASS";
         String timeOfSession = "6:00PM";
         Date dateOfSession = new Date();

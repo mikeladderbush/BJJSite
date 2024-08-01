@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BJJ.BJJSite.Classes.User;
+import com.BJJ.BJJSite.Factories.FactoryExceptions.UserAlreadyExistsException;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    @Autowired
     private final UserRepository userRepository;
 
     @Autowired
@@ -18,7 +20,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public <T extends User> T createUser(T user) {
+    public <T extends User> T createUser(T user) throws UserAlreadyExistsException {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()) {
+            throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists.");
+        }
         return userRepository.save(user);
     }
 

@@ -26,6 +26,9 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User implements UserUtils, UserDetails {
 
+    public User() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)

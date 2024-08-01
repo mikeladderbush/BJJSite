@@ -15,9 +15,12 @@ import jakarta.persistence.Table;
 @Table(name = "sessions")
 public class Session {
 
+    public Session() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected String id;
+    protected Long id;
     protected String sessionType;
 
     // Eventually set to a date/time that works best with database.
@@ -33,12 +36,12 @@ public class Session {
 
     public static class SessionBuilder<T extends SessionBuilder<T>> {
 
-        private String id;
+        private Long id;
         private String sessionType;
         private String timeOfSession;
         private Date dateOfSession;
 
-        public SessionBuilder(String id, String sessionType, String timeOfSession, Date dateOfSession) {
+        public SessionBuilder(Long id, String sessionType, String timeOfSession, Date dateOfSession) {
             this.id = id;
             this.sessionType = sessionType;
             this.timeOfSession = timeOfSession;
@@ -60,7 +63,7 @@ public class Session {
      * 
      * @return The ID of the Session.
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -69,7 +72,7 @@ public class Session {
      * 
      * @param id
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

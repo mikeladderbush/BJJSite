@@ -1,7 +1,6 @@
 package com.BJJ.BJJSite.Classes;
 
 import com.BJJ.BJJSite.Enums.PayBasis;
-import com.BJJ.BJJSite.Enums.Permissions;
 
 /**
  * Represents an Employee.

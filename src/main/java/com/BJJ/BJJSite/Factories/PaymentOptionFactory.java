@@ -11,12 +11,12 @@ public class PaymentOptionFactory {
 
     // Method to create a PaymentOption with default values
     public static PaymentOption createPaymentOption() {
-        String id = paymentOptionService.generateId();
+        Long id = paymentOptionService.generateId();
         return new PaymentOption.PaymentOptionBuilder(id).buildPaymentOption();
     }
 
     public static PaymentOption createPaymentOption(Consumer<PaymentOption.PaymentOptionBuilder> consumer) {
-        String id = paymentOptionService.generateId();
+        Long id = paymentOptionService.generateId();
         PaymentOption.PaymentOptionBuilder builder = new PaymentOption.PaymentOptionBuilder(id);
         consumer.accept(builder);
         return builder.buildPaymentOption();

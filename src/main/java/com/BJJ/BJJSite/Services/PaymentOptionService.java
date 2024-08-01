@@ -20,7 +20,7 @@ public class PaymentOptionService implements ServiceInterface {
         paymentOptions.add(paymentOption);
     }
 
-    public String generateId() {
+    public Long generateId() {
         return ServiceInterface.super.generateId();
     }
 

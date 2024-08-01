@@ -4,7 +4,7 @@ import com.BJJ.BJJSite.Interfaces.ServiceInterface;
 
 public class EmployeeService implements ServiceInterface {
     
-    public String generateId() {
+    public Long generateId() {
         return ServiceInterface.super.generateId();
     }
 

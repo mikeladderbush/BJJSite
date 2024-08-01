@@ -10,9 +10,12 @@ import jakarta.persistence.Table;
 @Table(name = "paymentOptions")
 public class PaymentOption {
 
+    public PaymentOption() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private String name;
     private String cardNumber;
     private String expirationDate;
@@ -23,7 +26,7 @@ public class PaymentOption {
 
     public static class PaymentOptionBuilder {
 
-        private String id;
+        private Long id;
         private String name = "NO_PAYMENT_NAME_ON_FILE";
         private String cardNumber = "NO_CARD_NUMBER_ON_FILE";
         private String expirationDate = "NO_EXPIRATION_DATE_ON_FILE";
@@ -32,7 +35,7 @@ public class PaymentOption {
         private String billingAddress = "NO_BILLING_ADDRESS_ON_FILE";
         private String billingZipCode = "NO_BILLING_ZIP_CODE_ON_FILE";
 
-        public PaymentOptionBuilder(String id) {
+        public PaymentOptionBuilder(Long id) {
             this.id = id;
         }
 
@@ -93,7 +96,7 @@ public class PaymentOption {
      * 
      * @return The ID of the contact.
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -102,7 +105,7 @@ public class PaymentOption {
      * 
      * @param id
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

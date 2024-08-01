@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public User createUser() {
+    public Optional<User> createUser() {
         return userFactory.createUser();
     }
 
