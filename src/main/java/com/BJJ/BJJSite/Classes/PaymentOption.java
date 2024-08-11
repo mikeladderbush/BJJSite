@@ -1,32 +1,68 @@
 package com.BJJ.BJJSite.Classes;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "paymentOptions")
+@Table(name = "payment_options")
 public class PaymentOption {
 
     public PaymentOption() {
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false)
+    private Long paymentOptionId;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String cardNumber;
+
+    @Column(nullable = false)
     private String expirationDate;
+
+    @Column(nullable = false)
     private String confirmationCode;
+
+    @Column(nullable = false)
     private String cardType;
+
+    @Column(nullable = false)
     private String billingAddress;
+
+    @Column(nullable = false)
     private String billingZipCode;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    protected PaymentOption(PaymentOptionBuilder PaymentOptionBuilder) {
+        name = PaymentOptionBuilder.name;
+        cardNumber = PaymentOptionBuilder.cardNumber;
+        expirationDate = PaymentOptionBuilder.expirationDate;
+        confirmationCode = PaymentOptionBuilder.confirmationCode;
+        cardType = PaymentOptionBuilder.cardType;
+        billingAddress = PaymentOptionBuilder.billingAddress;
+        billingZipCode = PaymentOptionBuilder.billingZipCode;
+    }
 
     public static class PaymentOptionBuilder {
 
-        private Long id;
         private String name = "NO_PAYMENT_NAME_ON_FILE";
         private String cardNumber = "NO_CARD_NUMBER_ON_FILE";
         private String expirationDate = "NO_EXPIRATION_DATE_ON_FILE";
@@ -35,42 +71,46 @@ public class PaymentOption {
         private String billingAddress = "NO_BILLING_ADDRESS_ON_FILE";
         private String billingZipCode = "NO_BILLING_ZIP_CODE_ON_FILE";
 
-        public PaymentOptionBuilder(Long id) {
-            this.id = id;
+        public PaymentOptionBuilder() {
         }
 
         public PaymentOptionBuilder name(String value) {
             this.name = value;
-            return this;
+            return self();
         }
 
         public PaymentOptionBuilder cardNumber(String value) {
             this.cardNumber = value;
-            return this;
+            return self();
+
         }
 
         public PaymentOptionBuilder expirationDate(String value) {
             this.expirationDate = value;
-            return this;
+            return self();
         }
 
         public PaymentOptionBuilder confirmationCode(String value) {
             this.confirmationCode = value;
-            return this;
+            return self();
         }
 
         public PaymentOptionBuilder cardType(String value) {
             this.cardType = value;
-            return this;
+            return self();
         }
 
         public PaymentOptionBuilder billingAddress(String value) {
             this.billingAddress = value;
-            return this;
+            return self();
         }
 
         public PaymentOptionBuilder billingZipCode(String value) {
             this.billingZipCode = value;
+            return self();
+        }
+
+        protected PaymentOptionBuilder self() {
             return this;
         }
 
@@ -80,24 +120,13 @@ public class PaymentOption {
 
     }
 
-    private PaymentOption(PaymentOptionBuilder paymentOptionBuilder) {
-        id = paymentOptionBuilder.id;
-        name = paymentOptionBuilder.name;
-        cardNumber = paymentOptionBuilder.cardNumber;
-        expirationDate = paymentOptionBuilder.expirationDate;
-        confirmationCode = paymentOptionBuilder.confirmationCode;
-        cardType = paymentOptionBuilder.cardType;
-        billingAddress = paymentOptionBuilder.billingAddress;
-        billingZipCode = paymentOptionBuilder.billingZipCode;
-    }
-
     /**
      * Retrieves the ID of the contact.
      * 
      * @return The ID of the contact.
      */
-    public Long getId() {
-        return id;
+    public Long getPaymentOptionId() {
+        return paymentOptionId;
     }
 
     /**
@@ -105,8 +134,8 @@ public class PaymentOption {
      * 
      * @param id
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long paymentOptionId) {
+        this.paymentOptionId = paymentOptionId;
     }
 
     public void setName(String name) {

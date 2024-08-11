@@ -71,8 +71,8 @@ public class Employee extends User {
         }
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
     public String getSocialSecurityNumber() {

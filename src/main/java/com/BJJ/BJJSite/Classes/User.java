@@ -1,22 +1,20 @@
 package com.BJJ.BJJSite.Classes;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.BJJ.BJJSite.Interfaces.UserUtils;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -24,7 +22,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User implements UserUtils, UserDetails {
+public class User implements UserUtils {
 
     public User() {
     }
@@ -32,7 +30,7 @@ public class User implements UserUtils, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    protected Long id;
+    protected Long userId;
 
     @Column(nullable = false)
     protected String fullName;
@@ -63,7 +61,7 @@ public class User implements UserUtils, UserDetails {
     private String sex;
     private String dob;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentOption> paymentOptions;
 
     protected User(UserBuilder<?> UserBuilder) {
@@ -100,7 +98,7 @@ public class User implements UserUtils, UserDetails {
         private boolean isAccountNonLocked;
         private boolean isCredentialsNonExpired;
         private boolean isEnabled;
-        private List<PaymentOption> paymentOptions = null;
+        public List<PaymentOption> paymentOptions = new ArrayList<>();
 
         public UserBuilder() {
         }
@@ -175,9 +173,15 @@ public class User implements UserUtils, UserDetails {
             return self();
         }
 
-        public T paymentOptions(List<PaymentOption> value) {
-            this.paymentOptions = value;
+        public T paymentOptions(List<PaymentOption> paymentOptions) {
+            this.paymentOptions = paymentOptions;
             return self();
+        }
+
+        @SuppressWarnings("unchecked")
+        public T addPaymentOption(PaymentOption paymentOption) {
+            paymentOptions.add(paymentOption);
+            return (T) this;
         }
 
         @SuppressWarnings("unchecked")
@@ -195,8 +199,8 @@ public class User implements UserUtils, UserDetails {
      * 
      * @return The ID of the User.
      */
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
     /**
@@ -204,8 +208,8 @@ public class User implements UserUtils, UserDetails {
      * 
      * @param id
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFullName() {
@@ -357,9 +361,15 @@ public class User implements UserUtils, UserDetails {
         this.paymentOptions = paymentOptions;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+    public void addPaymentOption(PaymentOption paymentOption) {
+        paymentOptions.add(paymentOption);
     }
+
+    /*
+     * @Override
+     * public Collection<? extends GrantedAuthority> getAuthorities() {
+     * return List.of();
+     * }
+     */
 
 }
