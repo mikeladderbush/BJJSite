@@ -49,6 +49,7 @@ public class DataInitializationService {
                     .paymentOptions(new ArrayList<>());
         });
 
+        /*
         if (demoUser.isPresent()) {
             // Create a new PaymentOption using the factory
             PaymentOption demoPaymentOption = paymentOptionFactory.createPaymentOption(builder -> {
@@ -73,5 +74,6 @@ public class DataInitializationService {
         } else {
             System.out.println("User not found.");
         }
+        */
     }
 }

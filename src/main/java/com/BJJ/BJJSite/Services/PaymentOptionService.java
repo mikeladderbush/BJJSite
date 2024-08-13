@@ -2,6 +2,7 @@ package com.BJJ.BJJSite.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.BJJ.BJJSite.Classes.PaymentOption;
 import com.BJJ.BJJSite.Factories.FactoryExceptions.PaymentOptionAlreadyExistsException;
@@ -19,20 +20,18 @@ public class PaymentOptionService {
         this.paymentOptionRepository = paymentOptionRepository;
     }
 
+    @Transactional
     public PaymentOption createPaymentOption(PaymentOption paymentOption) throws PaymentOptionAlreadyExistsException {
         Optional<PaymentOption> existingPaymentOption = paymentOptionRepository.findByName(paymentOption.getName());
         if (existingPaymentOption.isPresent()) {
-            throw new PaymentOptionAlreadyExistsException(
-                    "PaymentOption with number " + paymentOption.getCardNumber() + " already exists.");
+            System.out.println("PaymentOption with number " + paymentOption.getCardNumber() + " already exists.");
+            updatePaymentOption(existingPaymentOption.get().getCardNumber(), paymentOption);
         }
         return paymentOptionRepository.save(paymentOption);
     }
 
-    public Optional<PaymentOption> updatePaymentOption(Long id, PaymentOption update) {
-        Optional<PaymentOption> paymentOptionOptional = paymentOptionRepository.findById(id);
-        if (paymentOptionOptional.isPresent()) {
-            PaymentOption paymentOption = paymentOptionOptional.get();
-
+    public Optional<PaymentOption> updatePaymentOption(String cardNumber, PaymentOption update) {
+        return paymentOptionRepository.findByCardNumber(cardNumber).map(paymentOption -> {
             if (update.getCardNumber() != null) {
                 paymentOption.setCardNumber(update.getCardNumber());
             }
@@ -54,11 +53,8 @@ public class PaymentOptionService {
             if (update.getBillingZipCode() != null) {
                 paymentOption.setBillingZipCode(update.getBillingZipCode());
             }
-
-            paymentOptionRepository.save(paymentOption);
-            return Optional.of(paymentOption);
-        }
-        return Optional.empty();
+            return paymentOptionRepository.save(paymentOption);
+        });
     }
 
     public Optional<PaymentOption> getPaymentOption(Long id) {

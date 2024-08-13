@@ -11,4 +11,5 @@ import com.BJJ.BJJSite.Classes.PaymentOption;
 public interface PaymentOptionRepository extends JpaRepository<PaymentOption, Long> {
     Optional<PaymentOption> findByName(String name);
     Optional<PaymentOption> findById(Long id);
+    Optional<PaymentOption> findByCardNumber(String cardNumber);
 }
