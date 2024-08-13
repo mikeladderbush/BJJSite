@@ -1,50 +1,71 @@
 package com.BJJ.BJJSite.Services;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.BJJ.BJJSite.Classes.PaymentOption;
-import com.BJJ.BJJSite.Interfaces.ServiceInterface;
+import com.BJJ.BJJSite.Factories.FactoryExceptions.PaymentOptionAlreadyExistsException;
+import com.BJJ.BJJSite.Repositories.PaymentOptionRepository;
 
+import java.util.Optional;
 
-public class PaymentOptionService implements ServiceInterface {
+@Service
+public class PaymentOptionService {
 
-    private List<PaymentOption> paymentOptions;
+    private final PaymentOptionRepository paymentOptionRepository;
 
-    public PaymentOptionService() {
-        this.paymentOptions = new ArrayList<>();
+    @Autowired
+    public PaymentOptionService(PaymentOptionRepository paymentOptionRepository) {
+        this.paymentOptionRepository = paymentOptionRepository;
     }
 
-    public void addPaymentOption(PaymentOption paymentOption) {
-        paymentOptions.add(paymentOption);
-    }
-
-    public Long generateId() {
-        return ServiceInterface.super.generateId();
-    }
-
-    public void deletePaymentOption(String cardNumber) {
-        Iterator<PaymentOption> iterator = paymentOptions.iterator();
-        while (iterator.hasNext()) {
-            PaymentOption paymentOption = iterator.next();
-            if (paymentOption.getCardNumber().equals(cardNumber)) {
-                iterator.remove();
-            }
+    @Transactional
+    public PaymentOption createPaymentOption(PaymentOption paymentOption) throws PaymentOptionAlreadyExistsException {
+        Optional<PaymentOption> existingPaymentOption = paymentOptionRepository.findByName(paymentOption.getName());
+        if (existingPaymentOption.isPresent()) {
+            System.out.println("PaymentOption with number " + paymentOption.getCardNumber() + " already exists.");
+            updatePaymentOption(existingPaymentOption.get().getCardNumber(), paymentOption);
         }
+        return paymentOptionRepository.save(paymentOption);
     }
 
-    public List<PaymentOption> getAllPaymentOptions() {
-        return paymentOptions;
-    }
-
-    public PaymentOption findPaymentOptionByCardNumber(String cardNumber) {
-        for (PaymentOption paymentOption : paymentOptions) {
-            if (paymentOption.getCardNumber().equals(cardNumber)) {
-                return paymentOption;
+    public Optional<PaymentOption> updatePaymentOption(String cardNumber, PaymentOption update) {
+        return paymentOptionRepository.findByCardNumber(cardNumber).map(paymentOption -> {
+            if (update.getCardNumber() != null) {
+                paymentOption.setCardNumber(update.getCardNumber());
             }
-        }
-        return null;
+            if (update.getName() != null) {
+                paymentOption.setName(update.getName());
+            }
+            if (update.getExpirationDate() != null) {
+                paymentOption.setExpirationDate(update.getExpirationDate());
+            }
+            if (update.getConfirmationCode() != null) {
+                paymentOption.setConfirmationCode(update.getConfirmationCode());
+            }
+            if (update.getCardType() != null) {
+                paymentOption.setCardType(update.getCardType());
+            }
+            if (update.getBillingAddress() != null) {
+                paymentOption.setBillingAddress(update.getBillingAddress());
+            }
+            if (update.getBillingZipCode() != null) {
+                paymentOption.setBillingZipCode(update.getBillingZipCode());
+            }
+            return paymentOptionRepository.save(paymentOption);
+        });
     }
 
+    public Optional<PaymentOption> getPaymentOption(Long id) {
+        return paymentOptionRepository.findById(id);
+    }
+
+    public Optional<PaymentOption> findByName(String paymentOptionname) {
+        return paymentOptionRepository.findByName(paymentOptionname);
+    }
+
+    public void deletePaymentOption(Long id) {
+        paymentOptionRepository.deleteById(id);
+    }
 }

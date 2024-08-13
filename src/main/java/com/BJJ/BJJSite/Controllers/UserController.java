@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Factories.UserFactory;
+import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Services.UserService;
 
 @RestController
@@ -22,10 +23,12 @@ import com.BJJ.BJJSite.Services.UserService;
 public class UserController {
 
     private final UserFactory userFactory;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserFactory userFactory) {
+    public UserController(UserFactory userFactory, UserRepository userRepository) {
         this.userFactory = userFactory;
+        this.userRepository = userRepository;
     }
 
     @Autowired
@@ -44,7 +47,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User update) {
-        Optional<User> userOptional = userService.updateUser(id, update);
+        Optional<User> userOptional = userRepository.findById(id);
+        userService.updateUser(userOptional.get().getEmail(), update);
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
