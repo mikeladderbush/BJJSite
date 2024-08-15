@@ -1,13 +1,16 @@
 package com.BJJ.BJJSite;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.BJJ.BJJSite.Classes.PaymentOption;
+import com.BJJ.BJJSite.Classes.Role;
 import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Factories.PaymentOptionFactory;
 import com.BJJ.BJJSite.Factories.UserFactory;
@@ -29,6 +32,9 @@ public class DataInitializationService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -40,16 +46,16 @@ public class DataInitializationService {
         Optional<User> demoUser = userFactory.createUser(builder -> {
             builder.fullName("Mike Ladderbush")
                     .username("mikeladder")
-                    .password("mike")
+                    .password(passwordEncoder.encode("mike")) // Encode the password
                     .email("mikeladderbush@gmail.com")
                     .phone("9787708430")
                     .address("boston")
                     .sex("male")
                     .dob("2241997")
-                    .paymentOptions(new ArrayList<>());
+                    .paymentOptions(new ArrayList<>())
+                    .authorities(List.of(new Role("ROLE_USER"), new Role("ROLE_ADMIN"))); // Create roles and assign
         });
 
-        /*
         if (demoUser.isPresent()) {
             // Create a new PaymentOption using the factory
             PaymentOption demoPaymentOption = paymentOptionFactory.createPaymentOption(builder -> {
@@ -72,8 +78,8 @@ public class DataInitializationService {
             userService.createUser(demoUser.get());
             System.out.println("User saved successfully with payment option.");
         } else {
-            System.out.println("User not found.");
+            System.out.println("User creation failed.");
         }
-        */
+
     }
 }

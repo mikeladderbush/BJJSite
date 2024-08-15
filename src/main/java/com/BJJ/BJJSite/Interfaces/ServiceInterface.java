@@ -31,7 +31,6 @@ public interface ServiceInterface {
         System.out.println("Account non-locked: " + user.getAccountNonLocked());
         System.out.println("Credentials non-expired: " + user.getCredentialsNonExpired());
         System.out.println("Enabled: " + user.getEnabled());
-        System.out.println("Authorities: " + user.getAuthorities());
     }
 
 }

@@ -3,23 +3,19 @@ package com.BJJ.BJJSite.Classes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.BJJ.BJJSite.Interfaces.UserUtils;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -28,10 +24,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User implements UserUtils, UserDetails {
-
-    public User() {
-    }
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,8 +51,6 @@ public class User implements UserUtils, UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    //private Set<GrantedAuthority> authorities;
-
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -70,8 +61,15 @@ public class User implements UserUtils, UserDetails {
     private String sex;
     private String dob;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Collection<Role> authorities;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentOption> paymentOptions;
+
+    public User() {
+    }
 
     protected User(UserBuilder<?> UserBuilder) {
         fullName = UserBuilder.fullName;
@@ -89,7 +87,7 @@ public class User implements UserUtils, UserDetails {
         credentialsNonExpired = UserBuilder.credentialsNonExpired;
         enabled = UserBuilder.enabled;
         paymentOptions = UserBuilder.paymentOptions;
-        //authorities = UserBuilder.authorities;
+        authorities = UserBuilder.authorities;
     }
 
     public static class UserBuilder<T extends UserBuilder<T>> {
@@ -109,7 +107,7 @@ public class User implements UserUtils, UserDetails {
         private boolean credentialsNonExpired;
         private boolean enabled;
         public List<PaymentOption> paymentOptions = new ArrayList<>();
-        //public Set<GrantedAuthority> authorities = new HashSet<>();
+        private Collection<Role> authorities = new ArrayList<>();
 
         public UserBuilder() {
         }
@@ -195,18 +193,16 @@ public class User implements UserUtils, UserDetails {
             return (T) this;
         }
 
-        /*
-        public T authorities(Set<GrantedAuthority> authorities) {
+        public T authorities(Collection<Role> authorities) {
             this.authorities = authorities;
             return self();
         }
 
         @SuppressWarnings("unchecked")
-        public T addAuthorities(GrantedAuthority authority) {
+        public T addAuthority(Role authority) {
             authorities.add(authority);
             return (T) this;
         }
-        */
 
         @SuppressWarnings("unchecked")
         protected T self() {
@@ -277,11 +273,7 @@ public class User implements UserUtils, UserDetails {
      *                                  characters.
      */
     public void setUsername(String username) {
-        if (username != null && username.length() <= 10) {
-            this.username = username;
-        } else {
-            throw new IllegalArgumentException("Username must be fewer than 10 characters");
-        }
+        this.username = username;
     }
 
     /**
@@ -301,11 +293,7 @@ public class User implements UserUtils, UserDetails {
      *                                  characters.
      */
     public void setPassword(String password) {
-        if (password != null && password.length() <= 10) {
-            this.password = password;
-        } else {
-            throw new IllegalArgumentException("Password must be fewer than 10 characters");
-        }
+        this.password = password;
     }
 
     public String getEmail() {
@@ -389,9 +377,12 @@ public class User implements UserUtils, UserDetails {
         paymentOptions.add(paymentOption);
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+    public Collection<Role> getAuthorities() {
+        return authorities;
+    }
+
+    public void addGrantedAuthority(Role authority) {
+        authorities.add(authority);
     }
 
 }
