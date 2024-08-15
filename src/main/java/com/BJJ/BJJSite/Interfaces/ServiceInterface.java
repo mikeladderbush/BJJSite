@@ -27,10 +27,11 @@ public interface ServiceInterface {
         System.out.println("Address: " + user.getAddress());
         System.out.println("Sex: " + user.getSex());
         System.out.println("DOB: " + user.getDob());
-        System.out.println("Account non-expired: " + user.getIsAccountNonExpired());
-        System.out.println("Account non-locked: " + user.getIsAccountNonLocked());
-        System.out.println("Credentials non-expired: " + user.getIsCredentialsNonExpired());
-        System.out.println("Enabled: " + user.getIsEnabled());
+        System.out.println("Account non-expired: " + user.getAccountNonExpired());
+        System.out.println("Account non-locked: " + user.getAccountNonLocked());
+        System.out.println("Credentials non-expired: " + user.getCredentialsNonExpired());
+        System.out.println("Enabled: " + user.getEnabled());
+        System.out.println("Authorities: " + user.getAuthorities());
     }
 
 }

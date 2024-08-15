@@ -1,11 +1,17 @@
 package com.BJJ.BJJSite.Classes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.BJJ.BJJSite.Interfaces.UserUtils;
 
 import jakarta.persistence.CascadeType;
@@ -22,7 +28,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User implements UserUtils {
+public class User implements UserUtils, UserDetails {
 
     public User() {
     }
@@ -35,6 +41,7 @@ public class User implements UserUtils {
     @Column(nullable = false)
     protected String fullName;
 
+    @Column(nullable = false)
     protected String username;
 
     @Column(nullable = false)
@@ -51,10 +58,12 @@ public class User implements UserUtils {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    //private Set<GrantedAuthority> authorities;
+
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     private String phone;
     private String address;
@@ -75,11 +84,12 @@ public class User implements UserUtils {
         dob = UserBuilder.dob;
         createdAt = UserBuilder.createdAt;
         updatedAt = UserBuilder.updatedAt;
-        isAccountNonExpired = UserBuilder.isAccountNonExpired;
-        isAccountNonLocked = UserBuilder.isAccountNonLocked;
-        isCredentialsNonExpired = UserBuilder.isCredentialsNonExpired;
-        isEnabled = UserBuilder.isEnabled;
+        accountNonExpired = UserBuilder.accountNonExpired;
+        accountNonLocked = UserBuilder.accountNonLocked;
+        credentialsNonExpired = UserBuilder.credentialsNonExpired;
+        enabled = UserBuilder.enabled;
         paymentOptions = UserBuilder.paymentOptions;
+        //authorities = UserBuilder.authorities;
     }
 
     public static class UserBuilder<T extends UserBuilder<T>> {
@@ -94,11 +104,12 @@ public class User implements UserUtils {
         private String dob = "DEFAULT";
         private Date createdAt;
         private Date updatedAt;
-        private boolean isAccountNonExpired;
-        private boolean isAccountNonLocked;
-        private boolean isCredentialsNonExpired;
-        private boolean isEnabled;
+        private boolean accountNonExpired;
+        private boolean accountNonLocked;
+        private boolean credentialsNonExpired;
+        private boolean enabled;
         public List<PaymentOption> paymentOptions = new ArrayList<>();
+        //public Set<GrantedAuthority> authorities = new HashSet<>();
 
         public UserBuilder() {
         }
@@ -153,23 +164,23 @@ public class User implements UserUtils {
             return self();
         }
 
-        public T isAccountNonExpired(boolean value) {
-            this.isAccountNonExpired = value;
+        public T accountNonExpired(boolean value) {
+            this.accountNonExpired = value;
             return self();
         }
 
-        public T isAccountNonLocked(boolean value) {
-            this.isAccountNonLocked = value;
+        public T accountNonLocked(boolean value) {
+            this.accountNonLocked = value;
             return self();
         }
 
-        public T isCredentialsNonExpired(boolean value) {
-            this.isCredentialsNonExpired = value;
+        public T credentialsNonExpired(boolean value) {
+            this.credentialsNonExpired = value;
             return self();
         }
 
-        public T isEnabled(boolean value) {
-            this.isEnabled = value;
+        public T enabled(boolean value) {
+            this.enabled = value;
             return self();
         }
 
@@ -183,6 +194,19 @@ public class User implements UserUtils {
             paymentOptions.add(paymentOption);
             return (T) this;
         }
+
+        /*
+        public T authorities(Set<GrantedAuthority> authorities) {
+            this.authorities = authorities;
+            return self();
+        }
+
+        @SuppressWarnings("unchecked")
+        public T addAuthorities(GrantedAuthority authority) {
+            authorities.add(authority);
+            return (T) this;
+        }
+        */
 
         @SuppressWarnings("unchecked")
         protected T self() {
@@ -321,36 +345,36 @@ public class User implements UserUtils {
         this.dob = dob;
     }
 
-    public boolean getIsAccountNonExpired() {
-        return isAccountNonExpired;
+    public boolean getAccountNonExpired() {
+        return accountNonExpired;
     }
 
-    public void setIsAccountNonExpired(boolean isAccountNonExpired) {
-        this.isAccountNonExpired = isAccountNonExpired;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
 
-    public boolean getIsAccountNonLocked() {
-        return isAccountNonLocked;
+    public boolean getAccountNonLocked() {
+        return accountNonLocked;
     }
 
-    public void setIsAccountNonLocked(boolean isAccountNonLocked) {
-        this.isAccountNonLocked = isAccountNonLocked;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
 
-    public boolean getIsCredentialsNonExpired() {
-        return isCredentialsNonExpired;
+    public boolean getCredentialsNonExpired() {
+        return credentialsNonExpired;
     }
 
-    public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public boolean getIsEnabled() {
-        return isEnabled;
+    public boolean getEnabled() {
+        return enabled;
     }
 
-    public void setIsEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<PaymentOption> getPaymentOptions() {
@@ -365,11 +389,9 @@ public class User implements UserUtils {
         paymentOptions.add(paymentOption);
     }
 
-    /*
-     * @Override
-     * public Collection<? extends GrantedAuthority> getAuthorities() {
-     * return List.of();
-     * }
-     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 
 }
