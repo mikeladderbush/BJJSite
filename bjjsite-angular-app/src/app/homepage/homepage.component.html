@@ -9,6 +9,16 @@
 </head>
 
 <body>
+    <div *ngIf="user">
+        <h1>User Details</h1>
+        <p>ID: {{ user.userId }}</p>
+        <p>Name: {{ user.fullName }</p>
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+    </div>
+    <div *ngIf="!user">
+        <p>Loading user data...</p>
+    </div>
     <header>
         <h1>Homepage</h1>
     </header>

@@ -2,6 +2,7 @@ package com.BJJ.BJJSite.Classes;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +22,14 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+
+    @Column(nullable = false)
     protected String sessionType;
 
-    // Eventually set to a date/time that works best with database.
+    @Column(nullable = false)
     private String timeOfSession;
+
+    @Column(nullable = false)
     private Date dateOfSession;
 
     protected Session(SessionBuilder<?> SessionBuilder) {

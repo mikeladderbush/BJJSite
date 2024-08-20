@@ -1,37 +1,55 @@
 {
-  "hash": "81ea4e85",
-  "configHash": "35adff95",
+  "hash": "61584e39",
+  "configHash": "fbb51b21",
   "lockfileHash": "ead1424e",
-  "browserHash": "689be339",
+  "browserHash": "9c062ccb",
   "optimized": {
+    "@angular/common": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "aa088008",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "9b530dca",
+      "needsInterop": false
+    },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "f0885952",
+      "fileHash": "9f3b1b98",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "0fbabfdf",
+      "fileHash": "a28833c5",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "21985fc3",
+      "fileHash": "fcd2f154",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "85ca5e02",
+      "fileHash": "16a2312c",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-5747EXSC": {
-      "file": "chunk-5747EXSC.js"
+    "chunk-R2KZZBU4": {
+      "file": "chunk-R2KZZBU4.js"
+    },
+    "chunk-6L4AHEWX": {
+      "file": "chunk-6L4AHEWX.js"
+    },
+    "chunk-SZYUVCFQ": {
+      "file": "chunk-SZYUVCFQ.js"
     },
     "chunk-MTFEWRJD": {
       "file": "chunk-MTFEWRJD.js"
