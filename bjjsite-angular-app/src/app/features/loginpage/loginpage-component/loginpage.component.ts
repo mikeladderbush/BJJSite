@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loginpage',
-  standalone: true,
-  imports: [],
   templateUrl: './loginpage.component.html',
-  styleUrl: './loginpage.component.css'
+  styleUrls: ['./loginpage.component.css']
 })
-export class LoginpageComponent {
 
+export class LoginpageComponent {
+  username: string = '';
+  password: string = '';
+
+  constructor() {}
+
+  onLogin(): void {
+    console.log(`Logging in with ${this.username}`);
+  }
 }
