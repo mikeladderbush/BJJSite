@@ -11,11 +11,16 @@ import jakarta.persistence.Table;
 
 /**
  * Represents a Training Session.
+ * 
+ * The Session class is an entity that represents a training session, including details such as the session type, time, and date.
  */
 @Entity
 @Table(name = "sessions")
 public class Session {
 
+    /**
+     * Default constructor.
+     */
     public Session() {
     }
 
@@ -32,6 +37,11 @@ public class Session {
     @Column(nullable = false)
     private Date dateOfSession;
 
+    /**
+     * Protected constructor to be called by the SessionBuilder.
+     * 
+     * @param SessionBuilder The builder used to construct the Session instance.
+     */
     protected Session(SessionBuilder<?> SessionBuilder) {
         id = SessionBuilder.id;
         sessionType = SessionBuilder.sessionType;
@@ -39,6 +49,11 @@ public class Session {
         dateOfSession = SessionBuilder.dateOfSession;
     }
 
+    /**
+     * Builder class for creating a Session instance.
+     * 
+     * This builder pattern allows for flexible and customizable creation of Session objects.
+     */
     public static class SessionBuilder<T extends SessionBuilder<T>> {
 
         private Long id;
@@ -46,6 +61,14 @@ public class Session {
         private String timeOfSession;
         private Date dateOfSession;
 
+        /**
+         * Constructor for SessionBuilder.
+         * 
+         * @param id The ID of the session.
+         * @param sessionType The type of session (e.g., "Training", "Seminar").
+         * @param timeOfSession The time of the session.
+         * @param dateOfSession The date of the session.
+         */
         public SessionBuilder(Long id, String sessionType, String timeOfSession, Date dateOfSession) {
             this.id = id;
             this.sessionType = sessionType;
@@ -53,11 +76,21 @@ public class Session {
             this.dateOfSession = dateOfSession;
         }
 
+        /**
+         * Ensures that the builder returns the correct type for method chaining.
+         * 
+         * @return The current instance of SessionBuilder.
+         */
         @SuppressWarnings("unchecked")
         protected T self() {
             return (T) this;
         }
 
+        /**
+         * Builds and returns a Session instance.
+         * 
+         * @return A new Session object.
+         */
         public Session buildSession() {
             return new Session(this);
         }
@@ -73,34 +106,66 @@ public class Session {
     }
 
     /**
-     * For testing purpose only.
+     * Sets the ID of the Session.
      * 
-     * @param id
+     * This method is primarily intended for testing purposes.
+     * 
+     * @param id The ID to set.
      */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Retrieves the type of the Session.
+     * 
+     * @return The session type.
+     */
     public String getSessionType() {
         return sessionType;
     }
 
+    /**
+     * Sets the type of the Session.
+     * 
+     * @param sessionType The type of session to set.
+     */
     public void setSessionType(String sessionType) {
         this.sessionType = sessionType;
     }
 
+    /**
+     * Retrieves the time of the Session.
+     * 
+     * @return The time of the session.
+     */
     public String getTimeOfSession() {
         return timeOfSession;
     }
 
+    /**
+     * Sets the time of the Session.
+     * 
+     * @param timeOfSession The time of session to set.
+     */
     public void setTimeOfSession(String timeOfSession) {
         this.timeOfSession = timeOfSession;
     }
 
+    /**
+     * Retrieves the date of the Session.
+     * 
+     * @return The date of the session.
+     */
     public Date getDateOfSession() {
         return dateOfSession;
     }
 
+    /**
+     * Sets the date of the Session.
+     * 
+     * @param dateOfSession The date of session to set.
+     */
     public void setDateOfSession(Date dateOfSession) {
         this.dateOfSession = dateOfSession;
     }

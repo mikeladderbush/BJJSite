@@ -21,6 +21,10 @@ import jakarta.persistence.Table;
 
 /**
  * Represents a User.
+ * 
+ * The User class implements the Spring Security `UserDetails` interface and is an entity
+ * that includes various attributes such as username, password, email, and more. It also
+ * tracks roles (authorities) and payment options associated with the user.
  */
 @Entity
 @Table(name = "users")
@@ -68,9 +72,17 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentOption> paymentOptions;
 
+    /**
+     * Default constructor.
+     */
     public User() {
     }
 
+    /**
+     * Protected constructor to be called by the UserBuilder.
+     * 
+     * @param UserBuilder The builder used to construct the User instance.
+     */
     protected User(UserBuilder<?> UserBuilder) {
         fullName = UserBuilder.fullName;
         phone = UserBuilder.phone;
@@ -90,6 +102,11 @@ public class User implements UserDetails {
         authorities = UserBuilder.authorities;
     }
 
+    /**
+     * Builder class for creating a User instance.
+     * 
+     * This builder pattern allows for flexible and customizable creation of User objects.
+     */
     public static class UserBuilder<T extends UserBuilder<T>> {
 
         private String fullName = "DEFAULT_NAME";
@@ -109,6 +126,9 @@ public class User implements UserDetails {
         public List<PaymentOption> paymentOptions = new ArrayList<>();
         private Collection<Role> authorities = new ArrayList<>();
 
+        /**
+         * Default constructor for UserBuilder.
+         */
         public UserBuilder() {
         }
 
@@ -224,9 +244,11 @@ public class User implements UserDetails {
     }
 
     /**
-     * For testing purpose only.
+     * Sets the ID of the User.
      * 
-     * @param id
+     * This method is primarily intended for testing purposes.
+     * 
+     * @param id The ID to set.
      */
     public void setId(Long userId) {
         this.userId = userId;
@@ -269,8 +291,6 @@ public class User implements UserDetails {
      * Sets the username of the User.
      * 
      * @param username The username of the User.
-     * @throws IllegalArgumentException if the username is null or exceeds 10
-     *                                  characters.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -289,8 +309,6 @@ public class User implements UserDetails {
      * Sets the password of the User.
      * 
      * @param Password The password of the User.
-     * @throws IllegalArgumentException if the password is null or exceeds 10
-     *                                  characters.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -303,7 +321,6 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         if (email != null) {
             this.email = email;
-            // ADD EMAIL ERROR CHECKING
         } else {
             throw new IllegalArgumentException("Email error");
         }
