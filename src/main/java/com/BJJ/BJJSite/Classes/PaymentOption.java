@@ -32,8 +32,7 @@ public class PaymentOption {
      * This establishes a many-to-one relationship between PaymentOption and User.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "user_id", nullable = false) User user;
 
     /**
      * The unique identifier for this PaymentOption.
