@@ -12,13 +12,22 @@ import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Factories.FactoryExceptions.UserAlreadyExistsException;
 import com.BJJ.BJJSite.Services.UserService;
 
+/**
+ * Factory class for creating instances of User, Employee, and Administrator.
+ * 
+ * This factory provides methods to create User, Employee, and Administrator objects with default values or with custom configurations.
+ */
 @Component
 public class UserFactory {
 
     @Autowired
     private UserService userService;
 
-    // Method to create a User with default values
+    /**
+     * Creates a User with default values.
+     * 
+     * @return An Optional containing the created User, or an empty Optional if the User already exists.
+     */
     public Optional<User> createUser() {
         User user = new User.UserBuilder<>().buildUser();
         try {
@@ -28,6 +37,12 @@ public class UserFactory {
         }
     }
 
+    /**
+     * Creates a User with custom values using a Consumer to configure the UserBuilder.
+     * 
+     * @param consumer A Consumer that applies custom configurations to the UserBuilder.
+     * @return An Optional containing the created User, or an empty Optional if the User already exists.
+     */
     public Optional<User> createUser(Consumer<User.UserBuilder<?>> consumer) {
         User.UserBuilder<?> builder = new User.UserBuilder<>();
         consumer.accept(builder);
@@ -39,6 +54,11 @@ public class UserFactory {
         }
     }
 
+    /**
+     * Creates an Employee with default values.
+     * 
+     * @return An Optional containing the created Employee, or an empty Optional if the Employee already exists.
+     */
     public Optional<Employee> createEmployee() {
         Employee employee = new Employee.EmployeeBuilder<>().buildUser();
         try {
@@ -48,6 +68,12 @@ public class UserFactory {
         }
     }
 
+    /**
+     * Creates an Employee with custom values using a Consumer to configure the EmployeeBuilder.
+     * 
+     * @param consumer A Consumer that applies custom configurations to the EmployeeBuilder.
+     * @return An Optional containing the created Employee, or an empty Optional if the Employee already exists.
+     */
     public Optional<Employee> createEmployee(Consumer<Employee.EmployeeBuilder<?>> consumer) {
         Employee.EmployeeBuilder<?> builder = new Employee.EmployeeBuilder<>();
         consumer.accept(builder);
@@ -59,6 +85,11 @@ public class UserFactory {
         }
     }
 
+    /**
+     * Creates an Administrator with default values.
+     * 
+     * @return An Optional containing the created Administrator, or an empty Optional if the Administrator already exists.
+     */
     public Optional<Administrator> createAdministrator() {
         Administrator administrator = new Administrator.AdministratorBuilder().buildUser();
         try {
@@ -68,6 +99,12 @@ public class UserFactory {
         }
     }
 
+    /**
+     * Creates an Administrator with custom values using a Consumer to configure the AdministratorBuilder.
+     * 
+     * @param consumer A Consumer that applies custom configurations to the AdministratorBuilder.
+     * @return An Optional containing the created Administrator, or an empty Optional if the Administrator already exists.
+     */
     public Optional<Administrator> createAdministrator(Consumer<Administrator.AdministratorBuilder> consumer) {
         Administrator.AdministratorBuilder builder = new Administrator.AdministratorBuilder();
         consumer.accept(builder);
