@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 /**
  * HomepageComponent
@@ -14,9 +15,9 @@ import { CommonModule } from '@angular/common';
  *   the component's state based on the HTTP response.
  */
 @Component({
-  selector: 'app-homepage', // Custom HTML tag for the homepage component
+  selector: 'home', // Custom HTML tag for the homepage component
   standalone: true, // Indicates that this component is standalone
-  imports: [HttpClientModule, CommonModule], // Imports necessary modules for HTTP and common Angular functionality
+  imports: [HttpClientModule, CommonModule, RouterModule], // Imports necessary modules for HTTP and common Angular functionality
   templateUrl: './homepage.component.html', // Path to the HTML template
   styleUrls: ['./homepage.component.css'] // Path to the CSS file
 })

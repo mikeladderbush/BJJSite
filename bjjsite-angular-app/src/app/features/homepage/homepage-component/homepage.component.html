@@ -1,52 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<div *ngIf="user; else loading">
+    <h1>User Details</h1>
+    <p>ID: {{ user.userId }}</p>
+    <p>Name: {{ user.fullName }}</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Homepage</title>
-    <link rel="stylesheet" href="homepage.component.css">
-</head>
+<ng-template #loading>
+    <p>Loading user data...</p>
+</ng-template>
 
-<body>
-    <!---
-    <div *ngIf="user">
-        <h1>User Details</h1>
-        <p>ID: {{ user.userId }}</p>
-        <p>Name: {{ user.fullName }}</p>
-        <p>Username: {{ user.username }}</p>
-        <p>Email: {{ user.email }}</p>
-    </div>
-    <div *ngIf="!user">
-        <p>Loading user data...</p>
-    </div>
-    -->
-    <header>
-        <h1>Homepage</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <section id="home">
-        <h2>Home</h2>
-        <p>This is the home section.</p>
-    </section>
-    <section id="about">
-        <h2>About</h2>
-        <p>This is the about section</p>
-    </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>This is the contact section</p>
-    </section>
-    <footer>
-        <p>Copyright 2024</p>
-    </footer>
-    <script src="homepage.component.ts"></script>
-</body>
+<header>
+    <h1>Homepage</h1>
+</header>
 
-</html>
+<nav>
+    <ul>
+        <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/contact">Contact</a></li>
+        <li><a routerLink="/login">Login</a></li>
+    </ul>
+</nav>
+
+<footer>
+    <p>Copyright 2024</p>
+</footer>

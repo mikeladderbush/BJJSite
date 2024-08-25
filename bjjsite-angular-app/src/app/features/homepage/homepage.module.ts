@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HomepageComponent } from './homepage-component/homepage.component';
+import { RouterModule, Routes } from '@angular/router';
 
 /**
  * HomepageModule
@@ -9,10 +11,13 @@ import { CommonModule } from '@angular/common';
  * - The `CommonModule` is imported to provide Angular's common directives and pipes within this module.
  * - The `declarations` array is currently empty but will hold components, directives, or pipes specific to the homepage.
  */
+const routes: Routes = [
+]
 @NgModule({
-  declarations: [], // Placeholder for components, directives, or pipes related to the homepage
+  declarations: [HomepageComponent], // Placeholder for components, directives, or pipes related to the homepage
   imports: [
-    CommonModule // Provides common Angular directives and pipes
+    CommonModule, // Provides common Angular directives and pipes
+    RouterModule
   ]
 })
 export class HomepageModule { }

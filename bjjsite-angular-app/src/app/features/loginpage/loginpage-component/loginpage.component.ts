@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * LoginpageComponent
@@ -17,7 +17,6 @@ export class LoginpageComponent {
   username: string = ''; // Holds the entered username
   password: string = ''; // Holds the entered password
 
-  constructor() {}
 
   /**
    * onLogin
@@ -25,7 +24,7 @@ export class LoginpageComponent {
    * Method to handle the login action.
    * Currently logs the entered username to the console.
    */
-  onLogin(): void {
+  onLogin(){
     console.log(`Logging in with ${this.username}`);
   }
 }

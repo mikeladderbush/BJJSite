@@ -1,5 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AppComponent } from './core/components/app-component/app.component';
+import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
+import { LoginpageComponent } from './features/loginpage/loginpage-component/loginpage.component';
+import { AboutpageComponent } from './features/aboutpage/components/aboutpage-component/aboutpage.component';
+import { ContactpageComponent } from './features/contactpage/contactpage-component/contactpage.component';
+import { AppRoutingModule } from './core/routing/app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 /**
  * AppModule
@@ -11,9 +19,21 @@ import { CommonModule } from '@angular/common';
  * - The `declarations` array is currently empty but will eventually hold components, directives, or pipes that are part of the main application.
  */
 @NgModule({
-  declarations: [], // Placeholder for components, directives, or pipes that belong to the root module
+  declarations: [
+    AppComponent,
+    HomepageComponent,
+    LoginpageComponent,
+    AboutpageComponent,
+    ContactpageComponent
+  ], // Placeholder for components, directives, or pipes that belong to the root module
   imports: [
-    CommonModule // Provides common Angular directives and pipes across the application
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule, // Provides common Angular directives and pipes across the application
+    FormsModule
+  ],
+  bootstrap: [
+    AppComponent
   ]
 })
 export class AppModule { }
