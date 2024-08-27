@@ -1,8 +1,12 @@
 package com.BJJ.BJJSite.Controllers;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +21,8 @@ import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Factories.UserFactory;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Services.UserService;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 /**
  * REST controller for managing Users.
@@ -33,7 +39,7 @@ public class UserController {
     /**
      * Constructor for UserController.
      * 
-     * @param userFactory The factory used to create User instances.
+     * @param userFactory    The factory used to create User instances.
      * @param userRepository The repository used to interact with User data.
      */
     @Autowired
@@ -49,12 +55,27 @@ public class UserController {
      * Retrieves a User by its ID.
      * 
      * @param id The ID of the User.
-     * @return A ResponseEntity containing the User if found, or a 404 status if not found.
+     * @return A ResponseEntity containing the User if found, or a 404 status if not
+     *         found.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Long id) {
         Optional<User> userOptional = userService.getUser(id);
-        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (userOptional.isPresent()) {
+
+            User user = userOptional.get();
+            EntityModel<User> resource = EntityModel.of(user);
+
+            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
+            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
+            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+
+            return ResponseEntity.ok(resource);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -70,15 +91,31 @@ public class UserController {
     /**
      * Updates an existing User.
      * 
-     * @param id The ID of the User to be updated.
+     * @param id     The ID of the User to be updated.
      * @param update The updated User data.
-     * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
+     * @return A ResponseEntity containing the updated User if found, or a 404
+     *         status if not found.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User update) {
+    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Long id, @RequestBody User update) {
         Optional<User> userOptional = userRepository.findById(id);
-        userService.updateUser(userOptional.get().getEmail(), update);
-        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (userOptional.isPresent()) {
+
+            User user = userOptional.get();
+
+            userService.updateUser(userOptional.get().getEmail(), update);
+            EntityModel<User> resource = EntityModel.of(user);
+
+            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
+            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
+            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+
+            return ResponseEntity.ok(resource);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -89,8 +126,12 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok().build();
-    }
+        if (userRepository.existsById(id)) {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
 
+        }
+    }
 }
