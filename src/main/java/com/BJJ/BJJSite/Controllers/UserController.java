@@ -36,43 +36,32 @@ public class UserController {
     private final UserFactory userFactory;
     private final UserRepository userRepository;
 
-    /**
-     * Constructor for UserController.
-     * 
-     * @param userFactory    The factory used to create User instances.
-     * @param userRepository The repository used to interact with User data.
-     */
+    @Autowired
+    private UserService userService;
+
     @Autowired
     public UserController(UserFactory userFactory, UserRepository userRepository) {
         this.userFactory = userFactory;
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    private UserService userService;
-
     /**
      * Retrieves a User by its ID.
      * 
      * @param id The ID of the User.
-     * @return A ResponseEntity containing the User if found, or a 404 status if not
-     *         found.
+     * @return A ResponseEntity containing the User if found, or a 404 status if not found.
      */
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Long id) {
         Optional<User> userOptional = userService.getUser(id);
         if (userOptional.isPresent()) {
-
             User user = userOptional.get();
             EntityModel<User> resource = EntityModel.of(user);
-
             resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
             resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
             resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
             resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
-
             return ResponseEntity.ok(resource);
-
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -81,38 +70,35 @@ public class UserController {
     /**
      * Creates a new User.
      * 
-     * @return An Optional containing the created User.
+     * @return A ResponseEntity containing the created User.
      */
-    @PostMapping("/{id}")
-    public Optional<User> createUser() {
-        return userFactory.createUser();
+    @PostMapping
+    public ResponseEntity<EntityModel<User>> createUser() {
+        User createdUser = userFactory.createUser().orElseThrow(() -> new RuntimeException("User creation failed"));
+        EntityModel<User> resource = EntityModel.of(createdUser);
+        resource.add(linkTo(methodOn(UserController.class).getUserById(createdUser.getUserId())).withSelfRel());
+        return ResponseEntity.ok(resource);
     }
 
     /**
      * Updates an existing User.
      * 
-     * @param id     The ID of the User to be updated.
+     * @param id The ID of the User to be updated.
      * @param update The updated User data.
-     * @return A ResponseEntity containing the updated User if found, or a 404
-     *         status if not found.
+     * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
      */
     @PutMapping("/{id}")
     public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Long id, @RequestBody User update) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
-
             User user = userOptional.get();
-
-            userService.updateUser(userOptional.get().getEmail(), update);
+            userService.updateUser(user.getEmail(), update);
             EntityModel<User> resource = EntityModel.of(user);
-
             resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
             resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
             resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
             resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
-
             return ResponseEntity.ok(resource);
-
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -131,7 +117,6 @@ public class UserController {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
-
         }
     }
 }

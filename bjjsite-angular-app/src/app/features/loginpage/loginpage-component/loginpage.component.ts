@@ -1,30 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-/**
- * LoginpageComponent
- * 
- * This component represents the login page of the application.
- * 
- * - The component manages the user's login credentials, including `username` and `password`.
- * - The `onLogin` method is triggered when the user attempts to log in, currently logging the username to the console.
- */
 @Component({
-  selector: 'app-loginpage', // Custom HTML tag for the login page component
-  templateUrl: './loginpage.component.html', // Path to the HTML template
-  styleUrls: ['./loginpage.component.css'] // Path to the CSS file
+  selector: 'app-login',
+  templateUrl: './loginpage.component.html',
+  styleUrls: ['./loginpage.component.css'],
+  imports: [FormsModule, CommonModule],
+  standalone: true
 })
 export class LoginpageComponent {
-  username: string = ''; // Holds the entered username
-  password: string = ''; // Holds the entered password
+  loginData = {
+    email: '',
+    password: ''
+  };
 
-
-  /**
-   * onLogin
-   * 
-   * Method to handle the login action.
-   * Currently logs the entered username to the console.
-   */
-  onLogin(){
-    console.log(`Logging in with ${this.username}`);
+  onSubmit() {
+    if (this.loginData.email && this.loginData.password) {
+      // Here you would typically handle the login logic, e.g., calling a service.
+      console.log('Login successful', this.loginData);
+    }
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginpageComponent } from './loginpage-component/loginpage.component';
 import { LoginpageRoutingModule } from './loginpage-routing.module';
+import { FormsModule } from '@angular/forms';
 
 /**
  * LoginpageModule
@@ -16,7 +17,8 @@ import { LoginpageRoutingModule } from './loginpage-routing.module';
   declarations: [LoginpageComponent], // Declares the LoginpageComponent as part of this module
   imports: [
     CommonModule, // Provides common Angular directives and pipes
-    LoginpageRoutingModule // Handles routing for the login page feature
+    LoginpageRoutingModule, // Handles routing for the login page feature
+    FormsModule
   ]
 })
 export class LoginpageModule { }
