@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * ContactpageModule
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [], // Placeholder for components, directives, or pipes related to the "Contact" page
   imports: [
-    CommonModule // Provides common Angular directives and pipes
+    CommonModule, // Provides common Angular directives and pipes
+    SharedModule
   ]
 })
 export class ContactpageModule { }

@@ -1,0 +1,47 @@
+.black-belt-sidebar {
+    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/blackbelt.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.black-belt-sidebar nav {
+    height: 50%;
+}
+
+.black-belt-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.black-belt-sidebar li {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 5px 10px;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.41);
+    border-radius: 5px;
+    text-align: center;
+    width: 75%;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: rgba(255, 0, 0, 0.7);
+}

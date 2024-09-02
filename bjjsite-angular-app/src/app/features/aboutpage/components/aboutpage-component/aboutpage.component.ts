@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
 
 /**
  * AboutpageComponent
@@ -15,9 +16,9 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'about', // Custom HTML tag for the "About" page component
   standalone: true, // Indicates that this component is standalone
-  imports: [CommonModule, RouterModule], // No external modules are currently imported
+  imports: [CommonModule, RouterModule, SidebarComponent], // No external modules are currently imported
   templateUrl: './aboutpage.component.html', // Path to the HTML template
-  styleUrl: './aboutpage.component.css' // Path to the CSS file
+  styleUrls: ['./aboutpage.component.css'] // Path to the CSS file
 })
 export class AboutpageComponent implements OnInit {
   user: any;

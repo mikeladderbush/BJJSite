@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage-component/homepage.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * HomepageModule
@@ -17,7 +18,8 @@ const routes: Routes = [
   declarations: [HomepageComponent], // Placeholder for components, directives, or pipes related to the homepage
   imports: [
     CommonModule, // Provides common Angular directives and pipes
-    RouterModule
+    RouterModule,
+    SharedModule
   ]
 })
 export class HomepageModule { }

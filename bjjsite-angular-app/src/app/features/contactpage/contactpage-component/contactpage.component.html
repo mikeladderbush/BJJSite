@@ -9,21 +9,14 @@
 </head>
 
 <body>
+    <app-sidebar></app-sidebar>
+
     <header class="bg-primary text-white text-center py-4">
         <h1 class="mobi-mbri-home">Kimura BJJ Methuen</h1>
     </header>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/about">About</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <div class="container my-5">
+        <!--
         <div *ngIf="user; else loading" class="card p-4 shadow">
             <h1 class="card-title">User Details</h1>
             <p>ID: {{ user.userId }}</p>
@@ -31,6 +24,7 @@
             <p>Username: {{ user.username }}</p>
             <p>Email: {{ user.email }}</p>
         </div>
+    -->
 
         <ng-template #loading>
             <p class="text-center text-muted">Loading user data...</p>

@@ -14,12 +14,14 @@ body {
     padding: 20px;
 }
 
+
+
 /* Header Styles */
 header {
     background-color: #000000;
     color: white;
-    padding: 20px;
     text-align: center;
+    margin-left: 120px;
 }
 
 header h1 {
@@ -27,42 +29,13 @@ header h1 {
     margin: 0;
 }
 
-/* Navigation Styles */
-nav {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    margin: 20px 0;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 10px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    transition: background 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: #575757;
-}
-
-/* Main Content Styles */
 .container {
     max-width: 800px;
     margin: auto;
     background: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 120px;
 }
 
 .card {
@@ -77,16 +50,15 @@ nav ul li a:hover {
     margin-bottom: 10px;
 }
 
-/* Footer Styles */
 footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px;
     margin-top: 20px;
+    margin-left: 120px;
 }
 
-/* Utility Classes */
 .text-center {
     text-align: center;
 }

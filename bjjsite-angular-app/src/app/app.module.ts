@@ -8,6 +8,7 @@ import { ContactpageComponent } from './features/contactpage/contactpage-compone
 import { AppRoutingModule } from './core/routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 /**
  * AppModule
@@ -30,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     BrowserModule,
     AppRoutingModule, // Provides common Angular directives and pipes across the application
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   bootstrap: [
     AppComponent

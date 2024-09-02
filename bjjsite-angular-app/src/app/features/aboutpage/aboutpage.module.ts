@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutpageComponent } from './components/aboutpage-component/aboutpage.component';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * AboutpageModule
@@ -18,6 +19,7 @@ const routes: Routes = [
   declarations: [AboutpageComponent], // Correct component declaration
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild(routes) // Routing for the "About" page
   ]
 })
