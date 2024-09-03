@@ -14,7 +14,7 @@ import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.com
  * - The `selector` allows this component to be used as `<app-contactpage>` in the application's HTML.
  */
 @Component({
-  selector: 'about', // Custom HTML tag for the "About" page component
+  selector: 'contact',
   standalone: true, // Indicates that this component is standalone
   imports: [CommonModule, RouterModule, SidebarComponent], // No external modules are currently imported
   templateUrl: './contactpage.component.html', // Path to the HTML template

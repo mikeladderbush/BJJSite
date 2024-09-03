@@ -9,6 +9,9 @@ import { AppRoutingModule } from './core/routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './core/routing/app.routes';
 
 /**
  * AppModule
@@ -32,7 +35,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule, // Provides common Angular directives and pipes across the application
     FormsModule,
-    SharedModule
+    SharedModule,
+    RouterModule.forRoot(appRoutes)
   ],
   bootstrap: [
     AppComponent

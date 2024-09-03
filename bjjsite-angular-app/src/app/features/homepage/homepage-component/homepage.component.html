@@ -11,12 +11,13 @@
 <body>
     <app-sidebar></app-sidebar>
 
-    <header class="bg-primary text-white text-center py-4" style="margin-left: 120px;">
-        <h1 class="mobi-mbri-home">Kimura BJJ Methuen</h1>
-    </header>
+    <div class="main-content">
+        <header class="bg-primary text-white text-center py-4" style="margin-left: 120px;">
+            <h1 class="mobi-mbri-home">Kimura BJJ Methuen</h1>
+        </header>
 
-    <div class="container my-5" style="margin-left: 120px;">
-        <!--
+        <div class="container my-5" style="margin-left: 120px;">
+            <!--
         <div *ngIf="user; else loading" class="card p-4 shadow">
             <h1 class="card-title">User Details</h1>
             <p>ID: {{ user.userId }}</p>
@@ -26,14 +27,15 @@
         </div>
     -->
 
-        <ng-template #loading>
-            <p class="text-center text-muted">Loading user data...</p>
-        </ng-template>
-    </div>
+            <ng-template #loading>
+                <p class="text-center text-muted">Loading user data...</p>
+            </ng-template>
+        </div>
 
-    <footer class="bg-dark text-white text-center py-3" style="margin-left: 120px;">
-        <p class="m-0">&copy; 2024</p>
-    </footer>
+        <footer class="bg-dark text-white text-center py-3" style="margin-left: 120px;">
+            <p class="m-0">&copy; 2024</p>
+        </footer>
+    </div>
 
 </body>
 

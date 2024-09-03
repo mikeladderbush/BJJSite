@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from '../../features/homepage/homepage-component/homepage.component';
+import { ContactpageComponent } from '../../features/contactpage/contactpage-component/contactpage.component';
+import { LoginpageComponent } from '../../features/loginpage/loginpage-component/loginpage.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirects empty path to the home page
     { path: 'home', component: HomepageComponent },       // Route to the homepage
+    { path: 'contact', component: ContactpageComponent },
+    { path: 'login', component: LoginpageComponent },
     { path: '**', redirectTo: '/home'}                    // Wildcard route, must be last
 ];
 

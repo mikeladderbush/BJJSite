@@ -1,1 +1,163 @@
 /* You can add global styles to this file, and also import other style files */
+/* Global Reset and General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /* Ensure the same font is used globally */
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Sidebar Styles */
+.black-belt-sidebar {
+    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/blackbelt.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 120px; /* Consistent width across all pages */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.black-belt-sidebar nav {
+    height: 50%;
+}
+
+.black-belt-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.black-belt-sidebar li {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 10px 20px; /* Ensure padding is consistent */
+    display: block;
+    background-color: rgba(255, 255, 255, 0.41);
+    border-radius: 5px;
+    text-align: center;
+    width: 75%;
+    transition: background-color 0.3s ease;
+    font-family: Arial, sans-serif; /* Ensure font consistency */
+    font-size: 16px; /* Consistent font size */
+}
+
+.link:hover {
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+/* Container and Layout Styles */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 120px; /* Match sidebar width */
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 120px;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #777;
+}
+
+.py-3 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.py-4 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+/* Login Specific Styles */
+.login-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

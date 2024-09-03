@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginpageComponent } from './loginpage-component/loginpage.component';
 import { LoginpageRoutingModule } from './loginpage-routing.module';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * LoginpageModule
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule, // Provides common Angular directives and pipes
     LoginpageRoutingModule, // Handles routing for the login page feature
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class LoginpageModule { }
