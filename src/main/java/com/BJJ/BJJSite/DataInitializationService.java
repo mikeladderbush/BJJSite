@@ -64,7 +64,7 @@ public class DataInitializationService {
                     .sex("male")
                     .dob("2241997")
                     .paymentOptions(new ArrayList<>())
-                    .authorities(List.of(new Role("ROLE_USER"), new Role("ROLE_ADMIN"))); // Create roles and assign
+                    .role(Role.USER);
         });
 
         if (demoUser.isPresent()) {

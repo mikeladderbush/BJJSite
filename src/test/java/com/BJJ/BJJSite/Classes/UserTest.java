@@ -32,7 +32,7 @@ class UserTest {
                 .enabled(true)
                 .createdAt(new Date())
                 .updatedAt(new Date())
-                .authorities(new ArrayList<>());
+                .role(Role.ADMIN);
     }
 
     @Test
@@ -52,6 +52,7 @@ class UserTest {
         assertTrue(user.getAccountNonLocked());
         assertTrue(user.getCredentialsNonExpired());
         assertTrue(user.getEnabled());
+        assertEquals(Role.USER, user.getAuthorities());
     }
 
     @Test
@@ -83,6 +84,7 @@ class UserTest {
         assertTrue(!user.getAccountNonLocked());
         assertTrue(!user.getCredentialsNonExpired());
         assertTrue(!user.getEnabled());
+        assertEquals(Role.ADMIN, user.getAuthorities());
     }
 
     @Test
@@ -102,16 +104,5 @@ class UserTest {
 
         assertEquals(1, user.getPaymentOptions().size());
         assertEquals("Visa", user.getPaymentOptions().get(0).getName());
-    }
-
-    @Test
-    void testAddAuthority() {
-        User user = builder.buildUser();
-        Role role = new Role("ROLE_USER");
-
-        user.addGrantedAuthority(role);
-
-        assertEquals(1, user.getAuthorities().size());
-        assertEquals("ROLE_USER", ((Role) user.getAuthorities().iterator().next()).getAuthority());
     }
 }

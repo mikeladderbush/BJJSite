@@ -6,16 +6,19 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -65,12 +68,11 @@ public class User implements UserDetails {
     private String sex;
     private String dob;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private Collection<Role> authorities;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentOption> paymentOptions;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     /**
      * Default constructor.
@@ -99,7 +101,7 @@ public class User implements UserDetails {
         credentialsNonExpired = UserBuilder.credentialsNonExpired;
         enabled = UserBuilder.enabled;
         paymentOptions = UserBuilder.paymentOptions;
-        authorities = UserBuilder.authorities;
+        role = UserBuilder.role;
     }
 
     /**
@@ -123,8 +125,8 @@ public class User implements UserDetails {
         private boolean accountNonLocked;
         private boolean credentialsNonExpired;
         private boolean enabled;
-        public List<PaymentOption> paymentOptions = new ArrayList<>();
-        private Collection<Role> authorities = new ArrayList<>();
+        private List<PaymentOption> paymentOptions = new ArrayList<>();
+        private Role role;
 
         /**
          * Default constructor for UserBuilder.
@@ -213,20 +215,14 @@ public class User implements UserDetails {
             return (T) this;
         }
 
-        public T authorities(Collection<Role> authorities) {
-            this.authorities = authorities;
-            return self();
-        }
-
-        @SuppressWarnings("unchecked")
-        public T addAuthority(Role authority) {
-            authorities.add(authority);
-            return (T) this;
-        }
-
         @SuppressWarnings("unchecked")
         protected T self() {
             return (T) this;
+        }
+
+        public T role(Role value) {
+            this.role = value;
+            return self();
         }
 
         public User buildUser() {
@@ -394,12 +390,9 @@ public class User implements UserDetails {
         paymentOptions.add(paymentOption);
     }
 
-    public Collection<Role> getAuthorities() {
-        return authorities;
-    }
-
-    public void addGrantedAuthority(Role authority) {
-        authorities.add(authority);
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
 }
