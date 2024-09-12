@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 /**
  * AppModule
@@ -37,6 +38,9 @@ import { appRoutes } from './core/routing/app.routes';
     FormsModule,
     SharedModule,
     RouterModule.forRoot(appRoutes)
+  ],
+  providers: [
+    provideHttpClient(withFetch())
   ],
   bootstrap: [
     AppComponent

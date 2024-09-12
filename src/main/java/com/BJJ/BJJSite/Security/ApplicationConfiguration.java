@@ -16,7 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Security configuration class for the application.
  * 
- * This class configures the security settings, including HTTP security, session management, CSRF protection, and password encoding.
+ * This class configures the security settings, including HTTP security, session
+ * management, CSRF protection, and password encoding.
  */
 @Configuration
 @EnableWebSecurity
@@ -26,8 +27,10 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     /**
      * Configures the security filter chain.
      * 
-     * This method sets up the security filter chain, which includes allowing all HTTP requests, 
-     * disabling CSRF protection, setting session management to stateless, and configuring headers.
+     * This method sets up the security filter chain, which includes allowing all
+     * HTTP requests,
+     * disabling CSRF protection, setting session management to stateless, and
+     * configuring headers.
      * 
      * @param http The HttpSecurity object used to configure the security settings.
      * @return The configured SecurityFilterChain object.
@@ -36,20 +39,22 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(
-                (requests) -> requests.anyRequest().permitAll()
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-            .csrf(AbstractHttpConfigurer::disable);
-        
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/", "/home", "/about", "/login", "/contact").permitAll() // Public access
+                        .anyRequest().authenticated() // All other requests require authentication
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 
     /**
      * Configures the password encoder bean.
      * 
-     * This method provides a BCryptPasswordEncoder bean, which is used for encoding passwords in the application.
+     * This method provides a BCryptPasswordEncoder bean, which is used for encoding
+     * passwords in the application.
      * 
      * @return A PasswordEncoder instance for encoding passwords.
      */
