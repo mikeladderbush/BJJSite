@@ -132,7 +132,7 @@ public class Employee extends User {
      * 
      * @return The user ID.
      */
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 

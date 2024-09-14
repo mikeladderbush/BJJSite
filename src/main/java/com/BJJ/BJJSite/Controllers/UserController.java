@@ -52,7 +52,7 @@ public class UserController {
      * @return A ResponseEntity containing the User if found, or a 404 status if not found.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Integer id) {
         Optional<User> userOptional = userService.getUser(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -88,7 +88,7 @@ public class UserController {
      * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Long id, @RequestBody User update) {
+    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Integer id, @RequestBody User update) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -111,7 +111,7 @@ public class UserController {
      * @return A ResponseEntity with a 200 status if the deletion was successful.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         if (userRepository.existsById(id)) {
             userService.deleteUser(id);
             return ResponseEntity.ok().build();

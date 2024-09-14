@@ -73,7 +73,7 @@ public class Administrator extends Employee {
      * 
      * @return The user ID.
      */
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 

@@ -1,0 +1,65 @@
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{0}: checkout: moving from FeatureImpl to FeatureImpl
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{1}: checkout: moving from JWTimpl to FeatureImpl
+[33m5a478db9[m[33m ([m[1;31morigin/JWTimpl[m[33m, [m[1;32mJWTimpl[m[33m)[m HEAD@{2}: commit (merge): Merge branch 'featureimpl' into JWTimpl
+[33m604e118d[m HEAD@{3}: checkout: moving from FeatureImpl to JWTimpl
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{4}: checkout: moving from JWTImpl to FeatureImpl
+[33m604e118d[m HEAD@{5}: commit: Bringing in line with featureImpl
+[33m826f3f7e[m HEAD@{6}: checkout: moving from FeatureImpl to JWTImpl
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{7}: reset: moving to HEAD
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{8}: checkout: moving from JWTImpl to FeatureImpl
+[33m826f3f7e[m HEAD@{9}: checkout: moving from FeatureImpl to JWTImpl
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{10}: reset: moving to HEAD
+[33m841dfca0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFeatureImpl[m[33m, [m[1;31morigin/FeatureImpl[m[33m)[m HEAD@{11}: commit: Updated JWT for login component
+[33m8fbae926[m HEAD@{12}: commit: Adjusted security for routes
+[33md100d382[m HEAD@{13}: commit: Updated feature/global styles and routing
+[33m7a8d8f93[m HEAD@{14}: commit: Added belt image and updates
+[33m9e188334[m HEAD@{15}: commit: Adding default look for pages
+[33m3fed359d[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{16}: checkout: moving from main to FeatureImpl
+[33m3fed359d[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{17}: commit: removed frameworks
+[33m863cd805[m HEAD@{18}: commit: standalone login component
+[33meaf1199a[m HEAD@{19}: reset: moving to HEAD~
+[33m32090b40[m HEAD@{20}: commit: standalone login component
+[33meaf1199a[m HEAD@{21}: commit: Added more hypermedia to users
+[33me4531905[m HEAD@{22}: commit: Fixed angular routing
+[33m37746712[m HEAD@{23}: commit (merge): Merge branch 'Angular-Frontend'
+[33m54fa6d3b[m HEAD@{24}: pull --tags origin main: Fast-forward
+[33m8142b47a[m HEAD@{25}: checkout: moving from Angular-Frontend to main
+[33m87bd33c2[m[33m ([m[1;31morigin/Angular-Frontend[m[33m, [m[1;32mAngular-Frontend[m[33m)[m HEAD@{26}: checkout: moving from main to Angular-Frontend
+[33m8142b47a[m HEAD@{27}: checkout: moving from Angular-Frontend to main
+[33m87bd33c2[m[33m ([m[1;31morigin/Angular-Frontend[m[33m, [m[1;32mAngular-Frontend[m[33m)[m HEAD@{28}: commit: Test overhaul
+[33m6b8a3ae5[m HEAD@{29}: commit: Updated Documentation
+[33m000357ea[m HEAD@{30}: commit: inital login impl
+[33m771d36d5[m HEAD@{31}: commit: Refactoring and routing
+[33m8142b47a[m HEAD@{32}: checkout: moving from main to Angular-Frontend
+[33m8142b47a[m HEAD@{33}: commit: Figuring out component logic for testing
+[33m826f3f7e[m HEAD@{34}: checkout: moving from JWTImpl to main
+[33m826f3f7e[m HEAD@{35}: checkout: moving from main to JWTImpl
+[33m826f3f7e[m HEAD@{36}: commit: authImpl and minor refactor
+[33ma540c6a7[m HEAD@{37}: commit: need to fix authorities
+[33m3dea353e[m HEAD@{38}: pull --tags origin main: Fast-forward
+[33m0e007017[m[33m ([m[1;31morigin/SecurityImpl[m[33m, [m[1;32mSecurityImpl[m[33m)[m HEAD@{39}: checkout: moving from AngularImpl to main
+[33m884d32a6[m[33m ([m[1;31morigin/AngularImpl[m[33m, [m[1;32mAngularImpl[m[33m)[m HEAD@{40}: commit: finishing payments
+[33m2fbe5243[m HEAD@{41}: commit: persistence issues fixed
+[33m171a581d[m HEAD@{42}: commit: Finishing persistence impl
+[33m643ce699[m HEAD@{43}: commit: Bringing up to date
+[33m0e007017[m[33m ([m[1;31morigin/SecurityImpl[m[33m, [m[1;32mSecurityImpl[m[33m)[m HEAD@{44}: merge main: Fast-forward
+[33m881d7114[m HEAD@{45}: checkout: moving from main to AngularImpl
+[33m0e007017[m[33m ([m[1;31morigin/SecurityImpl[m[33m, [m[1;32mSecurityImpl[m[33m)[m HEAD@{46}: merge Securityimpl: Fast-forward
+[33mb2edb1ee[m HEAD@{47}: checkout: moving from SecurityImpl to main
+[33m0e007017[m[33m ([m[1;31morigin/SecurityImpl[m[33m, [m[1;32mSecurityImpl[m[33m)[m HEAD@{48}: commit: simple security and sql updated
+[33mdea3b2f4[m HEAD@{49}: commit: Updating to Spring 6/Sec 3
+[33m05d0e46d[m HEAD@{50}: pull --tags origin AngularImpl: Merge made by the 'ort' strategy.
+[33me95bdcd0[m HEAD@{51}: checkout: moving from AngularImpl to SecurityImpl
+[33m881d7114[m HEAD@{52}: checkout: moving from AngularImpl to AngularImpl
+[33m881d7114[m HEAD@{53}: commit: Initial Security to be merged
+[33me76641ba[m HEAD@{54}: checkout: moving from AngularImpl to AngularImpl
+[33me76641ba[m HEAD@{55}: checkout: moving from SecurityImpl to AngularImpl
+[33me95bdcd0[m HEAD@{56}: commit: Initial Security impl
+[33mb2edb1ee[m HEAD@{57}: checkout: moving from main to SecurityImpl
+[33mb2edb1ee[m HEAD@{58}: checkout: moving from AngularImpl to main
+[33me76641ba[m HEAD@{59}: checkout: moving from main to AngularImpl
+[33mb2edb1ee[m HEAD@{60}: checkout: moving from AngularImpl to main
+[33me76641ba[m HEAD@{61}: reset: moving to HEAD
+[33me76641ba[m HEAD@{62}: commit: Initial Angular Impl
+[33mb2edb1ee[m HEAD@{63}: checkout: moving from main to AngularImpl
+[33mb2edb1ee[m HEAD@{64}: commit (initial): Initial Commit
