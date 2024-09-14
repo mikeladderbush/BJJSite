@@ -1,8 +1,12 @@
 package com.BJJ.BJJSite.Controllers;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +22,13 @@ import com.BJJ.BJJSite.Factories.UserFactory;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Services.UserService;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+/**
+ * REST controller for managing Users.
+ * 
+ * Provides endpoints to create, retrieve, update, and delete users.
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -26,34 +37,81 @@ public class UserController {
     private final UserRepository userRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     public UserController(UserFactory userFactory, UserRepository userRepository) {
         this.userFactory = userFactory;
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    private UserService userService;
-
+    /**
+     * Retrieves a User by its ID.
+     * 
+     * @param id The ID of the User.
+     * @return A ResponseEntity containing the User if found, or a 404 status if not found.
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Long id) {
         Optional<User> userOptional = userService.getUser(id);
-        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            EntityModel<User> resource = EntityModel.of(user);
+            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
+            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
+            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+            return ResponseEntity.ok(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping("/{id}")
-    public Optional<User> createUser() {
-        return userFactory.createUser();
+    /**
+     * Creates a new User.
+     * 
+     * @return A ResponseEntity containing the created User.
+     */
+    @PostMapping
+    public ResponseEntity<EntityModel<User>> createUser() {
+        User createdUser = userFactory.createUser().orElseThrow(() -> new RuntimeException("User creation failed"));
+        EntityModel<User> resource = EntityModel.of(createdUser);
+        resource.add(linkTo(methodOn(UserController.class).getUserById(createdUser.getUserId())).withSelfRel());
+        return ResponseEntity.ok(resource);
     }
 
+    /**
+     * Updates an existing User.
+     * 
+     * @param id The ID of the User to be updated.
+     * @param update The updated User data.
+     * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Integer id, @RequestBody User update) {
+    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Long id, @RequestBody User update) {
         Optional<User> userOptional = userRepository.findById(id);
-        userService.updateUser(userOptional.get().getEmail(), update);
-        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            userService.updateUser(user.getEmail(), update);
+            EntityModel<User> resource = EntityModel.of(user);
+            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
+            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
+            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+            return ResponseEntity.ok(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    /**
+     * Deletes a User by its ID.
+     * 
+     * @param id The ID of the User to be deleted.
+     * @return A ResponseEntity with a 200 status if the deletion was successful.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         if (userRepository.existsById(id)) {
             userService.deleteUser(id);
             return ResponseEntity.ok().build();
@@ -61,5 +119,4 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

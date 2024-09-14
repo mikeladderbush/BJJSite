@@ -6,26 +6,27 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
  * Represents a User.
  * 
- * The User class implements the Spring Security `UserDetails` interface and is
- * an entity
- * that includes various attributes such as username, password, email, and more.
- * It also
+ * The User class implements the Spring Security `UserDetails` interface and is an entity
+ * that includes various attributes such as username, password, email, and more. It also
  * tracks roles (authorities) and payment options associated with the user.
  */
 @Entity
@@ -35,13 +36,10 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    protected Integer userId;
+    protected Long userId;
 
     @Column(nullable = false)
-    protected String firstname;
-
-    @Column(nullable = false)
-    protected String lastname;
+    protected String fullName;
 
     @Column(nullable = false)
     protected String username;
@@ -70,19 +68,25 @@ public class User implements UserDetails {
     private String sex;
     private String dob;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private Collection<Role> authorities;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentOption> paymentOptions;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    /**
+     * Default constructor.
+     */
     public User() {
     }
 
+    /**
+     * Protected constructor to be called by the UserBuilder.
+     * 
+     * @param UserBuilder The builder used to construct the User instance.
+     */
     protected User(UserBuilder<?> UserBuilder) {
-        firstname = UserBuilder.firstname;
-        lastname = UserBuilder.lastname;
+        fullName = UserBuilder.fullName;
         phone = UserBuilder.phone;
         username = UserBuilder.username;
         password = UserBuilder.password;
@@ -97,7 +101,7 @@ public class User implements UserDetails {
         credentialsNonExpired = UserBuilder.credentialsNonExpired;
         enabled = UserBuilder.enabled;
         paymentOptions = UserBuilder.paymentOptions;
-        authorities = UserBuilder.authorities;
+        role = UserBuilder.role;
     }
 
     /**
@@ -107,8 +111,7 @@ public class User implements UserDetails {
      */
     public static class UserBuilder<T extends UserBuilder<T>> {
 
-        private String firstname = "DEFAULT FIRST NAME";
-        private String lastname = "DEFAULT LAST NAME";
+        private String fullName = "DEFAULT_NAME";
         private String phone = "NO EMAIL ON FILE";
         private String username = "NO FIRST NAME ON FILE";
         protected String password = "NO LAST NAME ON FILE";
@@ -122,19 +125,17 @@ public class User implements UserDetails {
         private boolean accountNonLocked;
         private boolean credentialsNonExpired;
         private boolean enabled;
-        public List<PaymentOption> paymentOptions = new ArrayList<>();
-        private Collection<Role> authorities = new ArrayList<>();
+        private List<PaymentOption> paymentOptions = new ArrayList<>();
+        private Role role;
 
+        /**
+         * Default constructor for UserBuilder.
+         */
         public UserBuilder() {
         }
 
-        public T firstname(String value) {
-            this.firstname = value;
-            return self();
-        }
-
-        public T lastname(String value) {
-            this.lastname = value;
+        public T fullName(String value) {
+            this.fullName = value;
             return self();
         }
 
@@ -214,20 +215,14 @@ public class User implements UserDetails {
             return (T) this;
         }
 
-        public T authorities(Collection<Role> authorities) {
-            this.authorities = authorities;
-            return self();
-        }
-
-        @SuppressWarnings("unchecked")
-        public T addAuthority(Role authority) {
-            authorities.add(authority);
-            return (T) this;
-        }
-
         @SuppressWarnings("unchecked")
         protected T self() {
             return (T) this;
+        }
+
+        public T role(Role value) {
+            this.role = value;
+            return self();
         }
 
         public User buildUser() {
@@ -240,38 +235,28 @@ public class User implements UserDetails {
      * 
      * @return The ID of the User.
      */
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
-     * For testing purpose only.
+     * Sets the ID of the User.
      * 
-     * @param id
+     * This method is primarily intended for testing purposes.
+     * 
+     * @param id The ID to set.
      */
-    public void setId(Integer userId) {
+    public void setId(Long userId) {
         this.userId = userId;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstname(String firstname) {
-        if (firstname != null) {
-            this.firstname = firstname;
-        } else {
-            throw new IllegalArgumentException("Name cannot be null");
-        }
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        if (lastname != null) {
-            this.lastname = lastname;
+    public void setFullName(String fullName) {
+        if (fullName != null) {
+            this.fullName = fullName;
         } else {
             throw new IllegalArgumentException("Name cannot be null");
         }
@@ -302,8 +287,6 @@ public class User implements UserDetails {
      * Sets the username of the User.
      * 
      * @param username The username of the User.
-     * @throws IllegalArgumentException if the username is null or exceeds 10
-     *                                  characters.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -322,8 +305,6 @@ public class User implements UserDetails {
      * Sets the password of the User.
      * 
      * @param Password The password of the User.
-     * @throws IllegalArgumentException if the password is null or exceeds 10
-     *                                  characters.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -336,7 +317,6 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         if (email != null) {
             this.email = email;
-            // ADD EMAIL ERROR CHECKING
         } else {
             throw new IllegalArgumentException("Email error");
         }
@@ -410,12 +390,9 @@ public class User implements UserDetails {
         paymentOptions.add(paymentOption);
     }
 
-    public Collection<Role> getAuthorities() {
-        return authorities;
-    }
-
-    public void addGrantedAuthority(Role authority) {
-        authorities.add(authority);
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
 }

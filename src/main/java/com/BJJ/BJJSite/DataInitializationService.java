@@ -20,6 +20,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/**
+ * Service class for initializing data during application startup.
+ * 
+ * This service is responsible for creating demo users and associated payment options, as well as populating the database with initial data.
+ */
 @Service
 public class DataInitializationService {
 
@@ -38,6 +43,12 @@ public class DataInitializationService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Initializes the application data after the service is constructed.
+     * 
+     * This method is executed automatically after the service is constructed and is annotated with @PostConstruct.
+     * It creates a demo user with associated payment options and roles, and then saves them to the database.
+     */
     @PostConstruct
     @Transactional
     public void init() {
@@ -54,7 +65,7 @@ public class DataInitializationService {
                     .sex("male")
                     .dob("2241997")
                     .paymentOptions(new ArrayList<>())
-                    .authorities(List.of(new Role("ROLE_USER"), new Role("ROLE_ADMIN"))); // Create roles and assign
+                    .role(Role.USER);
         });
 
         if (demoUser.isPresent()) {

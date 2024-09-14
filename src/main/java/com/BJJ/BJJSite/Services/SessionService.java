@@ -7,9 +7,10 @@ import java.util.List;
 import com.BJJ.BJJSite.Classes.Session;
 import com.BJJ.BJJSite.Interfaces.ServiceInterface;
 
-
 /**
  * Manages operations related to Sessions.
+ * 
+ * This service provides methods for adding, deleting, retrieving, and managing sessions in a list.
  */
 public class SessionService implements ServiceInterface {
 
@@ -25,7 +26,7 @@ public class SessionService implements ServiceInterface {
     /**
      * Adds a Session to the list of Sessions.
      * 
-     * @param Session The Session to add.
+     * @param session The Session to add.
      */
     public void addSession(Session session) {
         Sessions.add(session);
@@ -36,6 +37,7 @@ public class SessionService implements ServiceInterface {
      * 
      * @return A randomly generated ID for Sessions.
      */
+    @Override
     public Long generateId() {
         return ServiceInterface.super.generateId();
     }
@@ -48,8 +50,8 @@ public class SessionService implements ServiceInterface {
     public void deleteSession(Long id) {
         Iterator<Session> iterator = Sessions.iterator();
         while (iterator.hasNext()) {
-            Session Session = iterator.next();
-            if (Session.getId().equals(id)) {
+            Session session = iterator.next();
+            if (session.getId().equals(id)) {
                 iterator.remove();
             }
         }
@@ -71,9 +73,9 @@ public class SessionService implements ServiceInterface {
      * @return The Session with the specified ID, or null if not found.
      */
     public Session findSessionById(Long id) {
-        for (Session Session : Sessions) {
-            if (Session.getId().equals(id)) {
-                return Session;
+        for (Session session : Sessions) {
+            if (session.getId().equals(id)) {
+                return session;
             }
         }
         return null;
