@@ -21,21 +21,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    /**
-     * Constructor for UserService.
-     * 
-     * @param userRepository The repository used to interact with User data.
-     */
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     /**
-     * Creates a new User.
-     * 
-     * If a User with the same email already exists, it updates the existing one
-     * instead.
+     * Creates a new User or updates an existing one if the email is already
+     * present.
      * 
      * @param <T>  The type of User.
      * @param user The User to be created.
@@ -43,30 +36,32 @@ public class UserService {
      * @throws UserAlreadyExistsException If a User with the same email already
      *                                    exists.
      */
+    @SuppressWarnings("unchecked")
     @Transactional
     public <T extends User> T createUser(T user) throws UserAlreadyExistsException {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+
         if (existingUser.isPresent()) {
-            System.out.println("User with email " + user.getEmail() + " already exists. Updating prior user instead");
-            updateUser(existingUser.get().getEmail(), user);
+            System.out.println("User with email " + user.getEmail() + " already exists. Updating existing user.");
+            return (T) updateUser(existingUser.get().getEmail(), user); // Cast to T
         }
 
+        // If the user does not exist, save the new user
         return userRepository.save(user);
     }
 
     /**
-     * Updates an existing User based on their email.
-     * 
-     * This method updates the fields of an existing User with the values from the
-     * provided update object.
+     * Updates an existing User based on their email. Fields in the existing user
+     * are updated with values from the provided update object.
      * 
      * @param userEmail The email of the User to be updated.
      * @param update    The updated User data.
-     * @return An Optional containing the updated User if found, or an empty
-     *         Optional if not found.
+     * @return The updated User.
      */
-    public Optional<User> updateUser(String userEmail, User update) {
-        return userRepository.findByEmail(userEmail).map(user -> {
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public <T extends User> T updateUser(String userEmail, T update) {
+        return (T) userRepository.findByEmail(userEmail).map(user -> {
             if (update.getFirstname() != null) {
                 user.setFirstname(update.getFirstname());
             }
@@ -78,9 +73,6 @@ public class UserService {
             }
             if (update.getPassword() != null) {
                 user.setPassword(update.getPassword());
-            }
-            if (update.getEmail() != null) {
-                user.setEmail(update.getEmail());
             }
             if (update.getPhone() != null) {
                 user.setPhone(update.getPhone());
@@ -98,19 +90,19 @@ public class UserService {
                 user.getPaymentOptions().clear();
                 user.getPaymentOptions().addAll(update.getPaymentOptions());
             }
-            return userRepository.save(user);
-        });
+            return userRepository.save(user); // Save and return updated user
+        }).orElseThrow(() -> new IllegalArgumentException("User with email " + userEmail + " not found"));
     }
 
     /**
      * Retrieves a User by their ID.
      * 
-     * @param integer The ID of the User.
+     * @param id The ID of the User.
      * @return An Optional containing the User if found, or an empty Optional if not
      *         found.
      */
-    public Optional<User> getUser(Integer integer) {
-        return userRepository.findById(integer);
+    public Optional<User> getUser(Integer id) {
+        return userRepository.findById(id);
     }
 
     /**
@@ -127,9 +119,9 @@ public class UserService {
     /**
      * Deletes a User by their ID.
      * 
-     * @param integer The ID of the User to be deleted.
+     * @param id The ID of the User to be deleted.
      */
-    public void deleteUser(Integer integer) {
-        userRepository.deleteById(integer);
+    public void deleteUser(Integer id) {
+        userRepository.deleteById(id);
     }
 }
