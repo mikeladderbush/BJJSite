@@ -29,7 +29,7 @@ public interface PaymentOptionRepository extends JpaRepository<PaymentOption, Lo
      * @param id The ID of the PaymentOption.
      * @return An Optional containing the PaymentOption if found, or an empty Optional if not found.
      */
-    Optional<PaymentOption> findById(Long id);
+    Optional<PaymentOption> findById(Integer id);
 
     /**
      * Finds a PaymentOption by its card number.

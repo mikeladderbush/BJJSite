@@ -7,7 +7,8 @@ import com.BJJ.BJJSite.Classes.User;
 /**
  * Interface defining common service operations.
  * 
- * The ServiceInterface provides default methods for generating IDs and displaying user information.
+ * The ServiceInterface provides default methods for generating IDs and
+ * displaying user information.
  */
 public interface ServiceInterface {
 
@@ -19,18 +20,20 @@ public interface ServiceInterface {
     /**
      * Generates a random ID for objects.
      * 
-     * This method generates a positive long value using a secure random number generator.
+     * This method generates a positive long value using a secure random number
+     * generator.
      * 
      * @return A randomly generated positive ID.
      */
-    public default Long generateId() {
-        return Math.abs(secureRandom.nextLong());
+    public default Integer generateId() {
+        return Math.abs(secureRandom.nextInt());
     }
 
     /**
      * Displays detailed information about a User.
      * 
-     * This method prints out various attributes of the User object, including ID, name, email, and account status.
+     * This method prints out various attributes of the User object, including ID,
+     * name, email, and account status.
      * 
      * @param user The User object whose information is to be displayed.
      */

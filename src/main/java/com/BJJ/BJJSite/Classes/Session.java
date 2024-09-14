@@ -12,7 +12,8 @@ import jakarta.persistence.Table;
 /**
  * Represents a Training Session.
  * 
- * The Session class is an entity that represents a training session, including details such as the session type, time, and date.
+ * The Session class is an entity that represents a training session, including
+ * details such as the session type, time, and date.
  */
 @Entity
 @Table(name = "sessions")
@@ -26,7 +27,7 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    protected Integer id;
 
     @Column(nullable = false)
     protected String sessionType;
@@ -52,11 +53,12 @@ public class Session {
     /**
      * Builder class for creating a Session instance.
      * 
-     * This builder pattern allows for flexible and customizable creation of Session objects.
+     * This builder pattern allows for flexible and customizable creation of Session
+     * objects.
      */
     public static class SessionBuilder<T extends SessionBuilder<T>> {
 
-        private Long id;
+        private Integer id;
         private String sessionType;
         private String timeOfSession;
         private Date dateOfSession;
@@ -64,12 +66,12 @@ public class Session {
         /**
          * Constructor for SessionBuilder.
          * 
-         * @param id The ID of the session.
-         * @param sessionType The type of session (e.g., "Training", "Seminar").
+         * @param id            The ID of the session.
+         * @param sessionType   The type of session (e.g., "Training", "Seminar").
          * @param timeOfSession The time of the session.
          * @param dateOfSession The date of the session.
          */
-        public SessionBuilder(Long id, String sessionType, String timeOfSession, Date dateOfSession) {
+        public SessionBuilder(Integer id, String sessionType, String timeOfSession, Date dateOfSession) {
             this.id = id;
             this.sessionType = sessionType;
             this.timeOfSession = timeOfSession;
@@ -101,7 +103,7 @@ public class Session {
      * 
      * @return The ID of the Session.
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -112,7 +114,7 @@ public class Session {
      * 
      * @param id The ID to set.
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

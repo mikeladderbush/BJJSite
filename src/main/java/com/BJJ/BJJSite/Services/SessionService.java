@@ -38,7 +38,7 @@ public class SessionService implements ServiceInterface {
      * @return A randomly generated ID for Sessions.
      */
     @Override
-    public Long generateId() {
+    public Integer generateId() {
         return ServiceInterface.super.generateId();
     }
 

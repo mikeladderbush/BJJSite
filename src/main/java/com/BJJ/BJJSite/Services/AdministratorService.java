@@ -17,7 +17,7 @@ public class AdministratorService implements ServiceInterface {
      * @return A unique ID generated using the method from the ServiceInterface.
      */
     @Override
-    public Long generateId() {
+    public Integer generateId() {
         return ServiceInterface.super.generateId();
     }
 

@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
      * 
      * @param registry The CORS registry.
      */
+    @SuppressWarnings("null")
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -35,6 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
      * 
      * @param registry The view controller registry.
      */
+    @SuppressWarnings("null")
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         // Forward to home page so Angular handles routing
@@ -49,6 +51,7 @@ public class WebConfig implements WebMvcConfigurer {
      * 
      * @param registry The resource handler registry.
      */
+    @SuppressWarnings("null")
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")

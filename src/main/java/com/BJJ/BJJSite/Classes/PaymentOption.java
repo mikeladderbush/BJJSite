@@ -42,7 +42,7 @@ public class PaymentOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long paymentOptionId;
+    private Integer paymentOptionId;
 
     /**
      * The name associated with the payment method.
@@ -236,7 +236,7 @@ public class PaymentOption {
      * 
      * @return The payment option ID.
      */
-    public Long getPaymentOptionId() {
+    public Integer getPaymentOptionId() {
         return paymentOptionId;
     }
 
@@ -247,7 +247,7 @@ public class PaymentOption {
      * 
      * @param paymentOptionId The ID to set.
      */
-    public void setId(Long paymentOptionId) {
+    public void setId(Integer paymentOptionId) {
         this.paymentOptionId = paymentOptionId;
     }
 

@@ -23,7 +23,7 @@ public class SessionFactory {
      * @return A new Session object with default values.
      */
     public static Session createSession() {
-        Long id = sessionService.generateId();
+        Integer id = sessionService.generateId();
         String sessionType = "REGULAR CLASS";
         String timeOfSession = "6:00PM";
         Date dateOfSession = new Date();
@@ -39,7 +39,7 @@ public class SessionFactory {
      * @return A new Session object with custom values.
      */
     public static Session createSession(Consumer<Session.SessionBuilder<?>> consumer) {
-        Long id = sessionService.generateId();
+        Integer id = sessionService.generateId();
         String sessionType = "REGULAR CLASS";
         String timeOfSession = "6:00PM";
         Date dateOfSession = new Date();

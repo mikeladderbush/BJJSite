@@ -5,19 +5,21 @@ import com.BJJ.BJJSite.Interfaces.ServiceInterface;
 /**
  * Service class for handling operations related to Employees.
  * 
- * This class implements the ServiceInterface and provides functionality specific to employees, such as generating unique IDs.
+ * This class implements the ServiceInterface and provides functionality
+ * specific to employees, such as generating unique IDs.
  */
 public class EmployeeService implements ServiceInterface {
 
     /**
      * Generates a unique ID for an Employee.
      * 
-     * This method overrides the default implementation provided by the ServiceInterface.
+     * This method overrides the default implementation provided by the
+     * ServiceInterface.
      * 
      * @return A unique ID generated using the method from the ServiceInterface.
      */
     @Override
-    public Long generateId() {
+    public Integer generateId() {
         return ServiceInterface.super.generateId();
     }
 

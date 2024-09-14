@@ -1,28 +1,27 @@
-package com.BJJ.BJJSite.Security;
+package com.BJJ.BJJSite.Security.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Security configuration class for the application.
- * 
- * This class configures the security settings, including HTTP security, session
- * management, CSRF protection, and password encoding.
- */
+import com.BJJ.BJJSite.Security.JWT.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
-public class ApplicationConfiguration implements WebMvcConfigurer {
+@RequiredArgsConstructor
+public class SecurityConfiguration {
+
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     /**
      * Configures the security filter chain.
@@ -40,26 +39,15 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/about", "/login", "/contact").permitAll() // Public access
+                        .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**").permitAll() // Public access
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
-    }
-
-    /**
-     * Configures the password encoder bean.
-     * 
-     * This method provides a BCryptPasswordEncoder bean, which is used for encoding
-     * passwords in the application.
-     * 
-     * @return A PasswordEncoder instance for encoding passwords.
-     */
-    @Bean
-    public PasswordEncoder passwordEncorder() {
-        return new BCryptPasswordEncoder();
     }
 }
