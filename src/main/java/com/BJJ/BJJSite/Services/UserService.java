@@ -10,6 +10,12 @@ import com.BJJ.BJJSite.Repositories.UserRepository;
 
 import java.util.Optional;
 
+/**
+ * Service class for managing User entities.
+ * 
+ * This class provides methods to create, update, retrieve, and delete User
+ * entities, handling business logic and interactions with the UserRepository.
+ */
 @Service
 public class UserService {
 
@@ -20,6 +26,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a new User.
+     * 
+     * If a User with the same email already exists, it updates the existing one
+     * instead.
+     * 
+     * @param <T>  The type of User.
+     * @param user The User to be created.
+     * @return The created or updated User.
+     * @throws UserAlreadyExistsException If a User with the same email already
+     *                                    exists.
+     */
     @Transactional
     public <T extends User> T createUser(T user) throws UserAlreadyExistsException {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
@@ -32,10 +50,24 @@ public class UserService {
 
     }
 
+    /**
+     * Updates an existing User based on their email.
+     * 
+     * This method updates the fields of an existing User with the values from the
+     * provided update object.
+     * 
+     * @param userEmail The email of the User to be updated.
+     * @param update    The updated User data.
+     * @return An Optional containing the updated User if found, or an empty
+     *         Optional if not found.
+     */
     public Optional<User> updateUser(String userEmail, User update) {
         return userRepository.findByEmail(userEmail).map(user -> {
-            if (update.getFullName() != null) {
-                user.setFullName(update.getFullName());
+            if (update.getFirstname() != null) {
+                user.setFirstname(update.getFirstname());
+            }
+            if (update.getLastname() != null) {
+                user.setLastname(update.getLastname());
             }
             if (update.getUsername() != null) {
                 user.setUsername(update.getUsername());
@@ -66,15 +98,34 @@ public class UserService {
         });
     }
 
-    public Optional<User> getUser(Long userId) {
-        return userRepository.findById(userId);
+    /**
+     * Retrieves a User by their ID.
+     * 
+     * @param id The ID of the User.
+     * @return An Optional containing the User if found, or an empty Optional if not
+     *         found.
+     */
+    public Optional<User> getUser(Integer id) {
+        return userRepository.findById(id);
     }
 
+    /**
+     * Finds a User by their username.
+     * 
+     * @param username The username of the User.
+     * @return An Optional containing the User if found, or an empty Optional if not
+     *         found.
+     */
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+    /**
+     * Deletes a User by their ID.
+     * 
+     * @param id The ID of the User to be deleted.
+     */
+    public void deleteUser(Integer id) {
+        userRepository.deleteById(id);
     }
 }

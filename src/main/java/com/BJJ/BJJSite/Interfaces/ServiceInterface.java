@@ -19,7 +19,8 @@ public interface ServiceInterface {
 
     public default void displayInformation(User user) {
         System.out.println("User ID: " + user.getUserId());
-        System.out.println("Full Name: " + user.getFullName());
+        System.out.println("First Name: " + user.getFirstname());
+        System.out.println("Last Name: " + user.getLastname());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Password: " + user.getPassword());

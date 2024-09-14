@@ -71,7 +71,12 @@ public class Employee extends User {
         }
     }
 
-    public Long getUserId() {
+    /**
+     * Retrieves the user ID of the Employee.
+     * 
+     * @return The user ID.
+     */
+    public Integer getUserId() {
         return userId;
     }
 

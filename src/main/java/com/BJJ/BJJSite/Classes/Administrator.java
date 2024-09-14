@@ -35,7 +35,12 @@ public class Administrator extends Employee {
         }
     }
 
-    public Long getUserId() {
+    /**
+     * Retrieves the user ID of the Administrator.
+     * 
+     * @return The user ID.
+     */
+    public Integer getUserId() {
         return userId;
     }
 

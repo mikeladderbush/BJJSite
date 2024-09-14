@@ -44,7 +44,8 @@ public class DataInitializationService {
         System.out.println("DataInitializationService is running...");
 
         Optional<User> demoUser = userFactory.createUser(builder -> {
-            builder.fullName("Mike Ladderbush")
+            builder.firstname("Mike")
+                    .lastname("Ladderbush")
                     .username("mikeladder")
                     .password(passwordEncoder.encode("mike")) // Encode the password
                     .email("mikeladderbush@gmail.com")

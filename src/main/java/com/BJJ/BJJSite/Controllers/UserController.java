@@ -35,7 +35,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Integer id) {
         Optional<User> userOptional = userService.getUser(id);
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -46,16 +46,20 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User update) {
+    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Integer id, @RequestBody User update) {
         Optional<User> userOptional = userRepository.findById(id);
         userService.updateUser(userOptional.get().getEmail(), update);
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        if (userRepository.existsById(id)) {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

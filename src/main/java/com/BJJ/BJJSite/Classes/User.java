@@ -21,6 +21,12 @@ import jakarta.persistence.Table;
 
 /**
  * Represents a User.
+ * 
+ * The User class implements the Spring Security `UserDetails` interface and is
+ * an entity
+ * that includes various attributes such as username, password, email, and more.
+ * It also
+ * tracks roles (authorities) and payment options associated with the user.
  */
 @Entity
 @Table(name = "users")
@@ -29,10 +35,13 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    protected Long userId;
+    protected Integer userId;
 
     @Column(nullable = false)
-    protected String fullName;
+    protected String firstname;
+
+    @Column(nullable = false)
+    protected String lastname;
 
     @Column(nullable = false)
     protected String username;
@@ -72,7 +81,8 @@ public class User implements UserDetails {
     }
 
     protected User(UserBuilder<?> UserBuilder) {
-        fullName = UserBuilder.fullName;
+        firstname = UserBuilder.firstname;
+        lastname = UserBuilder.lastname;
         phone = UserBuilder.phone;
         username = UserBuilder.username;
         password = UserBuilder.password;
@@ -90,9 +100,15 @@ public class User implements UserDetails {
         authorities = UserBuilder.authorities;
     }
 
+    /**
+     * Builder class for creating a User instance.
+     * 
+     * This builder pattern allows for flexible and customizable creation of User objects.
+     */
     public static class UserBuilder<T extends UserBuilder<T>> {
 
-        private String fullName = "DEFAULT_NAME";
+        private String firstname = "DEFAULT FIRST NAME";
+        private String lastname = "DEFAULT LAST NAME";
         private String phone = "NO EMAIL ON FILE";
         private String username = "NO FIRST NAME ON FILE";
         protected String password = "NO LAST NAME ON FILE";
@@ -112,8 +128,13 @@ public class User implements UserDetails {
         public UserBuilder() {
         }
 
-        public T fullName(String value) {
-            this.fullName = value;
+        public T firstname(String value) {
+            this.firstname = value;
+            return self();
+        }
+
+        public T lastname(String value) {
+            this.lastname = value;
             return self();
         }
 
@@ -219,7 +240,7 @@ public class User implements UserDetails {
      * 
      * @return The ID of the User.
      */
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -228,17 +249,29 @@ public class User implements UserDetails {
      * 
      * @param id
      */
-    public void setId(Long userId) {
+    public void setId(Integer userId) {
         this.userId = userId;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullName(String fullName) {
-        if (fullName != null) {
-            this.fullName = fullName;
+    public void setFirstname(String firstname) {
+        if (firstname != null) {
+            this.firstname = firstname;
+        } else {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        if (lastname != null) {
+            this.lastname = lastname;
         } else {
             throw new IllegalArgumentException("Name cannot be null");
         }
