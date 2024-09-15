@@ -34,10 +34,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      */
     Optional<User> findByEmail(String email);
 
+    @SuppressWarnings("null")
     Optional<User> findById(Integer id);
 
+    @SuppressWarnings("null")
     boolean existsById(Integer id);
 
+    @SuppressWarnings("null")
     void deleteById(Integer integer);
 
     boolean existsByEmail(String email);
