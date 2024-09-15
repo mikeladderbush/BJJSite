@@ -39,7 +39,7 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**").permitAll() // Public access
+                        .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**", "/api/v1/**").permitAll() // Public access
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

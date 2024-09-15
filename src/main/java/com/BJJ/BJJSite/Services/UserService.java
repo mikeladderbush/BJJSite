@@ -36,7 +36,6 @@ public class UserService {
      * @throws UserAlreadyExistsException If a User with the same email already
      *                                    exists.
      */
-    @SuppressWarnings("unchecked")
     @Transactional
     public <T extends User> T createUser(T user) throws UserAlreadyExistsException {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
