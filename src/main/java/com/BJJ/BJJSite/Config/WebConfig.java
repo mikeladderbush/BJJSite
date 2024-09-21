@@ -13,23 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     /**
-     * Configures Cross-Origin Resource Sharing (CORS) settings.
-     * 
-     * This method allows the application to handle requests from different origins, specifically enabling 
-     * requests from `http://localhost:4200` and `http://localhost:4200/**` with specific HTTP methods.
-     * 
-     * @param registry The CORS registry.
-     */
-    @SuppressWarnings("null")
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200","http://localhost:4200/**")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
-                .allowCredentials(true);
-    }
-
-    /**
      * Configures view controllers to redirect requests to the home page, allowing Angular to handle routing.
      * 
      * This method forwards requests to the root URL ("/") to `index.html`, which is served by Angular.

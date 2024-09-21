@@ -6,31 +6,32 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.BJJ.BJJSite.Classes.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Repository interface for managing Session entities.
  * 
- * This interface extends JpaRepository and is used for managing Session
- * entities. Note that the `findById` method is overridden and currently not
- * implemented, throwing an UnsupportedOperationException if called.
+ * This interface extends JpaRepository but disables the default findById method.
  */
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Integer> {
 
+    Logger logger = LoggerFactory.getLogger(SessionRepository.class);
+
     /**
-     * Finds a Session by its ID.
+     * Disabled method that would normally find a Session by its ID.
      * 
-     * This method is overridden and currently unimplemented. If called, it will
-     * throw an UnsupportedOperationException.
+     * This method is intentionally unimplemented. If called, it will log a warning
+     * and throw an UnsupportedOperationException.
      * 
      * @param id The ID of the Session.
-     * @return An Optional containing the Session if found, or an exception is
-     *         thrown.
+     * @return An UnsupportedOperationException is thrown.
      * @throws UnsupportedOperationException If this method is called.
      */
-    @SuppressWarnings("null")
     @Override
     default Optional<Session> findById(Integer id) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        logger.warn("findById method is disabled for SessionRepository");
+        throw new UnsupportedOperationException("The findById method is disabled for SessionRepository");
     }
 }
