@@ -99,7 +99,7 @@ class EmployeeTest {
         assertEquals(100.0, newEmployee.getPayrate());
         assertEquals(PayBasis.SALARY, newEmployee.getPaybasis());
         assertEquals(120000.0, newEmployee.getBaseEarnings());
-        assertTrue(newEmployee.getEnabled());
+        assertTrue(newEmployee.isEnabled());
         assertEquals("ADMIN", newEmployee.getAuthorities().iterator().next().getAuthority());
     }
 }

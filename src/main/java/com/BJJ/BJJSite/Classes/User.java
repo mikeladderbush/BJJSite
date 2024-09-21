@@ -371,7 +371,8 @@ public class User implements UserDetails {
         this.dob = dob;
     }
 
-    public boolean getAccountNonExpired() {
+    @Override
+    public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
 
@@ -379,7 +380,8 @@ public class User implements UserDetails {
         this.accountNonExpired = accountNonExpired;
     }
 
-    public boolean getAccountNonLocked() {
+    @Override
+    public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
 
@@ -387,7 +389,8 @@ public class User implements UserDetails {
         this.accountNonLocked = accountNonLocked;
     }
 
-    public boolean getCredentialsNonExpired() {
+    @Override
+    public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
 
@@ -395,7 +398,8 @@ public class User implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public boolean getEnabled() {
+    @Override
+    public boolean isEnabled() {
         return enabled;
     }
 

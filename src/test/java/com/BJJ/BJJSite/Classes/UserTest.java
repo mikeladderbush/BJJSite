@@ -122,7 +122,7 @@ class UserTest {
 
     @Test
     void testIsEnabled() {
-        assertTrue(user.getEnabled());
+        assertTrue(user.isEnabled());
     }
 
     @Test
@@ -142,7 +142,7 @@ class UserTest {
         assertEquals("alice", builtUser.getUsername());
         assertEquals("alice123", builtUser.getPassword());
         assertEquals("alice@example.com", builtUser.getEmail());
-        assertTrue(builtUser.getEnabled());
+        assertTrue(builtUser.isEnabled());
         assertEquals("ADMIN", builtUser.getAuthorities().iterator().next().getAuthority());
     }
 

@@ -48,10 +48,10 @@ public interface ServiceInterface {
         System.out.println("Address: " + user.getAddress());
         System.out.println("Sex: " + user.getSex());
         System.out.println("DOB: " + user.getDob());
-        System.out.println("Account non-expired: " + user.getAccountNonExpired());
-        System.out.println("Account non-locked: " + user.getAccountNonLocked());
-        System.out.println("Credentials non-expired: " + user.getCredentialsNonExpired());
-        System.out.println("Enabled: " + user.getEnabled());
+        System.out.println("Account non-expired: " + user.isAccountNonExpired());
+        System.out.println("Account non-locked: " + user.isAccountNonLocked());
+        System.out.println("Credentials non-expired: " + user.isCredentialsNonExpired());
+        System.out.println("Enabled: " + user.isEnabled());
     }
 
 }

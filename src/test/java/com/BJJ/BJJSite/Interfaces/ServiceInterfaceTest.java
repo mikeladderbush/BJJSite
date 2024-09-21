@@ -47,10 +47,10 @@ class ServiceInterfaceTest {
         when(mockUser.getAddress()).thenReturn("123 Main St");
         when(mockUser.getSex()).thenReturn("Male");
         when(mockUser.getDob()).thenReturn("01/01/1990");
-        when(mockUser.getAccountNonExpired()).thenReturn(true);
-        when(mockUser.getAccountNonLocked()).thenReturn(true);
-        when(mockUser.getCredentialsNonExpired()).thenReturn(true);
-        when(mockUser.getEnabled()).thenReturn(true);
+        when(mockUser.isAccountNonExpired()).thenReturn(true);
+        when(mockUser.isAccountNonLocked()).thenReturn(true);
+        when(mockUser.isCredentialsNonExpired()).thenReturn(true);
+        when(mockUser.isEnabled()).thenReturn(true);
 
         // Call the displayInformation method
         serviceInterface.displayInformation(mockUser);
@@ -66,9 +66,9 @@ class ServiceInterfaceTest {
         verify(mockUser).getAddress();
         verify(mockUser).getSex();
         verify(mockUser).getDob();
-        verify(mockUser).getAccountNonExpired();
-        verify(mockUser).getAccountNonLocked();
-        verify(mockUser).getCredentialsNonExpired();
-        verify(mockUser).getEnabled();
+        verify(mockUser).isAccountNonExpired();
+        verify(mockUser).isAccountNonLocked();
+        verify(mockUser).isCredentialsNonExpired();
+        verify(mockUser).isEnabled();
     }
 }

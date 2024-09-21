@@ -4,7 +4,10 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,15 +21,22 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.BJJ.BJJSite.Security.JWT.JwtAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final Environment environment;
+
+    public SecurityConfiguration(AuthenticationProvider authenticationProvider,
+            JwtAuthenticationFilter jwtAuthFilter,
+            Environment environment) {
+        this.authenticationProvider = authenticationProvider;
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.environment = environment;
+    }
 
     /**
      * Configures the security filter chain.
@@ -47,14 +57,18 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**", "/api/v1/**")
                         .permitAll() // Public access
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .apply(new CustomDSL());
+
+                if (!isTestEnvironment()) {
+                    http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                }
 
         return http.build();
     }
@@ -70,5 +84,18 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
 
+    }
+
+    
+    private boolean isTestEnvironment() {
+        return environment.acceptsProfiles(Profiles.of("test"));
+    }
+
+    public class CustomDSL extends AbstractHttpConfigurer<CustomDSL, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            AuthenticationManagerBuilder authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+            authBuilder.authenticationProvider(authenticationProvider);
+        }
     }
 }
