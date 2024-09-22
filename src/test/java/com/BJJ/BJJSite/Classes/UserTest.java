@@ -23,6 +23,9 @@ class UserTest {
                 .password("password123")
                 .email("john.doe@example.com")
                 .enabled(true)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
                 .role(Role.USER)
                 .buildUser();
     }

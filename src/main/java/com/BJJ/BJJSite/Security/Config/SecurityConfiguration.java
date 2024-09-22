@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,6 +25,7 @@ import com.BJJ.BJJSite.Security.JWT.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
@@ -55,7 +57,7 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**", "/api/v1/**")
+                        .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**")
                         .permitAll() // Public access
                         .anyRequest().authenticated() // All other requests require authentication
                 )
@@ -63,13 +65,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .csrf(AbstractHttpConfigurer::disable)
-                .apply(new CustomDSL());
-
-                if (!isTestEnvironment()) {
-                    http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-                }
-
+                .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
@@ -84,18 +80,5 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
 
-    }
-
-    
-    private boolean isTestEnvironment() {
-        return environment.acceptsProfiles(Profiles.of("test"));
-    }
-
-    public class CustomDSL extends AbstractHttpConfigurer<CustomDSL, HttpSecurity> {
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            AuthenticationManagerBuilder authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-            authBuilder.authenticationProvider(authenticationProvider);
-        }
     }
 }
