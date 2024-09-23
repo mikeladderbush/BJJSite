@@ -1,6 +1,5 @@
 package com.BJJ.BJJSite.Classes;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -10,16 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -73,9 +69,6 @@ public class User implements UserDetails {
     private String sex;
     private String dob;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PaymentOption> paymentOptions;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -106,7 +99,6 @@ public class User implements UserDetails {
         accountNonLocked = UserBuilder.accountNonLocked;
         credentialsNonExpired = UserBuilder.credentialsNonExpired;
         enabled = UserBuilder.enabled;
-        paymentOptions = UserBuilder.paymentOptions;
         role = UserBuilder.role;
     }
 
@@ -133,7 +125,6 @@ public class User implements UserDetails {
         private boolean accountNonLocked;
         private boolean credentialsNonExpired;
         private boolean enabled;
-        private List<PaymentOption> paymentOptions = new ArrayList<>();
         private Role role;
 
         /**
@@ -215,17 +206,6 @@ public class User implements UserDetails {
         public T enabled(boolean value) {
             this.enabled = value;
             return self();
-        }
-
-        public T paymentOptions(List<PaymentOption> paymentOptions) {
-            this.paymentOptions = paymentOptions;
-            return self();
-        }
-
-        @SuppressWarnings("unchecked")
-        public T addPaymentOption(PaymentOption paymentOption) {
-            paymentOptions.add(paymentOption);
-            return (T) this;
         }
 
         @SuppressWarnings("unchecked")
@@ -405,18 +385,6 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public List<PaymentOption> getPaymentOptions() {
-        return paymentOptions;
-    }
-
-    public void setPaymentOptions(List<PaymentOption> paymentOptions) {
-        this.paymentOptions = paymentOptions;
-    }
-
-    public void addPaymentOption(PaymentOption paymentOption) {
-        paymentOptions.add(paymentOption);
     }
 
     @Override

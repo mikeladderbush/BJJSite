@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +39,6 @@ class UserServiceTest {
                 .address("123 Main St")
                 .sex("Male")
                 .dob("01-01-1990")
-                .paymentOptions(new ArrayList<>())
                 .buildUser();
     }
 

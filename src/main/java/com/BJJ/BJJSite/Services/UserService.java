@@ -85,10 +85,6 @@ public class UserService {
             if (update.getDob() != null) {
                 user.setDob(update.getDob());
             }
-            if (update.getPaymentOptions() != null) {
-                user.getPaymentOptions().clear();
-                user.getPaymentOptions().addAll(update.getPaymentOptions());
-            }
             return userRepository.save(user); // Save and return updated user
         }).orElseThrow(() -> new IllegalArgumentException("User with email " + userEmail + " not found"));
     }

@@ -1,14 +1,11 @@
 package com.BJJ.BJJSite.Classes;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.List;
 
 class UserTest {
 
@@ -149,11 +146,4 @@ class UserTest {
         assertEquals("ADMIN", builtUser.getAuthorities().iterator().next().getAuthority());
     }
 
-    @Test
-    void testAddPaymentOption() {
-        PaymentOption paymentOption = mock(PaymentOption.class);
-        user.addPaymentOption(paymentOption);
-        assertEquals(1, user.getPaymentOptions().size());
-        assertTrue(user.getPaymentOptions().contains(paymentOption));
-    }
 }

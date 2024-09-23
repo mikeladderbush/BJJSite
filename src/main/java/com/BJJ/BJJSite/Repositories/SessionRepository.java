@@ -29,6 +29,7 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
      * @return An UnsupportedOperationException is thrown.
      * @throws UnsupportedOperationException If this method is called.
      */
+    @SuppressWarnings("null")
     @Override
     default Optional<Session> findById(Integer id) {
         logger.warn("findById method is disabled for SessionRepository");
