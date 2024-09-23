@@ -1,4 +1,4 @@
-package com.BJJ.BJJSite.Factories.FactoryExceptions;
+package com.BJJ.BJJSite.Exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String message) {

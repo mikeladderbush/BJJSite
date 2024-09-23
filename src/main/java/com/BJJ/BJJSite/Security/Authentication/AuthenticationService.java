@@ -22,13 +22,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = new User.UserBuilder<>()
+        var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ADMIN)
-                .buildUser();
+                .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
@@ -40,8 +40,7 @@ public class AuthenticationService {
                         request.getEmail(),
                         request.getPassword()));
 
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow(/* include exception here */);
+        var user = repository.getUserByEmail(request.getEmail());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }

@@ -1,23 +1,18 @@
 package com.BJJ.BJJSite.Controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import com.BJJ.BJJSite.Classes.User;
-import com.BJJ.BJJSite.Factories.UserFactory;
+import com.BJJ.BJJSite.Dto.UserDto;
+import com.BJJ.BJJSite.Dto.UserResponseDto;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Services.UserService;
+
+import jakarta.validation.Valid;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -30,17 +25,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserFactory userFactory;
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    public UserController(UserFactory userFactory, UserRepository userRepository) {
-        this.userFactory = userFactory;
-        this.userRepository = userRepository;
-    }
 
     /**
      * Retrieves a User by its ID.
@@ -49,56 +38,54 @@ public class UserController {
      * @return A ResponseEntity containing the User if found, or a 404 status if not found.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> getUserById(@PathVariable Integer id) {
-        Optional<User> userOptional = userService.getUser(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            EntityModel<User> resource = EntityModel.of(user);
-            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
-            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
-            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
-            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
-            return ResponseEntity.ok(resource);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasAuthority('user:read')")
+    public ResponseEntity<EntityModel<UserResponseDto>> getUserById(@PathVariable Integer id) {
+        User user = userRepository.getUserById(id);
+        UserResponseDto userResponseDto = convertEntityToResponseDto(user);
+
+        EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
+        resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+        resource.add(linkTo(methodOn(UserController.class).createUser(null)).withRel("create-user"));
+        resource.add(linkTo(methodOn(UserController.class).updateUser(id, null)).withRel("update-user"));
+        resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+        return ResponseEntity.ok(resource);
     }
 
     /**
      * Creates a new User.
      * 
+     * @param userDto The UserDto containing user information.
      * @return A ResponseEntity containing the created User.
      */
     @PostMapping
-    public ResponseEntity<EntityModel<User>> createUser() {
-        User createdUser = userFactory.createUser().orElseThrow(() -> new RuntimeException("User creation failed"));
-        EntityModel<User> resource = EntityModel.of(createdUser);
-        resource.add(linkTo(methodOn(UserController.class).getUserById(createdUser.getUserId())).withSelfRel());
-        return ResponseEntity.ok(resource);
+    @PreAuthorize("hasAuthority('user:create')")
+    public ResponseEntity<EntityModel<UserResponseDto>> createUser(@Valid @RequestBody UserDto userDto) {
+        User createdUser = userService.createUser(userDto);
+        UserResponseDto userResponseDto = convertEntityToResponseDto(createdUser);
+
+        EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
+        resource.add(linkTo(methodOn(UserController.class).getUserById(createdUser.getId())).withSelfRel());
+        return ResponseEntity.status(201).body(resource);
     }
 
     /**
      * Updates an existing User.
      * 
-     * @param id The ID of the User to be updated.
-     * @param update The updated User data.
+     * @param id       The ID of the User to be updated.
+     * @param userDto The updated User data.
      * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<User>> updateUser(@PathVariable Integer id, @RequestBody User update) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            userService.updateUser(user.getEmail(), update);
-            EntityModel<User> resource = EntityModel.of(user);
-            resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
-            resource.add(linkTo(methodOn(UserController.class).createUser()).withRel("create-user"));
-            resource.add(linkTo(methodOn(UserController.class).updateUser(id, user)).withRel("update-user"));
-            resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
-            return ResponseEntity.ok(resource);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasAuthority('user:update')")
+    public ResponseEntity<EntityModel<UserResponseDto>> updateUser(@PathVariable Integer id, @Valid @RequestBody UserDto userDto) {
+        User updatedUser = userService.updateUserById(id, userDto);
+        UserResponseDto userResponseDto = convertEntityToResponseDto(updatedUser);
+
+        EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
+        resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+        resource.add(linkTo(methodOn(UserController.class).createUser(null)).withRel("create-user"));
+        resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+        return ResponseEntity.ok(resource);
     }
 
     /**
@@ -108,12 +95,30 @@ public class UserController {
      * @return A ResponseEntity with a 200 status if the deletion was successful.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin:delete')")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        if (userRepository.existsById(id)) {
-            userService.deleteUser(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Converts a User entity to a UserResponseDto.
+     *
+     * @param user The User entity to convert.
+     * @return The UserResponseDto.
+     */
+    private UserResponseDto convertEntityToResponseDto(User user) {
+        return UserResponseDto.builder()
+                .userId(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .address(user.getAddress())
+                .dob(user.getDob())
+                .sex(user.getSex())
+                // Exclude password and sensitive fields
+                .build();
     }
 }

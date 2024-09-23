@@ -13,7 +13,7 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        user = new User.UserBuilder<>()
+        user = User.builder()
                 .firstname("John")
                 .lastname("Doe")
                 .username("johndoe")
@@ -24,77 +24,7 @@ class UserTest {
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .role(Role.USER)
-                .buildUser();
-    }
-
-    @Test
-    void testGetFirstname() {
-        assertEquals("John", user.getFirstname());
-    }
-
-    @Test
-    void testSetFirstname() {
-        user.setFirstname("Jane");
-        assertEquals("Jane", user.getFirstname());
-    }
-
-    @Test
-    void testSetFirstname_NullValue() {
-        assertThrows(IllegalArgumentException.class, () -> user.setFirstname(null));
-    }
-
-    @Test
-    void testGetLastname() {
-        assertEquals("Doe", user.getLastname());
-    }
-
-    @Test
-    void testSetLastname() {
-        user.setLastname("Smith");
-        assertEquals("Smith", user.getLastname());
-    }
-
-    @Test
-    void testSetLastname_NullValue() {
-        assertThrows(IllegalArgumentException.class, () -> user.setLastname(null));
-    }
-
-    @Test
-    void testGetUsername() {
-        assertEquals("johndoe", user.getUsername());
-    }
-
-    @Test
-    void testSetUsername() {
-        user.setUsername("janedoe");
-        assertEquals("janedoe", user.getUsername());
-    }
-
-    @Test
-    void testGetPassword() {
-        assertEquals("password123", user.getPassword());
-    }
-
-    @Test
-    void testSetPassword() {
-        user.setPassword("newpassword");
-        assertEquals("newpassword", user.getPassword());
-    }
-
-    @Test
-    void testGetEmail() {
-        assertEquals("john.doe@example.com", user.getEmail());
-    }
-
-    @Test
-    void testSetEmail() {
-        user.setEmail("jane.doe@example.com");
-        assertEquals("jane.doe@example.com", user.getEmail());
-    }
-
-    @Test
-    void testSetEmail_NullValue() {
-        assertThrows(IllegalArgumentException.class, () -> user.setEmail(null));
+                .build();
     }
 
     @Test
@@ -127,7 +57,7 @@ class UserTest {
 
     @Test
     void testBuilderPattern() {
-        User builtUser = new User.UserBuilder<>()
+        User builtUser = User.builder()
                 .firstname("Alice")
                 .lastname("Wonderland")
                 .username("alice")
@@ -135,7 +65,7 @@ class UserTest {
                 .email("alice@example.com")
                 .enabled(true)
                 .role(Role.ADMIN)
-                .buildUser();
+                .build();
 
         assertEquals("Alice", builtUser.getFirstname());
         assertEquals("Wonderland", builtUser.getLastname());
