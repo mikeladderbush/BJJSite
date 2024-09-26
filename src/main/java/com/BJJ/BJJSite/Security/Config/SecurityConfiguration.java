@@ -20,7 +20,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.BJJ.BJJSite.Security.JWT.JwtAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -28,14 +27,12 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
-    private final Environment environment;
 
     public SecurityConfiguration(AuthenticationProvider authenticationProvider,
             JwtAuthenticationFilter jwtAuthFilter,
             Environment environment) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthFilter = jwtAuthFilter;
-        this.environment = environment;
     }
 
     /**
@@ -57,6 +54,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/about", "/login", "/contact", "/api/v1/auth/**")
                         .permitAll() // Public access
+                        .requestMatchers("/api/users/**").hasRole("USER")
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

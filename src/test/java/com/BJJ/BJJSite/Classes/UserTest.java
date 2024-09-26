@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 class UserTest {
 
@@ -23,8 +25,10 @@ class UserTest {
                 .accountNonExpired(true)
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
-                .role(Role.USER)
                 .build();
+        Set<String> roles = new HashSet<>();
+        roles.add("USER");
+        user.setRoles(roles);
     }
 
     @Test
@@ -32,7 +36,7 @@ class UserTest {
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         assertNotNull(authorities);
         assertEquals(1, authorities.size());
-        assertEquals("USER", authorities.iterator().next().getAuthority());
+        assertEquals("ROLE_USER", authorities.iterator().next().getAuthority());
     }
 
     @Test
@@ -64,16 +68,19 @@ class UserTest {
                 .password("alice123")
                 .email("alice@example.com")
                 .enabled(true)
-                .role(Role.ADMIN)
                 .build();
 
+        final Set<String> roles = new HashSet<>();
+        roles.add("USER");
+
+        builtUser.setRoles(roles);
         assertEquals("Alice", builtUser.getFirstname());
         assertEquals("Wonderland", builtUser.getLastname());
         assertEquals("alice", builtUser.getUsername());
         assertEquals("alice123", builtUser.getPassword());
         assertEquals("alice@example.com", builtUser.getEmail());
         assertTrue(builtUser.isEnabled());
-        assertEquals("ADMIN", builtUser.getAuthorities().iterator().next().getAuthority());
+        assertEquals("ROLE_USER", builtUser.getAuthorities().iterator().next().getAuthority());
     }
 
 }

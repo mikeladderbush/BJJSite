@@ -2,7 +2,9 @@ package com.BJJ.BJJSite.Classes;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +15,6 @@ import com.BJJ.BJJSite.Enums.PayBasis;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -97,10 +97,6 @@ public class User implements UserDetails {
     @Builder.Default
     private String dob = "DEFAULT_DOB";
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Role role = Role.USER;
-
     @Builder.Default
     private String socialSecurityNumber = "000-00-0000";
 
@@ -116,23 +112,15 @@ public class User implements UserDetails {
     @Builder.Default
     private double baseEarnings = 0.0;
 
+    @Column
+    @Builder.Default
+    private Set<String> roles = Set.of("USER");
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role)) // Prefix roles with "ROLE_"
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
 }

@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 
 /**
  * AppModule
@@ -32,6 +32,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     ContactpageComponent
   ], // Placeholder for components, directives, or pipes that belong to the root module
   imports: [
+    HttpClient,
     CommonModule,
     BrowserModule,
     AppRoutingModule, // Provides common Angular directives and pipes across the application

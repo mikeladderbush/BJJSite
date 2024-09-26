@@ -5,7 +5,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.BJJ.BJJSite.Classes.Role;
 import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Security.JWT.JwtService;
@@ -21,13 +20,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ADMIN)
+                .roles(request.getRoles())
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -42,6 +42,7 @@ public class AuthenticationService {
 
         var user = repository.getUserByEmail(request.getEmail());
         var jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }

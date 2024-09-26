@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import com.BJJ.BJJSite.Classes.User;
@@ -23,6 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
  */
 @RestController
 @RequestMapping("/api/users")
+@EnableMethodSecurity(prePostEnabled = true)
 public class UserController {
 
     @Autowired
@@ -32,23 +34,28 @@ public class UserController {
     private UserService userService;
 
     /**
-     * Retrieves a User by its ID.
+     * Retrieves a User by their Email.
      * 
-     * @param id The ID of the User.
-     * @return A ResponseEntity containing the User if found, or a 404 status if not found.
+     * @param email The email of the User.
+     * @return A ResponseEntity containing the User if found, or a 404 status if not
+     *         found.
      */
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<EntityModel<UserResponseDto>> getUserById(@PathVariable Integer id) {
-        User user = userRepository.getUserById(id);
-        UserResponseDto userResponseDto = convertEntityToResponseDto(user);
+    @GetMapping("/{email}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<EntityModel<UserResponseDto>> getUser(@PathVariable String email) {
+        User user = userRepository.getUserByEmail(email);
 
+        UserResponseDto userResponseDto = convertEntityToResponseDto(user);
         EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
-        resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+
+        // Adding HATEOAS links
+        resource.add(linkTo(methodOn(UserController.class).getUser(email)).withSelfRel());
         resource.add(linkTo(methodOn(UserController.class).createUser(null)).withRel("create-user"));
-        resource.add(linkTo(methodOn(UserController.class).updateUser(id, null)).withRel("update-user"));
-        resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+        resource.add(linkTo(methodOn(UserController.class).updateUser(email, null)).withRel("update-user"));
+        resource.add(linkTo(methodOn(UserController.class).deleteUser(email)).withRel("delete-user"));
+
         return ResponseEntity.ok(resource);
+
     }
 
     /**
@@ -58,47 +65,56 @@ public class UserController {
      * @return A ResponseEntity containing the created User.
      */
     @PostMapping
-    @PreAuthorize("hasAuthority('user:create')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntityModel<UserResponseDto>> createUser(@Valid @RequestBody UserDto userDto) {
         User createdUser = userService.createUser(userDto);
         UserResponseDto userResponseDto = convertEntityToResponseDto(createdUser);
 
         EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
-        resource.add(linkTo(methodOn(UserController.class).getUserById(createdUser.getId())).withSelfRel());
+        resource.add(linkTo(methodOn(UserController.class).getUser(createdUser.getEmail())).withSelfRel());
+        resource.add(
+                linkTo(methodOn(UserController.class).updateUser(createdUser.getEmail(), null)).withRel("update-user"));
+        resource.add(linkTo(methodOn(UserController.class).deleteUser(createdUser.getEmail())).withRel("delete-user"));
+
         return ResponseEntity.status(201).body(resource);
     }
 
     /**
-     * Updates an existing User.
+     * Updates an existing User identified by email.
      * 
-     * @param id       The ID of the User to be updated.
-     * @param userDto The updated User data.
-     * @return A ResponseEntity containing the updated User if found, or a 404 status if not found.
+     * @param email   The email of the User to update.
+     * @param userDto The UserDto containing updated information.
+     * @return A ResponseEntity containing the updated User.
      */
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('user:update')")
-    public ResponseEntity<EntityModel<UserResponseDto>> updateUser(@PathVariable Integer id, @Valid @RequestBody UserDto userDto) {
-        User updatedUser = userService.updateUserById(id, userDto);
-        UserResponseDto userResponseDto = convertEntityToResponseDto(updatedUser);
+    @PutMapping("/{email}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<EntityModel<UserResponseDto>> updateUser(
+            @PathVariable String email,
+            @Valid @RequestBody UserDto userDto) {
+        User updatedUser = userService.updateUser(email, userDto);
 
+        UserResponseDto userResponseDto = convertEntityToResponseDto(updatedUser);
         EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
-        resource.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
+
+        // Adding HATEOAS links
+        resource.add(linkTo(methodOn(UserController.class).getUser(email)).withSelfRel());
         resource.add(linkTo(methodOn(UserController.class).createUser(null)).withRel("create-user"));
-        resource.add(linkTo(methodOn(UserController.class).deleteUser(id)).withRel("delete-user"));
+        resource.add(linkTo(methodOn(UserController.class).deleteUser(email)).withRel("delete-user"));
+
         return ResponseEntity.ok(resource);
     }
 
     /**
-     * Deletes a User by its ID.
+     * Deletes a User identified by email.
      * 
-     * @param id The ID of the User to be deleted.
-     * @return A ResponseEntity with a 200 status if the deletion was successful.
+     * @param email The email of the User to delete.
+     * @return A ResponseEntity with no content.
      */
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin:delete')")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{email}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteUser(@PathVariable String email) {
+        userRepository.deleteUserByEmail(email);
+        return ResponseEntity.noContent().build();
     }
 
     /**

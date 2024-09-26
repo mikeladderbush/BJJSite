@@ -1,15 +1,19 @@
 package com.BJJ.BJJSite.Services;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.BJJ.BJJSite.Classes.Role;
 import com.BJJ.BJJSite.Classes.User;
 import com.BJJ.BJJSite.Dto.UserDto;
 import com.BJJ.BJJSite.Exceptions.UserAlreadyExistsException;
 import com.BJJ.BJJSite.Exceptions.UserNotFoundException;
 import com.BJJ.BJJSite.Repositories.UserRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -22,7 +26,7 @@ public class UserService {
     private UserRepository userRepository;
 
     /**
-     * Creates a new user using the provided UserDto.
+     * Creates a new user using the provided UserDto and assigns a default role.
      *
      * @param userDto The UserDto containing user information.
      * @return The created User entity.
@@ -32,10 +36,7 @@ public class UserService {
             throw new IllegalArgumentException("User data must not be null");
         }
 
-        // Check if username or email already exists
-        if (userRepository.existsByUsername(userDto.getUsername())) {
-            throw new UserAlreadyExistsException("Username already exists");
-        }
+        // Check if email already exists
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException("Email already registered");
         }
@@ -46,54 +47,17 @@ public class UserService {
         // Convert UserDto to User entity
         User user = convertDtoToEntity(userDto);
         user.setPassword(encodedPassword);
-        user.setRole(Role.USER); // Default role
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
 
+        // Assign default role
+        Set<String> roles = new HashSet<>();
+        roles.add("USER"); // Default role
+        user.setRoles(roles);
+
         return userRepository.save(user);
-    }
-
-    /**
-     * Updates an existing user by their ID using the provided UserDto.
-     *
-     * @param userId  The ID of the user to update.
-     * @param userDto The UserDto containing updated user information.
-     * @return The updated User entity.
-     */
-    @Transactional
-    public User updateUserById(Integer userId, UserDto userDto) {
-        if (userId == null || userDto == null) {
-            throw new IllegalArgumentException("User ID and updated user data must not be null");
-        }
-
-        // Retrieve the existing user
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-        // Update fields
-        updateEntityFromDto(existingUser, userDto);
-
-        return userRepository.save(existingUser);
-    }
-
-    /**
-     * Deletes a user by their ID.
-     *
-     * @param userId The ID of the user to delete.
-     */
-    @Transactional
-    public void deleteUserById(Integer userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("User ID must not be null");
-        }
-
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
-        }
-
-        userRepository.deleteById(userId);
     }
 
     /**
@@ -101,36 +65,33 @@ public class UserService {
      *
      * @param email   The email of the user to update.
      * @param userDto The UserDto containing updated user information.
-     * @return The updated User entity.
+     * @return An Optional containing the updated User entity.
      */
     @Transactional
-    public User updateUserByEmail(String email, UserDto userDto) {
+    public User updateUser(String email, UserDto userDto) {
         if (email == null || userDto == null) {
             throw new IllegalArgumentException("Email and updated user data must not be null");
         }
 
-        // Retrieve the existing user
-        User existingUser = userRepository.getUserByEmail(email);
-
-        // Update fields
-        updateEntityFromDto(existingUser, userDto);
-
-        return userRepository.save(existingUser);
+        User oldUser = userRepository.getUserByEmail(email);
+        updateEntityFromDto(oldUser, userDto);
+        return userRepository.getUserByEmail(email);
     }
 
     /**
      * Deletes a user by their email.
      *
      * @param email The email of the user to delete.
+     * @return True if the user was deleted, otherwise false.
      */
     @Transactional
-    public void deleteUserByEmail(String email) {
+    public void deleteUser(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Email must not be null");
         }
 
         if (!userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("User not found");
+            throw new UserNotFoundException("User not found with email: " + email);
         }
 
         userRepository.deleteUserByEmail(email);
@@ -175,6 +136,14 @@ public class UserService {
         if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
             String encodedPassword = passwordEncoder.encode(userDto.getPassword());
             user.setPassword(encodedPassword);
+        }
+
+        // Update roles if provided (optional)
+        if (userDto.getRoles() != null && !userDto.getRoles().isEmpty()) {
+            Set<String> updatedRoles = userDto.getRoles().stream()
+                    .map(role -> role) // Ensure "ROLE_" prefix is added
+                    .collect(Collectors.toSet());
+            user.setRoles(updatedRoles);
         }
     }
 }
