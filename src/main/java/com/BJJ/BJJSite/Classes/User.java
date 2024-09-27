@@ -113,8 +113,7 @@ public class User implements UserDetails {
     private double baseEarnings = 0.0;
 
     @Column
-    @Builder.Default
-    private Set<String> roles = Set.of("USER");
+    private Set<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

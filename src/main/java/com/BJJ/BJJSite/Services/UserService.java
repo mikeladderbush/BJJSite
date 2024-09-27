@@ -35,15 +35,15 @@ public class UserService {
         if (userDto == null) {
             throw new IllegalArgumentException("User data must not be null");
         }
-
+    
         // Check if email already exists
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException("Email already registered");
         }
-
+    
         // Encode the password
         String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-
+    
         // Convert UserDto to User entity
         User user = convertDtoToEntity(userDto);
         user.setPassword(encodedPassword);
@@ -51,14 +51,20 @@ public class UserService {
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
-
+    
         // Assign default role
         Set<String> roles = new HashSet<>();
         roles.add("USER"); // Default role
         user.setRoles(roles);
-
+    
+        // Set a default username if it's null or empty
+        if (user.getUsername() == null || user.getUsername().isEmpty()) {
+            user.setUsername(userDto.getEmail()); // Set username as email or some other default
+        }
+    
         return userRepository.save(user);
     }
+    
 
     /**
      * Updates an existing user by their email using the provided UserDto.

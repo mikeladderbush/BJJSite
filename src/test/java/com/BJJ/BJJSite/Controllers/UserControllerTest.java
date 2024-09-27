@@ -9,8 +9,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import java.util.Set;
-import java.util.HashSet;
 
 import jakarta.transaction.Transactional;
 
@@ -18,7 +16,6 @@ import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Security.Authentication.AuthenticationRequest;
 import com.BJJ.BJJSite.Security.Authentication.RegisterRequest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,9 +46,6 @@ public class UserControllerTest {
         regRequest.setFirstname("test");
         regRequest.setLastname("user");
         regRequest.setPassword("mike");
-        Set<String> roles = new HashSet<>();
-        roles.add("ROLE_USER");
-        regRequest.setRoles(roles);
         mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(regRequest)))
