@@ -22,7 +22,7 @@ import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.com
   templateUrl: './homepage.component.html', // Path to the HTML template
   styleUrls: ['./homepage.component.css'] // Path to the CSS file
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent {
   user: any; // Holds the user data fetched from the API
 
   /**
@@ -33,37 +33,5 @@ export class HomepageComponent implements OnInit {
    */
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
 
-  /**
-   * ngOnInit
-   * 
-   * Lifecycle hook that is called after the component's view has been fully initialized.
-   * It triggers the `getUser` method to fetch user data when the component is initialized.
-   */
-  ngOnInit(): void {
-    this.getUser(1);
-  }
-
-  /**
-   * getUser
-   * 
-   * Fetches user data from the backend API based on the provided user ID.
-   * 
-   * @param id - The ID of the user to fetch
-   */
-  getUser(id: number): void {
-    this.http.get(`http://localhost:8080/api/users/${id}`)
-      .subscribe({
-        next: data => {
-          this.user = data;
-          console.log(this.user);
-          this.cdr.detectChanges(); // Manually triggers change detection
-        },
-        error: error => {
-          console.error('There was an issue getting a user', error);
-        },
-        complete: () => {
-          console.log('Request complete');
-        }
-      });
-  }
+  
 }

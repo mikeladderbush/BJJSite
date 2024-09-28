@@ -1,6 +1,6 @@
 .KimuraLogoPage {
     background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/KimuraLogo.jpg');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     position: fixed;
@@ -8,5 +8,27 @@
     height: 100vh;
     top: 0;
     left: 0;
+    background-color: black;
 
+}
+
+.KimuraLogoPage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit;
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: inherit;
+    filter: blur(10px);
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.KimuraLogoPage > * {
+    position: relative;
+    z-index: 2;
 }
