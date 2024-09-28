@@ -1,0 +1,30 @@
+.header1 {
+    font-family: 'Socicon', sans-serif;
+    width: 50vw;
+    margin: 10vw;
+}
+
+.BillCompetition {
+    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/billyduffybjj.JPG');
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+}
+
+.BillTitle {
+    font-family: 'Socicon', sans-serif;
+    width: 50vw;
+    margin: 10vw;
+}
+
+.BillBio {
+    font-family: 'Socicon', sans-serif;
+    background-position: left;
+    width: 50vw;
+    margin: 10vw;
+}

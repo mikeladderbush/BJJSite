@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './core/components/app-component/app.component';
-import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
-import { LoginpageComponent } from './features/loginpage/loginpage-component/loginpage.component';
-import { AboutpageComponent } from './features/aboutpage/components/aboutpage-component/aboutpage.component';
-import { ContactpageComponent } from './features/contactpage/contactpage-component/contactpage.component';
 import { AppRoutingModule } from './core/routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +9,10 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { AboutpageComponent } from './features/aboutpage/aboutpage-component/aboutpage.component';
+import { ContactpageComponent } from './features/contactpage/contactpage.module';
+import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
+import { LoginpageComponent } from './features/loginpage/loginpage-component/loginpage.component';
 
 /**
  * AppModule

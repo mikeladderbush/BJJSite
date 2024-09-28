@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
+import { HomepageComponent } from '../../../features/homepage/homepage-component/homepage.component';
+import { ContactpageComponent } from '../../../features/contactpage/contactpage-component/contactpage.component';
+import { AboutpageComponent } from '../../../features/aboutpage/aboutpage-component/aboutpage.component';
 
 /**
  * The root component of the application.
@@ -9,7 +12,7 @@ import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.com
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent],
+  imports: [RouterOutlet, SidebarComponent, HomepageComponent, AboutpageComponent, ContactpageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

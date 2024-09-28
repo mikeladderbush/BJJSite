@@ -5,36 +5,4 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="contactpage.component.css">
-    <title>Contactpage</title>
 </head>
-
-<body>
-    <app-sidebar></app-sidebar>
-
-    <header class="bg-primary text-white text-center py-4">
-        <h1 class="mobi-mbri-home">Kimura BJJ Methuen</h1>
-    </header>
-
-    <div class="container my-5">
-        <!--
-        <div *ngIf="user; else loading" class="card p-4 shadow">
-            <h1 class="card-title">User Details</h1>
-            <p>ID: {{ user.userId }}</p>
-            <p>Name: {{ user.fullName }}</p>
-            <p>Username: {{ user.username }}</p>
-            <p>Email: {{ user.email }}</p>
-        </div>
-    -->
-
-        <ng-template #loading>
-            <p class="text-center text-muted">Loading user data...</p>
-        </ng-template>
-    </div>
-
-    <footer class="bg-dark text-white text-center py-3">
-        <p class="m-0">&copy; 2024</p>
-    </footer>
-
-</body>
-
-</html>

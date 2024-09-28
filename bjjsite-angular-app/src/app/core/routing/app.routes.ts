@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { provideRouter } from '@angular/router';
 import { AppComponent } from '../components/app-component/app.component';
 import { HomepageComponent } from '../../features/homepage/homepage-component/homepage.component';
-import { AboutpageComponent } from '../../features/aboutpage/components/aboutpage-component/aboutpage.component';
+import { AboutpageComponent } from '../../features/aboutpage/aboutpage-component/aboutpage.component';
 import { ContactpageComponent } from '../../features/contactpage/contactpage-component/contactpage.component';
 import { LoginpageComponent } from '../../features/loginpage/loginpage-component/loginpage.component';
 

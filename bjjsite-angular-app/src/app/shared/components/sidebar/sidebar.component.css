@@ -9,53 +9,30 @@
     top: 0;
     left: 0;
     z-index: 1000;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .black-belt-sidebar nav {
     width: 100%;
     height: 100%;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Distribute the links vertically */
+    align-items: center;
 }
 
 .black-belt-sidebar ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    position: relative;
     width: 100%;
-    height: 100%;
 }
 
 .black-belt-sidebar li {
-    position: absolute;
-    width: 110%;
-}
-
-/* Position each link manually */
-.home-link {
-    top: 23%;
-    left: 10%;
-}
-
-.about-link {
-    top: 32%;
-    left: 10%;
-}
-
-.login-link {
-    top: 42%;
-    left: 10%;
-}
-
-.contact-link {
-    top: 52%;
-    left: 10%;
-}
-
-.resources-link {
-    top: 62%;
-    left: 10%;
+    width: 100%; /* Make each list item take up full width */
+    text-align: center; /* Center the text inside the list items */
 }
 
 .link {
@@ -64,7 +41,9 @@
     padding: 10px;
     display: block;
     background-color: rgba(255, 255, 255, 0);
-    border-radius: 0px;
-    text-align: left;
     transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: rgba(255, 0, 0, 0.7); /* Hover effect for better visibility */
 }
