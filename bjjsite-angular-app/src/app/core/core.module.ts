@@ -16,7 +16,7 @@ import { ContactpageComponent } from '../features/contactpage/contactpage-compon
 @NgModule({
   declarations: [], // Placeholder for core components, directives, and pipes
   imports: [
-    CommonModule // Provides Angular's common directives and pipes
+    CommonModule, // Provides Angular's common directives and pipes
   ]
 })
 export class CoreModule { }

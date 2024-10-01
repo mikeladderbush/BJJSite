@@ -8,7 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { AboutpageComponent } from './features/aboutpage/aboutpage-component/aboutpage.component';
 import { ContactpageComponent } from './features/contactpage/contactpage.module';
 import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
@@ -29,10 +29,11 @@ import { LoginpageComponent } from './features/loginpage/loginpage-component/log
     HomepageComponent,
     LoginpageComponent,
     AboutpageComponent,
-    ContactpageComponent
+    ContactpageComponent,
+    SidebarComponent
   ], // Placeholder for components, directives, or pipes that belong to the root module
   imports: [
-    HttpClient,
+    HttpClientModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule, // Provides common Angular directives and pipes across the application

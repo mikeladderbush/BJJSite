@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutpageComponent } from '../../features/aboutpage/aboutpage-component/aboutpage.component';
+import { ContactpageComponent } from '../../features/contactpage/contactpage.module';
 import { HomepageComponent } from '../../features/homepage/homepage-component/homepage.component';
-import { ContactpageComponent } from '../../features/contactpage/contactpage-component/contactpage.component';
 import { LoginpageComponent } from '../../features/loginpage/loginpage-component/loginpage.component';
 
+
 const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirects empty path to the home page
-    { path: 'home', component: HomepageComponent },       // Route to the homepage
-    { path: 'contact', component: ContactpageComponent },
-    { path: 'login', component: LoginpageComponent },
-    { path: '**', redirectTo: '/home'}                    // Wildcard route, must be last
+    { path: '', component: HomepageComponent }, // Default route
+    { path: 'home', component: HomepageComponent }, // Home page
+    { path: 'about', component: AboutpageComponent }, // About page
+    { path: 'contact', component: ContactpageComponent }, // Contact page
+    { path: 'login', component: LoginpageComponent }, // Login page
 ];
 
 /**
@@ -22,7 +24,10 @@ const routes: Routes = [
  * - Provides a wildcard route to handle undefined paths.
  */
 @NgModule({
-    imports: [RouterModule.forRoot(routes)], // Configures the router at the application's root level
+    imports: [RouterModule.forRoot(routes, {
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+    })], // Configures the router at the application's root level
     exports: [RouterModule] // Makes RouterModule available throughout the app
 })
 export class AppRoutingModule {}

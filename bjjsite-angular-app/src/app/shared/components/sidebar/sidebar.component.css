@@ -1,5 +1,5 @@
 .black-belt-sidebar {
-    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/blackbelt.jpg');
+    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/blackbeltsidebarnostripes.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,34 +16,46 @@
 
 .black-belt-sidebar nav {
     width: 100%;
-    height: 100%;
+    height: 40vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Distribute the links vertically */
+    justify-content: flex-start;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .black-belt-sidebar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .black-belt-sidebar li {
-    width: 100%; /* Make each list item take up full width */
-    text-align: center; /* Center the text inside the list items */
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: center;
 }
 
 .link {
+    background-image: url('C:/Users/Michael Ladderbush/Desktop/JavaProjects/BJJWebsite/BJJSite/BJJSite/images/stripe.png');
+    background-size: cover;
+    background-position: center;
     color: rgb(0, 0, 0);
     text-decoration: none;
-    padding: 10px;
+    width: auto; /* Scale link width relative to sidebar width */
+    padding: 2px; /* Use relative units for padding */
+    height: auto;
     display: block;
-    background-color: rgba(255, 255, 255, 0);
+    border-radius: 0; /* Ensure sharp corners */
     transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Ensure padding doesn't overflow */
+    max-width: 100px; 
+    max-height: 35px;
 }
 
 .link:hover {
-    background-color: rgba(255, 0, 0, 0.7); /* Hover effect for better visibility */
+    background-color: rgba(255, 0, 0, 0.7);
 }
+
