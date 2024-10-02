@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { HomepageComponent } from '../../../features/homepage/homepage-component/homepage.component';
 import { ContactpageComponent } from '../../../features/contactpage/contactpage-component/contactpage.component';
@@ -18,4 +18,13 @@ import { AboutpageComponent } from '../../../features/aboutpage/aboutpage-compon
 })
 export class AppComponent {
   title = 'bjjsite-angular-app'; // Application title
+  isLoginPage = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = this.router.url === '/login';
+      }
+    });
+  }
 }
