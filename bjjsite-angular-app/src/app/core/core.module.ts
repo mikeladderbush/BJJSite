@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from '../features/homepage/homepage-component/homepage.component';
-import { AboutpageComponent } from '../features/aboutpage/aboutpage-component/aboutpage.component';
-import { ContactpageComponent } from '../features/contactpage/contactpage-component/contactpage.component';
 
 /**
  * CoreModule
