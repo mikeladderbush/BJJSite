@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,31 @@ export class AuthenticationService {
     return this.http.post(`${this.apiUrl}/register`, body, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
+  }
+
+  isTokenValid(token: string): boolean {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      console.log(decodedToken);
+      const expiry = decodedToken.expiry;
+      const now = Math.floor(Date.now() / 1000);
+      return expiry > now;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  getEmailFromToken(token: string): string | null {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      console.log(decodedToken);
+      return decodedToken.sub;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  getUserData(email: string): Observable<any> {
+    return this.http.get(`/api/users/${email}`);
   }
 }

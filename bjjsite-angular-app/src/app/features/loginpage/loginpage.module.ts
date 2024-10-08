@@ -17,7 +17,6 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   declarations: [LoginpageComponent], // Declares the LoginpageComponent as part of this module
   imports: [
-    CommonModule, // Provides common Angular directives and pipes
     LoginpageRoutingModule, // Handles routing for the login page feature
     FormsModule,
     SharedModule

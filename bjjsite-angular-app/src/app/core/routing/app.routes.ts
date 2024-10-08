@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { AppComponent } from '../components/app-component/app.component';
 import { HomepageComponent } from '../../features/homepage/homepage-component/homepage.component';
 import { LoginpageComponent } from '../../features/loginpage/loginpage-component/loginpage.component';
+import { UserAccountComponent } from '../../features/user-account/user-account-component/user-account.component';
 
 /**
  * appRoutes
@@ -14,5 +15,6 @@ import { LoginpageComponent } from '../../features/loginpage/loginpage-component
 export const appRoutes: Routes = [
     { path: '', component: HomepageComponent }, // Maps the root URL to the homepage component
     { path: 'home', component: HomepageComponent },
-    { path: 'login', component: LoginpageComponent}
+    { path: 'login', component: LoginpageComponent},
+    { path: 'user-account', component: UserAccountComponent}
 ];

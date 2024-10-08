@@ -9,10 +9,9 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
 import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
-import { AboutpageComponent } from './features/aboutpage/aboutpage-component/aboutpage.component';
-import { ContactpageComponent } from './features/contactpage/contactpage.module';
 import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
 import { LoginpageComponent } from './features/loginpage/loginpage-component/loginpage.component';
+import { UserAccountComponent } from './features/user-account/user-account-component/user-account.component';
 
 /**
  * AppModule
@@ -28,9 +27,8 @@ import { LoginpageComponent } from './features/loginpage/loginpage-component/log
     AppComponent,
     HomepageComponent,
     LoginpageComponent,
-    AboutpageComponent,
-    ContactpageComponent,
-    SidebarComponent
+    SidebarComponent,
+    UserAccountComponent
   ], // Placeholder for components, directives, or pipes that belong to the root module
   imports: [
     HttpClientModule,

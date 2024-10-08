@@ -51,7 +51,6 @@ public class UserControllerTest {
         regRequest.setPassword("mike");
         Set<String> roles = new HashSet<>();
         roles.add("ROLE_USER");
-        regRequest.setRoles(roles);
         mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(regRequest)))

@@ -17,7 +17,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [HomepageComponent], // Placeholder for components, directives, or pipes related to the homepage
   imports: [
-    CommonModule, // Provides common Angular directives and pipes
     RouterModule,
     SharedModule
   ]

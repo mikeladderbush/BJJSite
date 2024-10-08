@@ -1,53 +1,62 @@
 {
-  "hash": "7bf1fbc6",
-  "configHash": "6a204285",
-  "lockfileHash": "3847d204",
-  "browserHash": "20478e65",
+  "hash": "cee39c53",
+  "configHash": "784ef994",
+  "lockfileHash": "d7da032b",
+  "browserHash": "e31a6a6e",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "6d336554",
+      "fileHash": "5f7c6cf6",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "68efa8a4",
+      "fileHash": "48d528a1",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "f4bed118",
+      "fileHash": "2c50b6f2",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "083ae243",
+      "fileHash": "d909368f",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "26ff90f9",
+      "fileHash": "fb2491e3",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "f6f89573",
+      "fileHash": "c9ef1eba",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "c7c28ca9",
+      "fileHash": "97eb55a4",
+      "needsInterop": false
+    },
+    "jwt-decode": {
+      "src": "../../../../../node_modules/jwt-decode/build/esm/index.js",
+      "file": "jwt-decode.js",
+      "fileHash": "5f030bee",
       "needsInterop": false
     }
   },
   "chunks": {
+    "xhr2-AQ42KH57": {
+      "file": "xhr2-AQ42KH57.js"
+    },
     "chunk-R2KZZBU4": {
       "file": "chunk-R2KZZBU4.js"
     },
@@ -59,9 +68,6 @@
     },
     "chunk-MTFEWRJD": {
       "file": "chunk-MTFEWRJD.js"
-    },
-    "xhr2-AQ42KH57": {
-      "file": "xhr2-AQ42KH57.js"
     },
     "chunk-NQ4HTGF6": {
       "file": "chunk-NQ4HTGF6.js"

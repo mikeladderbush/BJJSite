@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { AuthenticationService } from '../authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,10 @@ export class LoginpageComponent {
     email: '',
     password: '',
     firstname: '',
-    lastname: ''
+    lastname: '',
   }
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   onSubmit() {
     if (this.loginData.email && this.loginData.password) {
@@ -33,6 +34,8 @@ export class LoginpageComponent {
           console.log('Login successful', response);
           const token = response.token;
           localStorage.setItem('authToken', token);
+
+          this.router.navigate(['/user-account']);
         },
         (error) => {
           console.error('Login failed', error);
@@ -47,9 +50,12 @@ export class LoginpageComponent {
         this.registrationData.email,
         this.registrationData.password,
         this.registrationData.firstname,
-        this.registrationData.lastname
+        this.registrationData.lastname,
       ).subscribe((response) => {
         console.log('Registration successful', response);
+
+        this.router.navigate(['/user-account']);
+
       },
         (error) => {
           console.error('Registration failed', error);
