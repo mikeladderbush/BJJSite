@@ -13,7 +13,6 @@ export class SidebarComponent implements OnInit {
 
   constructor(private router: Router, private scroller: ViewportScroller) { }
   ngOnInit() {
-    this.router.navigate(["/"]);
   }
 
   goToHome() {

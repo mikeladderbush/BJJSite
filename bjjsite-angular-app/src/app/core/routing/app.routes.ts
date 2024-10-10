@@ -13,8 +13,8 @@ import { UserAccountComponent } from '../../features/user-account/user-account-c
  * - The base path ('') maps to the `HomepageComponent`, which serves as the landing page of the application.
  */
 export const appRoutes: Routes = [
-    { path: '', component: HomepageComponent }, // Maps the root URL to the homepage component
     { path: 'home', component: HomepageComponent },
     { path: 'login', component: LoginpageComponent},
-    { path: 'user-account', component: UserAccountComponent}
+    { path: 'user-account', component: UserAccountComponent},
+    { path: '', redirectTo: '/home', pathMatch: 'full' }  // Root path shows the homepage
 ];

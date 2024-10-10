@@ -1,55 +1,55 @@
 {
-  "hash": "cee39c53",
+  "hash": "0323199d",
   "configHash": "784ef994",
-  "lockfileHash": "d7da032b",
-  "browserHash": "e31a6a6e",
+  "lockfileHash": "cee53fce",
+  "browserHash": "f7b918a1",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "5f7c6cf6",
+      "fileHash": "fb7013b4",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "48d528a1",
+      "fileHash": "8e67c9a0",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "2c50b6f2",
+      "fileHash": "f41c6fff",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "d909368f",
+      "fileHash": "7de7fa88",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "fb2491e3",
+      "fileHash": "bfa31ef4",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "c9ef1eba",
+      "fileHash": "1aac7421",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "97eb55a4",
+      "fileHash": "0c57518f",
       "needsInterop": false
     },
     "jwt-decode": {
       "src": "../../../../../node_modules/jwt-decode/build/esm/index.js",
       "file": "jwt-decode.js",
-      "fileHash": "5f030bee",
+      "fileHash": "efdcd726",
       "needsInterop": false
     }
   },

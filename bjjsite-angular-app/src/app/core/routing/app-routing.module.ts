@@ -6,9 +6,11 @@ import { UserAccountComponent } from '../../features/user-account/user-account-c
 import { authGuard } from '../../auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomepageComponent },  // Root path shows the homepage
+  { path: 'home', component: HomepageComponent },
   { path: 'login', component: LoginpageComponent },  // Login page
-  { path: 'user-account', component: UserAccountComponent, canActivate: [authGuard]}
+  { path: 'user-account', component: UserAccountComponent, canActivate: [authGuard]},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },  // Root path shows the homepage
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
