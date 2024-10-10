@@ -54,6 +54,13 @@ export class AuthenticationService {
   }
 
   getUserData(email: string): Observable<any> {
-    return this.http.get(`/api/users/${email}`);
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get(`/api/users/${email}`, { headers });
   }
 }
