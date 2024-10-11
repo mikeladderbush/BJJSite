@@ -17,11 +17,8 @@ import jakarta.validation.Valid;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-/**
- * REST controller for managing Users.
- * 
- * Provides endpoints to create, retrieve, update, and delete users.
- */
+import org.hibernate.mapping.Set;
+
 @RestController
 @RequestMapping("/api/users")
 @EnableMethodSecurity(prePostEnabled = true)
@@ -33,13 +30,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Retrieves a User by their Email.
-     * 
-     * @param email The email of the User.
-     * @return A ResponseEntity containing the User if found, or a 404 status if not
-     *         found.
-     */
     @GetMapping("/{email}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntityModel<UserResponseDto>> getUser(@PathVariable String email) {
@@ -55,15 +45,8 @@ public class UserController {
         resource.add(linkTo(methodOn(UserController.class).deleteUser(email)).withRel("delete-user"));
 
         return ResponseEntity.ok(resource);
-
     }
 
-    /**
-     * Creates a new User.
-     * 
-     * @param userDto The UserDto containing user information.
-     * @return A ResponseEntity containing the created User.
-     */
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntityModel<UserResponseDto>> createUser(@Valid @RequestBody UserDto userDto) {
@@ -79,13 +62,6 @@ public class UserController {
         return ResponseEntity.status(201).body(resource);
     }
 
-    /**
-     * Updates an existing User identified by email.
-     * 
-     * @param email   The email of the User to update.
-     * @param userDto The UserDto containing updated information.
-     * @return A ResponseEntity containing the updated User.
-     */
     @PutMapping("/{email}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntityModel<UserResponseDto>> updateUser(
@@ -96,7 +72,6 @@ public class UserController {
         UserResponseDto userResponseDto = convertEntityToResponseDto(updatedUser);
         EntityModel<UserResponseDto> resource = EntityModel.of(userResponseDto);
 
-        // Adding HATEOAS links
         resource.add(linkTo(methodOn(UserController.class).getUser(email)).withSelfRel());
         resource.add(linkTo(methodOn(UserController.class).createUser(null)).withRel("create-user"));
         resource.add(linkTo(methodOn(UserController.class).deleteUser(email)).withRel("delete-user"));
@@ -104,12 +79,6 @@ public class UserController {
         return ResponseEntity.ok(resource);
     }
 
-    /**
-     * Deletes a User identified by email.
-     * 
-     * @param email The email of the User to delete.
-     * @return A ResponseEntity with no content.
-     */
     @DeleteMapping("/{email}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {
@@ -134,7 +103,6 @@ public class UserController {
                 .address(user.getAddress())
                 .dob(user.getDob())
                 .sex(user.getSex())
-                // Exclude password and sensitive fields
                 .build();
     }
 }

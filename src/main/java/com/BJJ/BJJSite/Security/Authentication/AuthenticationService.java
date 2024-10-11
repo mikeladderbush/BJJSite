@@ -6,8 +6,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.BJJ.BJJSite.Classes.User;
+import com.BJJ.BJJSite.Dto.UserDto;
 import com.BJJ.BJJSite.Repositories.UserRepository;
 import com.BJJ.BJJSite.Security.JWT.JwtService;
+import com.BJJ.BJJSite.Services.UserService;
+import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,21 +22,19 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
+    public AuthenticationResponse register(UserDto request) {
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
-        repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        request.setRoles(Set.of("USER"));
+
+        User createdUser = userService.createUser(request);
+
+        var jwtToken = jwtService.generateToken(createdUser);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(UserDto request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

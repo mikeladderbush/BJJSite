@@ -5,12 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.BJJ.BJJSite.Classes.User;
 
-/**
- * Repository interface for managing User entities.
- * 
- * This interface extends JpaRepository and provides methods to retrieve User
- * entities by various attributes such as username and email.
- */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 

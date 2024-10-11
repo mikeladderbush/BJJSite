@@ -41,25 +41,17 @@ public class User implements UserDetails {
     @Column(nullable = false)
     protected Integer id;
 
-    @Column(nullable = false)
-    @Builder.Default
-    protected String firstname = "test";
+    protected String firstname;
+
+    protected String lastname;
+
+    protected String username;
 
     @Column(nullable = false)
-    @Builder.Default
-    protected String lastname = "user";
-
-    @Column(nullable = false)
-    @Builder.Default
-    protected String username = "defaultUser";
-
-    @Column(nullable = false)
-    @Builder.Default
-    protected String password = "Applesauce1";
+    protected String password;
 
     @Column(unique = true, length = 100, nullable = false)
-    @Builder.Default
-    protected String email = "test@user.com";
+    protected String email;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -114,7 +106,7 @@ public class User implements UserDetails {
 
     @Column
     @Builder.Default
-    private Set<String> roles = Set.of("USER");
+    private Set<String> roles  = Set.of("USER");
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

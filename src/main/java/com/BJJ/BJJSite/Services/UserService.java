@@ -1,6 +1,5 @@
 package com.BJJ.BJJSite.Services;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,30 +31,16 @@ public class UserService {
      * @return The created User entity.
      */
     public User createUser(UserDto userDto) {
-        if (userDto == null) {
-            throw new IllegalArgumentException("User data must not be null");
-        }
-
-        // Check if email already exists
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException("Email already registered");
         }
 
-        // Encode the password
-        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-
         // Convert UserDto to User entity
         User user = convertDtoToEntity(userDto);
-        user.setPassword(encodedPassword);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        
+        // Encode password
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(true);
-
-        // Assign default role
-        Set<String> roles = new HashSet<>();
-        roles.add("USER"); // Default role
-        user.setRoles(roles);
 
         return userRepository.save(user);
     }
@@ -113,7 +98,7 @@ public class UserService {
                 .address(userDto.getAddress())
                 .dob(userDto.getDob())
                 .sex(userDto.getSex())
-                // Password is set separately after encoding
+                .roles(userDto.getRoles())
                 .build();
     }
 
