@@ -21,7 +21,7 @@ export class UserAccountComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      this.renderPayPalButtons();
+    this.renderPayPalButtons();
   }
 
   loadUserData(): void {
@@ -49,8 +49,10 @@ export class UserAccountComponent implements OnInit, AfterViewInit {
   renderPayPalButtons(): void {
     if (paypal) {
       paypal.Buttons({
-        style:{
-          size: 'small'
+        style: {
+          color: 'black',
+          size: 'large',
+          height: 25,
         },
         createOrder: (data: any, actions: any) => {
           return actions.order.create({
@@ -77,3 +79,4 @@ export class UserAccountComponent implements OnInit, AfterViewInit {
     }
   }
 }
+

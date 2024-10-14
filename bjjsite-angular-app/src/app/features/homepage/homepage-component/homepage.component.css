@@ -85,13 +85,15 @@ html {
 }
 
 .contact {
+    font-family: 'Socicon', sans-serif;
+    max-width: 120ch;
+    margin: 0 auto;
+    padding: 30px;
+    height: auto;
     min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
     box-sizing: border-box;
+    clear: both;
 }
 
 @media (max-width: 768px) {
