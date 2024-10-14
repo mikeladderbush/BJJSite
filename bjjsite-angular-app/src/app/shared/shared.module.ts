@@ -7,7 +7,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     SidebarComponent
   ],
   imports: [
-    CommonModule
   ],
   exports: [
     SidebarComponent

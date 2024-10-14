@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AppComponent } from './core/components/app-component/app.component';
 import { AppRoutingModule } from './core/routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './core/routing/app.routes';
-import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { HomepageComponent } from './features/homepage/homepage-component/homepage.component';
 import { LoginpageComponent } from './features/loginpage/loginpage-component/loginpage.component';
 import { UserAccountComponent } from './features/user-account/user-account-component/user-account.component';
@@ -32,11 +30,9 @@ import { UserAccountComponent } from './features/user-account/user-account-compo
   ], // Placeholder for components, directives, or pipes that belong to the root module
   imports: [
     HttpClientModule,
-    CommonModule,
     BrowserModule,
     AppRoutingModule, // Provides common Angular directives and pipes across the application
     FormsModule,
-    SharedModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

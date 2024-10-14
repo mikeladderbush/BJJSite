@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.BJJ.BJJSite.Classes.User;
+import com.BJJ.BJJSite.Dto.RoleAssignmentDto;
 import com.BJJ.BJJSite.Dto.UserDto;
 import com.BJJ.BJJSite.Exceptions.UserAlreadyExistsException;
 import com.BJJ.BJJSite.Exceptions.UserNotFoundException;
@@ -37,7 +38,7 @@ public class UserService {
 
         // Convert UserDto to User entity
         User user = convertDtoToEntity(userDto);
-        
+
         // Encode password
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(true);
@@ -130,5 +131,10 @@ public class UserService {
                     .collect(Collectors.toSet());
             user.setRoles(updatedRoles);
         }
+    }
+
+    public void updateRolesFromDto(User user, RoleAssignmentDto roleAssignmentDto) {
+        user.setRoles(roleAssignmentDto.getRoles());
+        userRepository.save(user);
     }
 }

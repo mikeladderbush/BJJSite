@@ -18,6 +18,7 @@ const routes: Routes = [
   declarations: [HomepageComponent], // Placeholder for components, directives, or pipes related to the homepage
   imports: [
     RouterModule,
+    CommonModule,
     SharedModule
   ]
 })

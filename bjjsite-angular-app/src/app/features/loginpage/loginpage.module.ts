@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginpageComponent } from './loginpage-component/loginpage.component';
-import { LoginpageRoutingModule } from './loginpage-routing.module';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -17,8 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   declarations: [LoginpageComponent], // Declares the LoginpageComponent as part of this module
   imports: [
-    LoginpageRoutingModule, // Handles routing for the login page feature
     FormsModule,
+    CommonModule,
     SharedModule
   ]
 })

@@ -17,8 +17,6 @@ import jakarta.validation.Valid;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import org.hibernate.mapping.Set;
-
 @RestController
 @RequestMapping("/api/users")
 @EnableMethodSecurity(prePostEnabled = true)
@@ -80,7 +78,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{email}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {
         userRepository.deleteUserByEmail(email);
         return ResponseEntity.noContent().build();
@@ -92,7 +90,7 @@ public class UserController {
      * @param user The User entity to convert.
      * @return The UserResponseDto.
      */
-    private UserResponseDto convertEntityToResponseDto(User user) {
+    protected UserResponseDto convertEntityToResponseDto(User user) {
         return UserResponseDto.builder()
                 .userId(user.getId())
                 .firstname(user.getFirstname())

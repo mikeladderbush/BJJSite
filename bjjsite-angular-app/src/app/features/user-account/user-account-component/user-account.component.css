@@ -1,7 +1,13 @@
-.AccountHeader {
+body {
     font-family: 'Socicon', sans-serif;
     width: 100%;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 40px;
+}
+
+#paypal-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }

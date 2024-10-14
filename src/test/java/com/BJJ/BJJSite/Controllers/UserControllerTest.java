@@ -129,7 +129,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname").value("updated"))
                 .andExpect(jsonPath("$.lastname").value("user"))
-                .andExpect(jsonPath("$.username").value("updatedusertest"));
+                .andExpect(jsonPath("$.username").value("updateusertest"));
     }
 
 }

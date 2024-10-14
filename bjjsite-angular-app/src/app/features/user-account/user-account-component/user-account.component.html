@@ -2,14 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="user-account.component.css">
-    <title>User Account</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="user-account.component.css">
+  <title>User Account</title>
 </head>
 
 <body>
-  <div id="Account" class="Account"></div>
+  <div *ngIf="userData" id="Account" class="Account">
 
-  <h1 class="AccountHeader">Account Details</h1>
+    <h1 class="AccountHeader">Account Details</h1>
+    <p class="Field" id="Email">{{ userData.email }}</p>
+    <p class="Field" id="FirstName">{{ userData.firstname }}</p>
+    <p class="Field" id="LastName">{{ userData.lastname }}</p>
+  </div>
+
 </body>
+
+<!-- PayPal Button Container-->
+<div id="paypal-button-container"></div>
