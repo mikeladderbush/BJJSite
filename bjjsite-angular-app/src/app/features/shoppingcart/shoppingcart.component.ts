@@ -1,19 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 declare let paypal: any;
 
 @Component({
   selector: 'app-shoppingcart',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './shoppingcart.component.html',
   styleUrl: './shoppingcart.component.css'
 })
 export class ShoppingcartComponent implements AfterViewInit {
 
+  selectedOption: number = 0;
+
   ngAfterViewInit(): void {
     this.renderPayPalButtons();
   }
+
   renderPayPalButtons(): void {
     if (paypal) {
       paypal.Buttons({
@@ -26,7 +31,7 @@ export class ShoppingcartComponent implements AfterViewInit {
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: '10.00'
+                value: this.selectedOption
               }
             }]
           });

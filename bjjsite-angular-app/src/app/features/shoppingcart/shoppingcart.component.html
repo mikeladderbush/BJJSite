@@ -1,7 +1,23 @@
-<p>shoppingcart works!</p>
+<body>
+    <h1 class="MembershipType" id="Trial">Trial Membership</h1>
+    <p>Come by and try a class for free!</p>
+    <h1 class="MembershipType" id="ThreeDay">Three Day Membership</h1>
+    <p>Three day membership lets you train with us three times a week for a starting price of 120$ a month</p>
+    <h1 class="MembershipType" id="Full">Full Membership</h1>
+    <p>Full membership is restriction free and you can train as much as you want for 160$ a month</p>
+</body>
+
+<div>
+    <select class="MembershipSelection" id="SelectionTop" [(ngModel)]="selectedOption">
+        <option value=0>Trial (0$)</option>
+        <option value=120>Three Day (120$)</option>
+        <option value=160>Full (160$)</option>
+    </select>
+    <p>{{ selectedOption }}</p>
+</div>
 
 
 <!-- PayPal Button Container-->
 <div class="paypal">
     <div id="paypal-button-container"></div>
-  </div>
+</div>
