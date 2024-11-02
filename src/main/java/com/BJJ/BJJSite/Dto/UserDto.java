@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.util.Set;
 
+import com.BJJ.BJJSite.Enums.Memberships;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,17 +29,10 @@ public class UserDto {
     @Size(max = 15, message = "Phone number must be at most 15 characters")
     private String phone;
 
-    @Size(max = 100, message = "Address must be at most 100 characters")
-    private String address;
-
-    @Size(max = 10, message = "Sex must be at most 10 characters")
-    private String sex;
-
-    @Size(max = 10, message = "Date of birth must be at most 10 characters")
-    private String dob;
-
     @Size(min = 6, message = "Password must have at least 6 characters")
     private String password;
 
+    private Memberships membership;
+    
     private Set<String> roles;
 }

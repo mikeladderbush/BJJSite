@@ -23,6 +23,15 @@ import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.com
   styleUrls: ['./homepage.component.css'] // Path to the CSS file
 })
 export class HomepageComponent {
+  loggedIn: boolean = false;
+
+  ngOnInit(): void{
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.loggedIn = true;
+    }
+  }
+
   user: any; // Holds the user data fetched from the API
 
   /**
@@ -32,6 +41,10 @@ export class HomepageComponent {
    * service for manually triggering change detection.
    */
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+
+  if (loggedIn = true){
+    //add user hello at top right later
+  }
 
   
 }

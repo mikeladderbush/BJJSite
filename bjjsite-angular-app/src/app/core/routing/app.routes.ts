@@ -4,6 +4,7 @@ import { AppComponent } from '../components/app-component/app.component';
 import { HomepageComponent } from '../../features/homepage/homepage-component/homepage.component';
 import { LoginpageComponent } from '../../features/loginpage/loginpage-component/loginpage.component';
 import { UserAccountComponent } from '../../features/user-account/user-account-component/user-account.component';
+import { ShoppingcartComponent } from '../../features/shoppingcart/shoppingcart.component';
 
 /**
  * appRoutes
@@ -14,7 +15,8 @@ import { UserAccountComponent } from '../../features/user-account/user-account-c
  */
 export const appRoutes: Routes = [
     { path: 'home', component: HomepageComponent },
-    { path: 'login', component: LoginpageComponent},
-    { path: 'user-account', component: UserAccountComponent},
+    { path: 'login', component: LoginpageComponent },
+    { path: 'user-account', component: UserAccountComponent },
+    { path: 'shoppingcart', component: ShoppingcartComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' }  // Root path shows the homepage
 ];

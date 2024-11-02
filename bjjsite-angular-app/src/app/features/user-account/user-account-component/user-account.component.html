@@ -15,11 +15,15 @@
     <p class="Field" id="Email">{{ userData.email }}</p>
     <p class="Field" id="FirstName">{{ userData.firstname }}</p>
     <p class="Field" id="LastName">{{ userData.lastname }}</p>
+    <p class="Field" id="Membership">{{ userData.membership }}</p>
+  </div>
+
+  <div class="membership">
+    <button (click)="routeToCart()">Update Your Membership</button>
+  </div>
+
+  <div class="logout">
+    <button (click)="logout()">Log Out</button>
   </div>
 
 </body>
-
-<!-- PayPal Button Container-->
-<div class="paypal">
-  <div id="paypal-button-container"></div>
-</div>

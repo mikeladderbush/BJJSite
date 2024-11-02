@@ -25,7 +25,28 @@ export class LoginpageComponent {
     lastname: '',
   }
 
+  loggedIn: boolean = false;
+
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const email = this.authenticationService.getEmailFromToken(token);
+      if (email) {
+        const userData = this.authenticationService.getUserData(email).subscribe(
+          (userData) => {
+            if (userData) {
+              this.router.navigate(['/user-account']);
+            }
+          },
+          (error) => {
+            console.error('Failed to retrieve user data', error);
+          }
+        );
+      }
+    }
+  }
 
   onSubmit() {
     if (this.loginData.email && this.loginData.password) {

@@ -96,9 +96,7 @@ public class UserService {
                 .username(userDto.getUsername())
                 .email(userDto.getEmail())
                 .phone(userDto.getPhone())
-                .address(userDto.getAddress())
-                .dob(userDto.getDob())
-                .sex(userDto.getSex())
+                .membership(userDto.getMembership())
                 .roles(userDto.getRoles())
                 .build();
     }
@@ -114,9 +112,7 @@ public class UserService {
         user.setLastname(userDto.getLastname());
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
-        user.setAddress(userDto.getAddress());
-        user.setDob(userDto.getDob());
-        user.setSex(userDto.getSex());
+        user.setMembership(userDto.getMembership());
 
         // Update password if provided
         if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {

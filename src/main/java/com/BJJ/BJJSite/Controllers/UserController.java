@@ -98,9 +98,7 @@ public class UserController {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .address(user.getAddress())
-                .dob(user.getDob())
-                .sex(user.getSex())
+                .membership(user.getMembership())
                 .build();
     }
 }

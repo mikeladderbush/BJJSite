@@ -1,0 +1,11 @@
+.paypal {
+    display: grid;
+    place-items: center;
+    height: 35vh;
+    width: 100px;
+    margin: 0 auto;
+  }
+
+#paypal-button-container {
+    width: 150px;
+}

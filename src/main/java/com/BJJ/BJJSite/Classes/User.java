@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.BJJ.BJJSite.Enums.PayBasis;
+import com.BJJ.BJJSite.Enums.Memberships;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -77,32 +77,12 @@ public class User implements UserDetails {
     @Builder.Default
     private boolean enabled = true;
 
+    @Column
+    @Builder.Default
+    private Memberships membership = Memberships.NONE;
+
     @Builder.Default
     private String phone = "NO_PHONE";
-
-    @Builder.Default
-    private String address = "NO_ADDRESS";
-
-    @Builder.Default
-    private String sex = "DEFAULT_SEX";
-
-    @Builder.Default
-    private String dob = "DEFAULT_DOB";
-
-    @Builder.Default
-    private String socialSecurityNumber = "000-00-0000";
-
-    @Builder.Default
-    private String position = "DEFAULT_POSITION";
-
-    @Builder.Default
-    private double payrate = 0.0;
-
-    @Builder.Default
-    private PayBasis paybasis = PayBasis.VOLUNTEER;
-
-    @Builder.Default
-    private double baseEarnings = 0.0;
 
     @Column
     @Builder.Default

@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../loginpage/authentication.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-declare let paypal: any;
 
 @Component({
   selector: 'app-user-account',
@@ -12,16 +11,12 @@ declare let paypal: any;
   imports: [CommonModule],
   standalone: true
 })
-export class UserAccountComponent implements OnInit, AfterViewInit {
+export class UserAccountComponent implements OnInit {
   userData: any;
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUserData();
-  }
-
-  ngAfterViewInit(): void {
-    this.renderPayPalButtons();
   }
 
   loadUserData(): void {
@@ -46,37 +41,13 @@ export class UserAccountComponent implements OnInit, AfterViewInit {
     }
   }
 
-  renderPayPalButtons(): void {
-    if (paypal) {
-      paypal.Buttons({
-        style: {
-          color: 'black',
-          size: 'large',
-          height: 25,
-        },
-        createOrder: (data: any, actions: any) => {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: '10.00'
-              }
-            }]
-          });
-        },
+  routeToCart(): void {
+    this.router.navigate(['/shoppingcart']);
+  }
 
-        onApprove: (data: any, actions: any) => {
-          return actions.order.capture().then((details: any) => {
-            alert('Transaction completed by ' + details.payer.name.given_name);
-          });
-        },
-
-        onError: (err: any) => {
-          console.error('PayPal error: ', err);
-        }
-      }).render('#paypal-button-container');
-    } else {
-      console.error('PayPal SDK not loaded');
-    }
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }
 
