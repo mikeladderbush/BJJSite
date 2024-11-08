@@ -51,4 +51,6 @@ export class ShoppingcartComponent implements AfterViewInit {
       console.error('PayPal SDK not loaded');
     }
   }
+
+  
 }

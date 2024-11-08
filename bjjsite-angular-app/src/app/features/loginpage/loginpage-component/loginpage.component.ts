@@ -18,13 +18,6 @@ export class LoginpageComponent {
     password: ''
   };
 
-  registrationData = {
-    email: '',
-    password: '',
-    firstname: '',
-    lastname: '',
-  }
-
   loggedIn: boolean = false;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
@@ -65,24 +58,5 @@ export class LoginpageComponent {
     }
   }
 
-  onRegister() {
-    if (this.registrationData.email && this.registrationData.password) {
-      this.authenticationService.register(
-        this.registrationData.email,
-        this.registrationData.password,
-        this.registrationData.firstname,
-        this.registrationData.lastname,
-      ).subscribe((response) => {
-        console.log('Registration successful', response);
 
-        this.router.navigate(['/user-account']);
-
-      },
-        (error) => {
-          console.error('Registration failed', error);
-        }
-      );
-    }
-
-  }
 }

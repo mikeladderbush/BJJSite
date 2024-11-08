@@ -5,16 +5,14 @@
     <p>Three day membership lets you train with us three times a week for a starting price of 120$ a month</p>
     <h1 class="MembershipType" id="Full">Full Membership</h1>
     <p>Full membership is restriction free and you can train as much as you want for 160$ a month</p>
+    <div>
+        <select class="MembershipSelection" id="SelectionTop" [(ngModel)]="selectedOption">
+            <option value=0>Trial (0$)</option>
+            <option value=120>Three Day (120$)</option>
+            <option value=160>Full (160$)</option>
+        </select>
+    </div>
 </body>
-
-<div>
-    <select class="MembershipSelection" id="SelectionTop" [(ngModel)]="selectedOption">
-        <option value=0>Trial (0$)</option>
-        <option value=120>Three Day (120$)</option>
-        <option value=160>Full (160$)</option>
-    </select>
-    <p>{{ selectedOption }}</p>
-</div>
 
 
 <!-- PayPal Button Container-->
