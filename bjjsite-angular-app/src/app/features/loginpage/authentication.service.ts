@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { Memberships } from '../../shared/membership.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthenticationService {
     });
   }
 
-  register(email: string, password: string, firstname: string, lastname: string, membership: string): Observable<any> {
+  register(email: string, password: string, firstname: string, lastname: string, membership: Memberships): Observable<any> {
     const body = {
       email,
       password,
