@@ -19,12 +19,13 @@ export class AuthenticationService {
     });
   }
 
-  register(email: string, password: string, firstname: string, lastname: string): Observable<any> {
+  register(email: string, password: string, firstname: string, lastname: string, membership: string): Observable<any> {
     const body = {
       email,
       password,
       firstname,
-      lastname
+      lastname,
+      membership
     };
     return this.http.post(`${this.apiUrl}/register`, body, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

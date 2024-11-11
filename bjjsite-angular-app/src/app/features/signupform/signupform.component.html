@@ -3,27 +3,27 @@
         <h2>Register</h2>
         <form (ngSubmit)="onRegister()">
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" [(ngModel)]="registrationData.email" name="email" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" [(ngModel)]="registrationData.email" name="email" required>
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" [(ngModel)]="registrationData.password" name="password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" [(ngModel)]="registrationData.password" name="password" required>
             </div>
             <div class="form-group">
-                <label>First Name</label>
-                <input type="text" [(ngModel)]="registrationData.firstname" name="firstname" required>
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" [(ngModel)]="registrationData.firstname" name="firstname" required>
             </div>
             <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" [(ngModel)]="registrationData.lastname" name="lastname" required>
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" [(ngModel)]="registrationData.lastname" name="lastname" required>
             </div>
             <div class="form-group">
-                <label>Membership Selection</label>
-                <select>
-                    <option>Free Trial</option>
-                    <option>Three Day 120$</option>
-                    <option>Full 160$</option>
+                <label for="membership">Membership Selection</label>
+                <select id="membership" [(ngModel)]="registrationData.membership" name="membership">
+                    <option value="TRIAL">Free Trial</option>
+                    <option value="THREEDAYS">Three Day 120$</option>
+                    <option value="FULL">Full 160$</option>
                 </select>
             </div>
             <button type="submit">Register</button>
