@@ -18,18 +18,7 @@
                 <label for="lastname">Last Name</label>
                 <input type="text" id="lastname" [(ngModel)]="registrationData.lastname" name="lastname" required>
             </div>
-            <div class="form-group">
-                <label for="membership">Membership Selection</label>
-                <select [(ngModel)]="registrationData.membership" name="membership">
-                    <option [ngValue]="Memberships.NONE">None</option>
-                    <option [ngValue]="Memberships.TRIAL">Trial</option>
-                    <option [ngValue]="Memberships.THREEDAYS">Three Days</option>
-                    <option [ngValue]="Memberships.FULL">Full</option>
-                </select>
-            </div>
             <button type="submit">Register</button>
         </form>
     </div>
-    <!-- PayPal button container (hidden by default) -->
-    <div id="paypal-button-container" style="display: none;"></div>
 </body>

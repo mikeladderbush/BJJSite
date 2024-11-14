@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Memberships } from '../../shared/membership.enum';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 
 declare let paypal: any;
 
@@ -9,11 +12,14 @@ declare let paypal: any;
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './shoppingcart.component.html',
-  styleUrl: './shoppingcart.component.css'
+  styleUrls: ['./shoppingcart.component.css']
 })
 export class ShoppingcartComponent implements AfterViewInit {
 
-  selectedOption: number = 0;
+  Memberships = Memberships; // Make Memberships available to the template
+  selectedOption: Memberships = Memberships.NONE;
+
+  constructor(private http: HttpClient) { }
 
   ngAfterViewInit(): void {
     this.renderPayPalButtons();
@@ -27,24 +33,22 @@ export class ShoppingcartComponent implements AfterViewInit {
           size: 'large',
           height: 25,
         },
-        createOrder: (data: any, actions: any) => {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: this.selectedOption
-              }
-            }]
-          });
+        createSubscription: (data: any, actions: any) => {
+          const planId = this.getPlanIdForMembership(this.selectedOption);
+          if (!planId) {
+            alert('Please select a valid membership type.');
+            return Promise.reject('Invalid membership selection');
+          }
+          return actions.subscription.create({ plan_id: planId });
         },
-
         onApprove: (data: any, actions: any) => {
-          return actions.order.capture().then((details: any) => {
-            alert('Transaction completed by ' + details.payer.name.given_name);
+          actions.order.capture().then(() => {
+            this.updateUserMembership();
           });
         },
-
         onError: (err: any) => {
-          console.error('PayPal error: ', err);
+          console.error('PayPal error:', err);
+          alert('Payment failed. Please try again.');
         }
       }).render('#paypal-button-container');
     } else {
@@ -52,5 +56,46 @@ export class ShoppingcartComponent implements AfterViewInit {
     }
   }
 
-  
+  getPlanIdForMembership(membership: Memberships): string | null {
+    switch (membership) {
+      case Memberships.THREEDAYS:
+        return 'P-5VS82014YS568633XM42UIRA'; // Three Days Membership Plan
+      case Memberships.FULL:
+        return 'P-2LB17374MY217825TM42UEEA'; // Full Membership Plan
+      default:
+        console.error('Invalid membership type selected');
+        return null;
+    }
+  }
+
+  updateUserMembership(): void {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('User is not authenticated');
+      return;
+    }
+
+    const decodedToken: any = jwtDecode(token);
+    const email = decodedToken.sub; // Assuming 'sub' contains the email
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    const userDto = {
+      email: email,
+      membership: this.selectedOption // Update with selected membership
+    };
+
+    this.http.put(`/api/users/${email}`, userDto, { headers })
+      .subscribe({
+        next: () => {
+          alert('Membership updated successfully');
+        },
+        error: (err) => {
+          console.error('Failed to update membership', err);
+        }
+      });
+  }
 }

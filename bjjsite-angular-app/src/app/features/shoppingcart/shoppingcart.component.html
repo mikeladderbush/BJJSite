@@ -7,9 +7,9 @@
     <p>Full membership is restriction free and you can train as much as you want for 160$ a month</p>
     <div>
         <select class="MembershipSelection" id="SelectionTop" [(ngModel)]="selectedOption">
-            <option value=0>Trial (0$)</option>
-            <option value=120>Three Day (120$)</option>
-            <option value=160>Full (160$)</option>
+            <option [ngValue]="Memberships.NONE">Trial (0$)</option>
+            <option [ngValue]="Memberships.THREEDAYS">Three Day (120$)</option>
+            <option [ngValue]="Memberships.FULL">Full (160$)</option>
         </select>
     </div>
 </body>
