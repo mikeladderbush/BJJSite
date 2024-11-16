@@ -1,5 +1,6 @@
-html {
+html, body {
     scroll-behavior: smooth;
+    background-color: #000;
 }
 
 .home {
@@ -33,7 +34,7 @@ html {
     opacity: 0.5;
 }
 
-.home > * {
+.home>* {
     position: relative;
     z-index: 2;
 }
@@ -44,14 +45,16 @@ html {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 40px;
+    background-color: #000;
+    color: #fff;
 }
 
 .BillCompetition {
     width: 150px;
     height: 150px;
     border: 2px solid #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    background-color: #000;
     margin-top: 20px;
     margin-bottom: 40px;
     margin-left: 570px;
@@ -63,9 +66,9 @@ html {
     background-position: top;
     width: 150px;
     height: 150px;
-    border: 2px solid #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgb(255, 255, 255, 0.1);
+    background-color: #000;
     margin-top: 20px;
     margin-bottom: 40px;
     margin-left: 570px;
@@ -77,6 +80,7 @@ html {
     font-family: 'Socicon', sans-serif;
     font-size: 2rem;
     margin-bottom: 20px;
+    color: #fff;
 }
 
 /* Style the main content with a responsive max-width */
@@ -87,7 +91,8 @@ html {
     padding: 30px;
     height: auto;
     min-height: 100vh;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #000;
+    color: #fff;
     box-sizing: border-box;
     clear: both;
 }
@@ -99,13 +104,17 @@ html {
     padding: 30px;
     height: auto;
     min-height: 100vh;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #000;
+    color: #fff;
     box-sizing: border-box;
     clear: both;
 }
 
 @media (max-width: 768px) {
-    .home, .about, .contact {
+
+    .home,
+    .about,
+    .contact {
         flex-direction: column;
         padding: 10px;
     }
@@ -126,4 +135,50 @@ html {
     .BillTitle {
         font-size: 1.5rem;
     }
+}
+
+.resources {
+    font-family: 'Socicon', sans-serif;
+    max-width: 120ch;
+    margin: 0 auto;
+    padding: 30px;
+    height: auto;
+    min-height: 100vh;
+    background-color: #000;
+    color: #fff;
+    box-sizing: border-box;
+    clear: both;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 20px;
+    background: #000;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: #fff;
+}
+
+.day {
+    background-color: #333;
+    border: 1px solid #fff;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.day h2 {
+    margin: 0 0 10px;
+    font-size: 0.7rem;
+    color: #fff;
+}
+
+.day p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #fff;
 }

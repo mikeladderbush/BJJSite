@@ -99,6 +99,7 @@ public class UserController {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .membership(user.getMembership())
+                .roles(user.getRoles())
                 .build();
     }
 }

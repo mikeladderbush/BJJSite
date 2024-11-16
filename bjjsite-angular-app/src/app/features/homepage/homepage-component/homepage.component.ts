@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
+import { AdminAccountComponent } from '../../../admin/admin_features/admin-account/admin-account.component';
 
 /**
  * HomepageComponent
@@ -25,7 +26,7 @@ import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.com
 export class HomepageComponent {
   loggedIn: boolean = false;
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
       this.loggedIn = true;
@@ -40,11 +41,12 @@ export class HomepageComponent {
    * Injects the `HttpClient` service for making HTTP requests and the `ChangeDetectorRef`
    * service for manually triggering change detection.
    */
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  }
 
-  if (loggedIn = true){
+  if(loggedIn = true) {
     //add user hello at top right later
   }
 
-  
+
 }

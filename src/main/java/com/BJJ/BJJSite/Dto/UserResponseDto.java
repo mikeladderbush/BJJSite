@@ -1,5 +1,7 @@
 package com.BJJ.BJJSite.Dto;
 
+import java.util.Set;
+
 import com.BJJ.BJJSite.Enums.Memberships;
 
 import lombok.AllArgsConstructor;
@@ -23,5 +25,6 @@ public class UserResponseDto {
     private String email;
     private String phone;
     private Memberships membership;
+    private Set<String> roles;
 
 }

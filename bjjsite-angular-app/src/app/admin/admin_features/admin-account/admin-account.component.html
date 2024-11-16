@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin-account.component.css">
+  <title>Admin Account</title>
+</head>
+
+<body>
+  <div class="news" id="updateposter">
+
+  </div>
+  <div class="admin-calendar-control">
+    <h2>Update Calendar</h2>
+    <form (submit)="addClassToCalendar()">
+      <label for="day">Day:</label>
+      <select id="day" [(ngModel)]="selectedDay" name="day">
+        <option value="Sunday">Sunday</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+      </select>
+
+      <label for="timeRange">Time Range:</label>
+      <input type="text" id="timeRange" placeholder="e.g., 6:30-8:00pm" [(ngModel)]="timeRange" name="timeRange" />
+
+      <button type="submit">Add Class</button>
+    </form>
+  </div>
+
+  <div class="adminfunctions" id="givepriviledge">
+
+  </div>
+  <div class="logout">
+    <button (click)="logout()">Log Out</button>
+  </div>
+
+</body>
