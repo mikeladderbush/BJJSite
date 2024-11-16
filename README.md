@@ -1,6 +1,6 @@
 # Brazilian Jiu-Jitsu School Website
 
-Welcome to the Kimura Jiu-Jitsu School Website project! This project aims to develop a user-friendly and intuitive website for a Brazilian Jiu-Jitsu school owned by a non-tech-savvy instructor. The website will be built using Java, Spring Frameworks, Angular, PostgreSQL, and Salesforce to provide a seamless experience for both the school’s staff and its students.
+Welcome to the Kimura Jiu-Jitsu School Website project! This project aims to develop a user-friendly and intuitive website for a Brazilian Jiu-Jitsu school owned by a non-tech-savvy instructor. The website will be built using Java, Spring Frameworks, Angular, and PostgreSQL to provide a seamless experience for both the school’s staff and its students.
 
 ## Project Overview
 
@@ -10,7 +10,6 @@ The primary goal of this project is to create a website that is not only easy to
 
 - **Administrator UI:** A secure and intuitive user interface that allows school employees to easily update and manage website content, such as class schedules, announcements, and student information.
 - **Responsive Design:** The website will be fully responsive, ensuring a great user experience across all devices, from desktops to mobile phones.
-- **Integration with Salesforce:** Seamless integration with Salesforce to manage student enrollment, payments, and CRM functionalities.
 - **Robust Backend:** Built with Java and Spring Frameworks, the backend will handle data processing, user authentication, and interactions with the PostgreSQL database.
 - **Angular Frontend:** The frontend will be developed using Angular, providing a dynamic and responsive user interface for both the public website and the administrator panel.
 - **Secure Data Management:** Utilizing PostgreSQL for secure data storage and management, ensuring that sensitive student information is well protected.
@@ -20,7 +19,6 @@ The primary goal of this project is to create a website that is not only easy to
 - **Java & Spring Frameworks:** Powering the backend with robust and scalable solutions for data management, business logic, and security.
 - **Angular:** Creating a dynamic, responsive, and user-friendly frontend for both the public website and admin UI.
 - **PostgreSQL:** Secure and reliable relational database management system for storing and managing all website data.
-- **Salesforce:** Integrating with Salesforce for CRM capabilities, allowing the school to efficiently manage student information, communications, and payment processing.
 - **HTML/CSS/TypeScript:** Building a clean and responsive design that is easy to navigate and visually appealing.
 
 Getting Started
@@ -32,7 +30,6 @@ Before you start, make sure you have the following installed:
     Node.js and npm
     Angular CLI
     PostgreSQL
-    Salesforce Developer Account
 
 Installation
 
@@ -60,8 +57,6 @@ cd BJJSite
         npm install
         ng serve
 
-    Salesforce Integration:
-        Configure the Salesforce API keys and endpoints in the application.properties or as environment variables.
 
 4. Running the Application
 
@@ -72,4 +67,4 @@ Once the backend and frontend are set up, you can access the website locally:
 
 5. Deployment
 
-To deploy the website, follow the specific instructions for your cloud provider or hosting service. Ensure that the PostgreSQL database is accessible and that Salesforce integration settings are correctly configured.
+To deploy the website, follow the specific instructions for your cloud provider or hosting service.
