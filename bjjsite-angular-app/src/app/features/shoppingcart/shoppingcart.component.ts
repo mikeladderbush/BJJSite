@@ -41,10 +41,8 @@ export class ShoppingcartComponent implements AfterViewInit {
           }
           return actions.subscription.create({ plan_id: planId });
         },
-        onApprove: (data: any, actions: any) => {
-          actions.order.capture().then(() => {
+        onApprove: (data: any) => {
             this.updateUserMembership();
-          });
         },
         onError: (err: any) => {
           console.error('PayPal error:', err);
@@ -91,7 +89,7 @@ export class ShoppingcartComponent implements AfterViewInit {
     this.http.put(`/api/users/${email}`, userDto, { headers })
       .subscribe({
         next: () => {
-          alert('Membership updated successfully');
+          console.log('Membership updated successfully');
         },
         error: (err) => {
           console.error('Failed to update membership', err);

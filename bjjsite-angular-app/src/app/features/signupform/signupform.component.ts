@@ -27,6 +27,10 @@ export class SignupformComponent {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
+  ngOnInit(): void{
+    localStorage.clear();
+  }
+
   onRegister() {
     if (this.registrationData.email && this.registrationData.password) {
       this.registerUser();
@@ -43,6 +47,7 @@ export class SignupformComponent {
     ).subscribe(
       (response) => {
         console.log('Registration successful', response);
+        this.authenticationService.login(this.registrationData.email, this.registrationData.password);
         this.router.navigate(['/user-account']); // Redirect to user account after registration
       },
       (error) => {
