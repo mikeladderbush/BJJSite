@@ -16,15 +16,17 @@ public class SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @Autowired
-    private SessionService sessionService;
-
     public Session createSession(SessionDto sessionDto) {
-        if (sessionRepository.existsById(sessionDto.getSessionId())) {
-            throw new SessionAlreadyExistsException("Session already exists");
+
+        if (sessionRepository.isOverlappingSession(sessionDto.getDayOfWeek(), sessionDto.getStartTime(),
+                sessionDto.getEndTime())) {
+            throw new SessionAlreadyExistsException("Session already exists for this day and time.");
         }
 
         Session session = convertDtoToEntity(sessionDto);
+        session.setStartTime(sessionDto.getStartTime());
+        session.setEndTime(sessionDto.getEndTime());
+
         return sessionRepository.save(session);
     }
 
@@ -50,14 +52,16 @@ public class SessionService {
 
     private void updateEntityFromDto(Session session, SessionDto sessionDto) {
         session.setDayOfWeek(sessionDto.getDayOfWeek());
-        session.setTimeOfDay(sessionDto.getTimeOfDay());
+        session.setStartTime(sessionDto.getStartTime());
+        session.setEndTime(sessionDto.getEndTime());
         session.setTypeOfSession(sessionDto.getTypeOfSession());
     }
 
     private Session convertDtoToEntity(SessionDto sessionDto) {
         return Session.builder()
                 .dayOfWeek(sessionDto.getDayOfWeek())
-                .timeOfDay(sessionDto.getTimeOfDay())
+                .startTime(sessionDto.getStartTime())
+                .endTime(sessionDto.getEndTime())
                 .typeOfSession(sessionDto.getTypeOfSession())
                 .build();
     }

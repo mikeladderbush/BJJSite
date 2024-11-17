@@ -16,7 +16,8 @@ public class SessionResponseDto {
     
     private Integer sessionId;
     private DayOfWeek dayOfWeek;
-    private Time timeOfDay;
+    private Time startTime;
+    private Time endTime;
     private String typeOfSession;
     
 }

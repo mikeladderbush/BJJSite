@@ -45,7 +45,7 @@ public class SessionController {
         return ResponseEntity.ok(resource);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/addSession")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntityModel<SessionResponseDto>> createSession(@Valid SessionDto sessionDto) {
         Session createdSession = sessionService.createSession(sessionDto);
@@ -89,7 +89,8 @@ public class SessionController {
         return SessionResponseDto.builder()
                 .sessionId(session.getId())
                 .dayOfWeek(session.getDayOfWeek())
-                .timeOfDay(session.getTimeOfDay())
+                .startTime(session.getStartTime())
+                .endTime(session.getEndTime())
                 .typeOfSession(session.getTypeOfSession())
                 .build();
     }

@@ -1,73 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
 import { AuthenticationService } from '../../../features/loginpage/authentication.service';
+import { FormsModule } from '@angular/forms';
+import { SessionService } from '../../session.service';
 
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.css'
 })
-export class AdminAccountComponent implements OnInit {
-  userData: any;
-  selectedDay: string = '';
-  timeRange: string = '';
-  calendar: Record<string, string> = {
-    Sunday: '',
-    Monday: '',
-    Tuesday: '',
-    Wednesday: '',
-    Thursday: '',
-    Friday: '',
-    Saturday: '',
-  };
+export class AdminAccountComponent {
+  sessionData = { day: '', startTime: '', endTime: '', type: '' }
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private sessionService: SessionService, private router: Router) { }
 
-  ngOnInit(): void {
-    this.loadUserData();
-  }
-
-  loadUserData(): void {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const email = this.authenticationService.getEmailFromToken(token);
-      if (email) {
-        this.authenticationService.getUserData(email).subscribe(
-          (response) => {
-            this.userData = typeof response === 'string' ? JSON.parse(response) : response;
-            console.log(this.userData);
-          },
-          (error) => {
-            console.error('Failed to load user data', error);
-          }
-        );
-      } else {
-        this.router.navigate(['/login']);
-      }
-    } else {
-      this.router.navigate(['/login']);
-    }
-  }
-
-  addClassToCalendar(): void {
-    //TODO, ADD CLASSES TO DATABASE AND THEN GET FROM THERE
-    if (!this.selectedDay || !this.timeRange) {
-      alert('Please select a day AND a time range');
+  addClassToCalendar(event: Event): void {
+    if (!this.sessionData.day || !this.sessionData.startTime || !this.sessionData.endTime) {
+      alert('Please fill all required fields');
       return;
     }
 
-    if (this.calendar[this.selectedDay]) {
-      const overwrite = confirm(
-        'There is already a class scheduled for this time, do you want to overwrite it?'
-      );
-      if (!overwrite) {
-        return;
+    this.sessionService.addSession(
+      this.sessionData.day,
+      this.sessionData.startTime,
+      this.sessionData.endTime,
+      this.sessionData.type
+    ).subscribe(
+      (response) => {
+        console.log('Session added successfully', response);
+      },
+      (error) => {
+        console.error('Session could not be added', error);
       }
-    }
-    this.calendar[this.selectedDay] = this.timeRange;
+    );
+
     alert('The class has been added');
   }
 

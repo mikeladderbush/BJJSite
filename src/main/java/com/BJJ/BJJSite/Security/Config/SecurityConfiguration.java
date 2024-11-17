@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/", "/home", "/login", "/contact", "/api/v1/auth/**")
                         .permitAll() // Public access
                         .requestMatchers("/api/users/**", "/user-account").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/admin/**", "/admin-account").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**", "/admin-account", "/api/sessions/**", "/api/sessions/addSession").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -5,6 +5,8 @@ import java.time.DayOfWeek;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,10 +34,14 @@ public class Session {
     protected Integer id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     protected DayOfWeek dayOfWeek;
 
     @Column(nullable = false)
-    protected Time timeOfDay;
+    protected Time startTime;
+
+    @Column(nullable = false)
+    protected Time endTime;
 
     @Column(nullable = false)
     protected String typeOfSession;
