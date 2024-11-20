@@ -1,7 +1,8 @@
 package com.BJJ.BJJSite.Dto;
 
 import java.sql.Time;
-import java.time.DayOfWeek;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SessionDto {
-
-    private DayOfWeek dayOfWeek;
-
+    @JsonProperty("dayOfWeek")
+    private Integer dayOfWeek;
+    @JsonProperty("startTime")
     private Time startTime;
-
+    @JsonProperty("endTime")
     private Time endTime;
-
+    @JsonProperty("typeOfSession")
     private String typeOfSession;
 }

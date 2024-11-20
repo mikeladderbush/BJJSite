@@ -1,7 +1,6 @@
 package com.BJJ.BJJSite.Dto;
 
 import java.sql.Time;
-import java.time.DayOfWeek;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SessionResponseDto {
     
     private Integer sessionId;
-    private DayOfWeek dayOfWeek;
+    private Integer dayOfWeek;
     private Time startTime;
     private Time endTime;
     private String typeOfSession;

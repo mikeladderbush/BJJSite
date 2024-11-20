@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.BJJ.BJJSite.Classes.Session;
 import com.BJJ.BJJSite.Dto.SessionDto;
-import com.BJJ.BJJSite.Exceptions.SessionAlreadyExistsException;
 import com.BJJ.BJJSite.Repositories.SessionRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,14 +17,10 @@ public class SessionService {
 
     public Session createSession(SessionDto sessionDto) {
 
-        if (sessionRepository.isOverlappingSession(sessionDto.getDayOfWeek(), sessionDto.getStartTime(),
-                sessionDto.getEndTime())) {
-            throw new SessionAlreadyExistsException("Session already exists for this day and time.");
-        }
+        //debugging endpoint
+        System.out.println(sessionDto.getTypeOfSession());
 
         Session session = convertDtoToEntity(sessionDto);
-        session.setStartTime(sessionDto.getStartTime());
-        session.setEndTime(sessionDto.getEndTime());
 
         return sessionRepository.save(session);
     }

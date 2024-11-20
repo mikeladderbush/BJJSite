@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, Router } from '@angular/router';
 import { AuthenticationService } from '../../../features/loginpage/authentication.service';
 import { FormsModule } from '@angular/forms';
-import { SessionService } from '../../session.service';
+import { DayOfWeek, SessionService } from '../../session.service';
 
 @Component({
   selector: 'app-admin-account',
@@ -13,13 +13,38 @@ import { SessionService } from '../../session.service';
   styleUrl: './admin-account.component.css'
 })
 export class AdminAccountComponent {
-  sessionData = { day: '', startTime: '', endTime: '', type: '' }
+  sessionData = { day: undefined, startTime: '', endTime: '', type: '' }
+
+  days = [ 
+    { value: DayOfWeek.SUNDAY, label: 'Sunday'},
+    { value: DayOfWeek.MONDAY, label: 'Monday'},
+    { value: DayOfWeek.TUESDAY, label: 'Tuesday'},
+    { value: DayOfWeek.WEDNESDAY, label: 'Wedneday'},
+    { value: DayOfWeek.THURSDAY, label: 'Thursday'},
+    { value: DayOfWeek.FRIDAY, label: 'Friday'},
+    { value: DayOfWeek.SATURDAY, label: 'Saturday'}
+  ];
 
   constructor(private authenticationService: AuthenticationService, private sessionService: SessionService, private router: Router) { }
 
-  addClassToCalendar(event: Event): void {
-    if (!this.sessionData.day || !this.sessionData.startTime || !this.sessionData.endTime) {
-      alert('Please fill all required fields');
+  addSession(): void {
+    if (this.sessionData.day === null || this.sessionData.day === undefined) {
+      alert('Please select a day.');
+      return;
+    }
+
+    if (!this.sessionData.startTime) {
+      alert('Please fill in the start time');
+      return;
+    }
+
+    if (!this.sessionData.endTime) {
+      alert('Please fill in the end time');
+      return;
+    }
+
+    if (!this.sessionData.type) {
+      alert('Please fill in the type of session');
       return;
     }
 

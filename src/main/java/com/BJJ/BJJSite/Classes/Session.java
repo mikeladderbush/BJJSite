@@ -33,17 +33,13 @@ public class Session {
     @Column(nullable = false)
     protected Integer id;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    protected DayOfWeek dayOfWeek;
+    @Enumerated(EnumType.ORDINAL)
+    protected Integer dayOfWeek;
 
-    @Column(nullable = false)
     protected Time startTime;
 
-    @Column(nullable = false)
     protected Time endTime;
 
-    @Column(nullable = false)
     protected String typeOfSession;
 
 }

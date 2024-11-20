@@ -26,7 +26,9 @@ export class LoginpageComponent {
   ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
-      this.redirectBasedOnRole(token);
+      if (this.authenticationService.isTokenValid(token)) {
+        this.redirectBasedOnRole(token);
+      }
     }
   }
 
@@ -58,6 +60,7 @@ export class LoginpageComponent {
       console.error('Failed to retrieve roles', error);
     }
   }
-
-
 }
+
+
+
