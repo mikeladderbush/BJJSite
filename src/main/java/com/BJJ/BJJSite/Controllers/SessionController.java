@@ -17,6 +17,8 @@ import jakarta.validation.Valid;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/sessions")
 @EnableMethodSecurity(prePostEnabled = true)
@@ -43,6 +45,17 @@ public class SessionController {
         resource.add(linkTo(methodOn(SessionController.class).deleteSession(id)).withRel("delete-session"));
 
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<SessionResponseDto>> getAllSessions() {
+        List<Session> sessions = sessionRepository.getAllSessions();
+        List<SessionResponseDto> sessionDtos = sessions.stream()
+                .map(this::convertEntityToResponseDto)
+                .toList();
+
+        return ResponseEntity.ok(sessionDtos);
+
     }
 
     @PostMapping("/addSession")

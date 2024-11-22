@@ -51,41 +51,19 @@
         <p>https://www.facebook.com/bill.duffy.9699</p>
     </div>
 
-    <div id="schedule" class="resources">
+    <div *ngIf="sessionData.length > 0" id="schedule" class="resources">
         <h1>Up to date schedule...</h1>
         <div id="calendar" class="calendar">
-            <div class="day" id="sunday">
-                <h1>Sunday</h1>
-                <p>No Class</p>
-            </div>
-            <div class="day" id="monday">
-                <h1>Monday</h1>
-                <p>No Class</p>
-            </div>
-            <div class="day" id="tuesday">
-                <h1>Tuesday</h1>
-                <p>Gi Training</p>
-                <p>6:30-8:00 PM</p>
-            </div>
-            <div class="day" id="wednesday">
-                <h1>Wedsnesday</h1>
-                <p>No Class</p>
-            </div>
-            <div class="day" id="thursday">
-                <h1>Thursday</h1>
-                <p>Gi Training</p>
-                <p>6:30-8:00 PM</p>
-            </div>
-            <div class="day" id="friday">
-                <h1>Friday</h1>
-                <p>No Class</p>
-            </div>
-            <div class="day" id="saturday">
-                <h1>Saturday</h1>
-                <p>No Gi Training</p>
-                <p>12:00-2:00 PM</p>
+            <div class="day" *ngFor="let session of sessionData" [id]="session.dayOfWeek">
+                <h2>{{ session.dayOfWeek }}</h2>
+                <p>Start Time: {{ session.startTime }}</p>
+                <p>End Time: {{ session.endTime }}</p>
+                <p>Type: {{ session.type }}</p>
             </div>
         </div>
+    </div>
+    <div *ngIf="sessionData.length === 0">
+        <p>No sessions found</p>
     </div>
 
     <div id="contact" class="contact">

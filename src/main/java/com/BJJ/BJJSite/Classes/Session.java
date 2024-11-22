@@ -1,12 +1,9 @@
 package com.BJJ.BJJSite.Classes;
 
 import java.sql.Time;
-import java.time.DayOfWeek;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,7 +30,6 @@ public class Session {
     @Column(nullable = false)
     protected Integer id;
 
-    @Enumerated(EnumType.ORDINAL)
     protected Integer dayOfWeek;
 
     protected Time startTime;

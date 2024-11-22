@@ -54,7 +54,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/", "/home", "/login", "/contact", "/api/v1/auth/**")
+                        .requestMatchers("/", "/home", "/login", "/contact", "api/sessions/all", "/api/v1/auth/**")
                         .permitAll() // Public access
                         .requestMatchers("/api/users/**", "/user-account").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/admin/**", "/admin-account", "/api/sessions/**", "/api/sessions/addSession").hasRole("ADMIN")

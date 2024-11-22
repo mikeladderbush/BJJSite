@@ -34,4 +34,12 @@ export class SessionService {
       })
     });
   }
+
+  getSessionData(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get('http://localhost:8080/api/sessions/all', { headers });
+  } 
 }

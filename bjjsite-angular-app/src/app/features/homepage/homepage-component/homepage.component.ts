@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { AdminAccountComponent } from '../../../admin/admin_features/admin-account/admin-account.component';
+import { SessionService } from '../../../admin/session.service';
 
 /**
  * HomepageComponent
@@ -24,24 +25,30 @@ import { AdminAccountComponent } from '../../../admin/admin_features/admin-accou
   styleUrls: ['./homepage.component.css'] // Path to the CSS file
 })
 export class HomepageComponent {
+
+  sessionData: { dayOfWeek: string; startTime: string; endTime: string; type: string }[] = [];
   loggedIn: boolean = false;
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private sessionService: SessionService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
       this.loggedIn = true;
     }
+
+    this.loadSessionData();
   }
 
-  user: any; // Holds the user data fetched from the API
-
-  /**
-   * Constructor
-   * 
-   * Injects the `HttpClient` service for making HTTP requests and the `ChangeDetectorRef`
-   * service for manually triggering change detection.
-   */
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  loadSessionData(): void {
+    this.sessionService.getSessionData().subscribe(
+      (response) => {
+        this.sessionData = Array.isArray(response) ? response : [];
+        console.log(this.sessionData);
+      },
+      (error) => {
+        console.error('Failed to load session data', error);
+      }
+    );
   }
 
   if(loggedIn = true) {
