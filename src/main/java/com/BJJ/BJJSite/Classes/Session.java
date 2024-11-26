@@ -32,9 +32,9 @@ public class Session {
 
     protected Integer dayOfWeek;
 
-    protected Time startTime;
+    protected String startTime;
 
-    protected Time endTime;
+    protected String endTime;
 
     protected String typeOfSession;
 

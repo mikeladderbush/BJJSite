@@ -60,7 +60,10 @@ public class SessionController {
 
     @PostMapping("/addSession")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<EntityModel<SessionResponseDto>> createSession(@Valid SessionDto sessionDto) {
+    public ResponseEntity<EntityModel<SessionResponseDto>> createSession(@Valid @RequestBody SessionDto sessionDto) {
+        
+        System.out.println("Incoming DTO: " + sessionDto);
+        
         Session createdSession = sessionService.createSession(sessionDto);
         SessionResponseDto sessionResponseDto = convertEntityToResponseDto(createdSession);
 

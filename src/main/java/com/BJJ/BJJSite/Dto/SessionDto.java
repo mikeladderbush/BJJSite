@@ -17,9 +17,9 @@ public class SessionDto {
     @JsonProperty("dayOfWeek")
     private Integer dayOfWeek;
     @JsonProperty("startTime")
-    private Time startTime;
+    private String startTime;
     @JsonProperty("endTime")
-    private Time endTime;
+    private String endTime;
     @JsonProperty("typeOfSession")
     private String typeOfSession;
 }

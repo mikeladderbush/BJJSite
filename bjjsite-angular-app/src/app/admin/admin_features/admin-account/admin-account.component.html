@@ -17,13 +17,9 @@
     <form (ngSubmit)="addSession()">
       <label for="day">Day:</label>
       <select id="day" [(ngModel)]="sessionData.day" name="day" required>
-        <option [ngValue]="0">Sunday</option>
-        <option [ngValue]="1">Monday</option>
-        <option [ngValue]="2">Tuesday</option>
-        <option [ngValue]="3">Wednesday</option>
-        <option [ngValue]="4">Thursday</option>
-        <option [ngValue]="5">Friday</option>
-        <option [ngValue]="6">Saturday</option>
+        <option *ngFor="let day of [0, 1, 2, 3, 4, 5, 6]" [value]="day">
+          {{ ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day] }}
+        </option>
       </select>
 
       <label for="startTime">Start Time:</label>
