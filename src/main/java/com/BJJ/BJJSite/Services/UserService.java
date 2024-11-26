@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.BJJ.BJJSite.Classes.User;
-import com.BJJ.BJJSite.Dto.RoleAssignmentDto;
 import com.BJJ.BJJSite.Dto.UserDto;
 import com.BJJ.BJJSite.Exceptions.UserAlreadyExistsException;
 import com.BJJ.BJJSite.Exceptions.UserNotFoundException;
@@ -129,8 +128,4 @@ public class UserService {
         }
     }
 
-    public void updateRolesFromDto(User user, RoleAssignmentDto roleAssignmentDto) {
-        user.setRoles(roleAssignmentDto.getRoles());
-        userRepository.save(user);
-    }
 }

@@ -6,6 +6,7 @@ import { LoginpageComponent } from '../../features/loginpage/loginpage-component
 import { UserAccountComponent } from '../../features/user-account/user-account-component/user-account.component';
 import { ShoppingcartComponent } from '../../features/shoppingcart/shoppingcart.component';
 import { SignupformComponent } from '../../features/signupform/signupform.component';
+import { AdminAccountComponent } from '../../admin/admin_features/admin-account/admin-account.component';
 
 /**
  * appRoutes
@@ -18,6 +19,7 @@ export const appRoutes: Routes = [
     { path: 'home', component: HomepageComponent },
     { path: 'login', component: LoginpageComponent },
     { path: 'user-account', component: UserAccountComponent },
+    { path: 'admin-account', component: AdminAccountComponent},
     { path: 'signupform', component: SignupformComponent},
     { path: 'shoppingcart', component: ShoppingcartComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' }  // Root path shows the homepage

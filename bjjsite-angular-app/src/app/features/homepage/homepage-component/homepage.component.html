@@ -46,11 +46,37 @@
         </main>
     </div>
 
+    <div id="news" class="resources">
+        <h1>Follow us on social media for the latest updates!</h1>
+        <p>https://www.facebook.com/bill.duffy.9699</p>
+    </div>
+
+    <div *ngIf="sessionData.length > 0" id="schedule" class="resources">
+        <h1>Up to date schedule...</h1>
+        <div id="calendar" class="calendar">
+            <div class="day" *ngFor="let session of sessionData" [id]="session.dayOfWeek">
+                <h2>
+                    {{ session.dayOfWeek === "0" ? 'Sunday' :
+                    session.dayOfWeek === "1" ? 'Monday' :
+                    session.dayOfWeek === "2" ? 'Tuesday' :
+                    session.dayOfWeek === "3" ? 'Wednesday' :
+                    session.dayOfWeek === "4" ? 'Thursday' :
+                    session.dayOfWeek === "5" ? 'Friday' : 'Saturday' }}
+                </h2>
+
+                <p>Start Time: {{ session.startTime }}</p>
+                <p>End Time: {{ session.endTime }}</p>
+                <p>Type: {{ session.typeOfSession }}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="sessionData.length === 0">
+        <p>No sessions found</p>
+    </div>
+
     <div id="contact" class="contact">
         <h1>Contact</h1>
-        <p>Billy Duffy</p>
-        <p>###-###-####</p>
-        <p>email</p>
+        <p>Bill Duffy</p>
     </div>
 </body>
 

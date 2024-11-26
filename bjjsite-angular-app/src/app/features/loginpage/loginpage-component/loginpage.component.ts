@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -25,31 +26,19 @@ export class LoginpageComponent {
   ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (token) {
-      const email = this.authenticationService.getEmailFromToken(token);
-      if (email) {
-        const userData = this.authenticationService.getUserData(email).subscribe(
-          (userData) => {
-            if (userData) {
-              this.router.navigate(['/user-account']);
-            }
-          },
-          (error) => {
-            console.error('Failed to retrieve user data', error);
-          }
-        );
+      if (this.authenticationService.isTokenValid(token)) {
+        this.redirectBasedOnRole(token);
       }
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginData.email && this.loginData.password) {
       this.authenticationService.login(this.loginData.email, this.loginData.password).subscribe(
         (response) => {
-          console.log('Login successful', response);
           const token = response.token;
           localStorage.setItem('authToken', token);
-
-          this.router.navigate(['/user-account']);
+          this.redirectBasedOnRole(token);
         },
         (error) => {
           console.error('Login failed', error);
@@ -58,5 +47,20 @@ export class LoginpageComponent {
     }
   }
 
-
+  private redirectBasedOnRole(token: string): void {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const roles: string[] = decodedToken.roles || [];
+      if (roles.includes('ROLE_ADMIN')) {
+        this.router.navigate(['/admin-account']);
+      } else {
+        this.router.navigate(['/user-account']);
+      }
+    } catch (error) {
+      console.error('Failed to retrieve roles', error);
+    }
+  }
 }
+
+
+

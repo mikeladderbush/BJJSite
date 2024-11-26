@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin-account.component.css">
+  <title>Admin Account</title>
+</head>
+
+<body>
+  <div class="news" id="updateposter">
+
+  </div>
+  <div class="admin-calendar-control">
+    <h2>Update Calendar</h2>
+    <form (ngSubmit)="addSession()">
+      <label for="day">Day:</label>
+      <select id="day" [(ngModel)]="sessionData.day" name="day" required>
+        <option *ngFor="let day of [0, 1, 2, 3, 4, 5, 6]" [value]="day">
+          {{ ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day] }}
+        </option>
+      </select>
+
+      <label for="startTime">Start Time:</label>
+      <input type="time" id="startTime" [(ngModel)]="sessionData.startTime" name="startTime" required />
+
+      <label for="endTime">End Time:</label>
+      <input type="time" id="endTime" [(ngModel)]="sessionData.endTime" name="endTime" required />
+
+      <label for="sessionType">Session Type:</label>
+      <input type="text" id="sessionType" [(ngModel)]="sessionData.type" name="type" placeholder="e.g., Kids BJJ"
+        required />
+
+      <button type="submit">Add Class</button>
+    </form>
+  </div>
+
+  <div class="adminfunctions" id="givepriviledge">
+
+  </div>
+  <div class="logout">
+    <button (click)="logout()">Log Out</button>
+  </div>
+
+</body>
