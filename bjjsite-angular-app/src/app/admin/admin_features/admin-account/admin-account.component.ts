@@ -13,7 +13,7 @@ import { SessionService } from '../../session.service';
   styleUrl: './admin-account.component.css'
 })
 export class AdminAccountComponent {
-  sessionData = { day: 0, startTime: '', endTime: '', type: '' }
+  sessionData = { day: '', startTime: '', endTime: '', type: '' }
 
   constructor(private authenticationService: AuthenticationService, private sessionService: SessionService, private router: Router) { }
 

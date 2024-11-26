@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SessionDto {
     @JsonProperty("dayOfWeek")
-    private Integer dayOfWeek;
+    private String dayOfWeek;
     @JsonProperty("startTime")
     private String startTime;
     @JsonProperty("endTime")

@@ -30,7 +30,7 @@ public class Session {
     @Column(nullable = false)
     protected Integer id;
 
-    protected Integer dayOfWeek;
+    protected String dayOfWeek;
 
     protected String startTime;
 

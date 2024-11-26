@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SessionResponseDto {
     
     private Integer sessionId;
-    private Integer dayOfWeek;
+    private String dayOfWeek;
     private String startTime;
     private String endTime;
     private String typeOfSession;

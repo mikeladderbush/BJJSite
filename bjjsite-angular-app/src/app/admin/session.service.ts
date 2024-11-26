@@ -11,7 +11,7 @@ export class SessionService {
 
   constructor(private http: HttpClient) { }
 
-  addSession(day: number, startTime: string, endTime: string, type: string): Observable<any> {
+  addSession(day: string, startTime: string, endTime: string, type: string): Observable<any> {
     const session = { dayOfWeek: day, startTime, endTime, typeOfSession: type };
     const token = localStorage.getItem('authToken');
 

@@ -26,7 +26,7 @@ import { SessionService } from '../../../admin/session.service';
 })
 export class HomepageComponent {
 
-  sessionData: { dayOfWeek: string; startTime: string; endTime: string; type: string }[] = [];
+  sessionData: { dayOfWeek: string; startTime: string; endTime: string; typeOfSession: string }[] = [];
   loggedIn: boolean = false;
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private sessionService: SessionService) { }
 
